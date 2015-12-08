@@ -182,3 +182,14 @@ h1 {
   padding: 8px 12px;
   font-size: 1.2em;
 }
+
+.account-information {
+  margin-top: 30px;
+  padding-top: 10px;
+  font-size: 13px;
+  border-top: 1px solid #eee;
+}
+
+.account-information .fa-user {
+  margin-right: 5px;
+}
