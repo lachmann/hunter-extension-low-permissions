@@ -69,13 +69,11 @@ h1 {
 }
 
 #resultsNumber {
-  color: #aaa;
   margin: 10px 0 20px 0;
 }
 
 .sources-link {
   float: right;
-  color: #aaa;
 }
 
 .sources-link .fa {
@@ -110,10 +108,6 @@ h1 {
   margin: 50px 0 30px 0;
 }
 
-.error-message {
-  color: #aaa;
-}
-
 .connect-container,
 .connect-again-container,
 .upgrade-container {
@@ -124,7 +118,6 @@ h1 {
 .connect-message,
 .connect-again-container,
 .upgrade-message {
-  color: #aaa;
   margin-bottom: 15px;
 }
 
@@ -133,27 +126,6 @@ h1 {
   margin-left: 10px;
   border-bottom: 1px dotted #333;
   text-decoration: none;
-}
-
-.clear_cta {
-  text-decoration: none;
-  display: inline-block;
-  padding: 12px 25px;
-  color: #fff;
-  background: #D65B3C;
-  -webkit-transition: background-color 200ms ease-in-out;
-  -moz-transition: background-color 200ms ease-in-out;
-  -o-transition: background-color 200ms ease-in-out;
-  -ms-transition: background-color 200ms ease-in-out;
-  transition: background-color 200ms ease-in-out;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-}
-
-.clear_cta:hover, .clear_cta:focus {
-  background: #B2381A;
-  color: #fff;
 }
 
 .feedback_link {
