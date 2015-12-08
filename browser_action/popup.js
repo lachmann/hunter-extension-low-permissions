@@ -14,6 +14,9 @@ chrome.tabs.getSelected(null, function(tab) {
 
   // Get account information
   getAccountInformation();
+
+  // Analytics
+  eventTrack("Open browser popup");
 });
 
 

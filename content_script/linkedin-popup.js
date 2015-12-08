@@ -4,6 +4,9 @@ function launchPopup() {
   appendOverlay(function() {
     openPopup(function() {
       launchSearch();
+
+      // Analytics
+      eventTrack("Open LinkedIn popup");
     });
   });
 
