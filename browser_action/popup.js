@@ -13,7 +13,7 @@ chrome.tabs.getSelected(null, function(tab) {
   linkedinNotification();
 
   // Get account information
-  getAccountInformation();
+  addAccountInformation();
 
   // Analytics
   eventTrack("Open browser popup");
@@ -232,23 +232,8 @@ $(".feedback_link").click(function() {
 
 // Get account information
 //
-
-function getAccountInformation() {
-  chrome.storage.sync.get('api_key', function(value){
-    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-      url = "https://api.emailhunter.co/v1/account?api_key="+value["api_key"];
-      $.ajax({
-        url : url,
-        type : 'GET',
-        dataType : 'json',
-        success : function(json){
-          $(".account-information").html("<i class='fa fa-user'></i> "+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
-        }
-      });
-    }
-  });
-}
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function addAccountInformation() {
+  getAccountInformation(function(json) {
+    $(".account-information").html("<i class='fa fa-user'></i> "+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
+  })
 }
