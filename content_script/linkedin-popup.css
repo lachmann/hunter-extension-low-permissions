@@ -94,7 +94,7 @@
 
 #eh_popup_content_container {
   height: 20px;
-  color: #D65B3C;
+  color: #e86240;
   font-weight: 600;
   font-size: 16px;
   margin: 15px 0 0 0;
@@ -151,7 +151,7 @@
   display: inline-block;
   padding: 12px 25px;
   color: #fff !important;
-  background: #D65B3C;
+  background: #e86240;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
   -o-transition: background-color 200ms ease-in-out;
@@ -162,7 +162,7 @@
   -webkit-border-radius: 3px;
 }
 .clear_cta:hover, .clear_cta:focus {
-  background: #B2381A;
+  background: #e86240;
   color: #fff;
   text-decoration: none;
 }
@@ -213,7 +213,7 @@
 
 #eh_popup_ask_domain_field:focus, #eh_popup_ask_domain_field:active {
   outline: none;
-  border: 1px solid #D65B3C;
+  border: 1px solid #e86240;
 }
 
 #eh_popup_ask_domain button {
@@ -295,7 +295,7 @@
 }
 
 .eh_popup_confidence_level {
-  background-color: #D65B3C;
+  background-color: #e86240;
   height: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

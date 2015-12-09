@@ -9,11 +9,11 @@
   color: #fff;
   font-weight: bold;
   font-size: 12px;
-  background-color: #EB6949;
-  background-image: -webkit-linear-gradient(top, #EB6949 0%,#C95032 100%);
-  background-image: -moz-linear-gradient(top, #EB6949 0%,#C95032 100%);
-  background-image: -o-linear-gradient(top, #EB6949 0%,#C95032 100%);
-  background-image: linear-gradient(top, #EB6949 0%,#C95032 100%);
+  background-color: #FA6039;
+  background-image: -webkit-linear-gradient(top, #FA6039 0%,#C95032 100%);
+  background-image: -moz-linear-gradient(top, #FA6039 0%,#C95032 100%);
+  background-image: -o-linear-gradient(top, #FA6039 0%,#C95032 100%);
+  background-image: linear-gradient(top, #FA6039 0%,#C95032 100%);
   border: 1px solid #AC3F23;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -36,11 +36,11 @@
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
   -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
   box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  background-color: #D65B3C;
-  background-image: -webkit-linear-gradient(top, #D65B3C 0%,#B84123 100%);
-  background-image: -moz-linear-gradient(top, #D65B3C 0%,#B84123 100%);
-  background-image: -o-linear-gradient(top, #D65B3C 0%,#B84123 100%);
-  background-image: linear-gradient(top, #D65B3C 0%,#B84123 100%);
+  background-color: #e86240;
+  background-image: -webkit-linear-gradient(top, #e86240 0%,#B84123 100%);
+  background-image: -moz-linear-gradient(top, #e86240 0%,#B84123 100%);
+  background-image: -o-linear-gradient(top, #e86240 0%,#B84123 100%);
+  background-image: linear-gradient(top, #e86240 0%,#B84123 100%);
 }
 
 .eh_linkedin_button:focus, .eh_linkedin_button:active {
@@ -74,5 +74,3 @@
   top: 0 !important;
   margin-top: 0 !important;
 }
-
-
