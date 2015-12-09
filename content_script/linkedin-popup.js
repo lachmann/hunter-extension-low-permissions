@@ -8,6 +8,8 @@ function launchPopup() {
       // Analytics
       eventTrack("Open LinkedIn popup");
     });
+
+    addAccountInformation();
   });
 
   // Drag popup
@@ -30,6 +32,7 @@ function launchPopup() {
 function closePopup() {
   $("#eh_popup").remove();
   $("#eh_overlay").remove();
+  $("#eh_account_popup").remove();
 }
 
 
@@ -43,7 +46,7 @@ function appendOverlay(callback) {
   $("#eh_overlay")
     .height(docHeight)
     .css({
-      'opacity' : 0.2,
+      'opacity' : 0.4,
       'position': 'absolute',
       'top': 0,
       'left': 0,
@@ -53,6 +56,19 @@ function appendOverlay(callback) {
   });
 
   callback();
+}
+
+
+// Show account information
+//
+function addAccountInformation() {
+  getAccountInformation(function(json) {
+    $("body").append('<div id="eh_account_popup"><div class="eh_deploy_account_information">'+json.email+' <i class="fa fa-caret-down"></i></div><div class="eh_account_information_detail"><div class="eh_plan_name">'+json.plan_name+' plan</div>'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests<br/><a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="clear_cta" target="_blank">Upgrade my account</a></div></div>');
+
+    $(".eh_deploy_account_information").click(function() {
+      $(".eh_account_information_detail").slideToggle(200);
+    });
+  })
 }
 
 
@@ -66,7 +82,7 @@ function openPopup(callback) {
 
   $("#eh_popup")
     .css({
-      'position': 'absolute',
+      'position': 'fixed',
       'top': windowHeight / 2 - 150,
       'left': windowWidth / 2 - 300,
       'padding': '30px',
