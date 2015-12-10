@@ -161,8 +161,10 @@
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
 }
-.clear_cta:hover, .clear_cta:focus {
-  background: #e86240;
+.clear_cta:hover,
+.clear_cta:focus,
+.clear_cta:active {
+  background: #db411a;
   color: #fff;
   text-decoration: none;
 }
@@ -355,6 +357,8 @@
 
 .eh_account_information_detail {
   display: none;
+  font-size: 13px;
+  line-height: 18px;
   padding: 13px 16px;
   color: #aaa;
   border-top: 1px solid #eee;
