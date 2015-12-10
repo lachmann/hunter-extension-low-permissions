@@ -167,7 +167,4 @@ function parseLinkedinProfile() {
 
   // Main content
   window.profile_main_content = getMainProfileContent();
-
-  console.log(window.last_company);
-  console.log(window.last_company_path);
 }
