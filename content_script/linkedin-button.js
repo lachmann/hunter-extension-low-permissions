@@ -24,6 +24,9 @@ chrome.extension.sendMessage({}, function(response) {
       clearInterval(readyStateCheckInterval);
       injectLinkedinButton();
 
+      // Parse the page (linkedin-dom.js)
+      parseLinkedinProfile();
+
       // Open popup on Linkedin profile
       $(".eh_linkedin_button").click(function() {
         launchPopup();
