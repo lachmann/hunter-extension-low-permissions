@@ -234,6 +234,11 @@ $(".feedback_link").click(function() {
 //
 function addAccountInformation() {
   getAccountInformation(function(json) {
-    $(".account-information").html("<i class='fa fa-user'></i> "+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
+    if (json == "none") {
+      $(".account-information").html("<i class='fa fa-user'></i> Not logged in <div class='pull-right'><a target='_blank' href='https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a> or <a target='_blank' href='https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a></div>");
+    }
+    else {
+      $(".account-information").html("<i class='fa fa-user'></i> "+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
+    }
   })
 }

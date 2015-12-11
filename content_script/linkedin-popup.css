@@ -131,7 +131,11 @@
   height: 19px;
 }
 
-.eh_popup_results_link:hover, .eh_popup_results_link:focus {
+.eh_popup_results_link:hover,
+.eh_popup_results_link:focus,
+.eh_popup_results_link:active
+ {
+  color: #999 !important;
   text-decoration: none;
 }
 
@@ -307,13 +311,14 @@
 }
 
 .eh_popup_signin_link {
-  color: #333;
+  color: #888 !important;
   margin-left: 15px;
-  border-bottom: 1px dotted #333;
+  border-bottom: 1px dotted #888;
   text-decoration: none;
 }
 
 .eh_popup_signin_link:hover {
+  color: #888 !important;
   text-decoration: none;
 }
 
@@ -371,4 +376,20 @@
 .eh_plan_name {
   color: #e86240;
   font-weight: bold;
+}
+
+.eh_account_not_logged {
+  font-size: 13px;
+  padding: 13px 16px;
+  color: #aaa;
+}
+
+.eh_account_not_logged a {
+  color: #aaa !important;
+  border-bottom: 1px dotted #aaa;
+}
+
+.eh_account_not_logged a:hover {
+  color: #aaa !important;
+  text-decoration: none !important;
 }

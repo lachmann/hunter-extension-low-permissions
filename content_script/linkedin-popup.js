@@ -63,11 +63,15 @@ function appendOverlay(callback) {
 //
 function addAccountInformation() {
   getAccountInformation(function(json) {
-    $("body").append('<div id="eh_account_popup"><div class="eh_deploy_account_information">'+json.email+' <i class="fa fa-caret-down"></i></div><div class="eh_account_information_detail"><div class="eh_plan_name">'+json.plan_name+' plan</div>'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests<br/><a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="clear_cta" target="_blank">Upgrade my account</a></div></div>');
-
-    $(".eh_deploy_account_information").click(function() {
-      $(".eh_account_information_detail").slideToggle(200);
-    });
+    if (json == "none") {
+      $("body").append('<div id="eh_account_popup"><div class="eh_account_not_logged">Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a></div></div>');
+    }
+    else {
+      $("body").append('<div id="eh_account_popup"><div class="eh_deploy_account_information">'+json.email+' <i class="fa fa-caret-down"></i></div><div class="eh_account_information_detail"><div class="eh_plan_name">'+json.plan_name+' plan</div>'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests<br/><a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="clear_cta" target="_blank">Upgrade my account</a></div></div>');
+      $(".eh_deploy_account_information").click(function() {
+        $(".eh_account_information_detail").slideToggle(200);
+      });
+    }
   })
 }
 
