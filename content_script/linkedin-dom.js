@@ -76,13 +76,15 @@ function getLastCompanyPath() {
 // Profile main content
 // Used to find email addresses directly available on the profile.
 //
-// TO DO: verify the DOM for Sales Navigator
+// Recruiter : $("#profile-ugc")
+// Sales Navigator : $("#background")
+// Free LinkedIn : $("#background")
 //
 
 function getMainProfileContent() {
   if (isRecruiter()) {
     profile_main_content = $("#profile-ugc").html();
-  } else if (!isSalesNavigator()) {
+  } else {
     profile_main_content = $("#background").html();
   }
 
