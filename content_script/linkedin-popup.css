@@ -322,6 +322,20 @@
   text-decoration: none;
 }
 
+#eh_copy_email_button_container {
+  float: right;
+}
+
+#eh_copy_email_button:hover {
+  cursor: pointer;
+}
+
+.eh_copied_message {
+  font-weight: 500;
+  font-size: 12px;
+  color: #888;
+}
+
 
 /**
  * Linkedin account popup

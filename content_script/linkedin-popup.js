@@ -179,6 +179,7 @@ function launchSearch() {
 //
 function showFoundEmailAddress(email_json, count_json) {
   mainMessagePopup(email_json.email);
+  addCopyButton(email_json.email);
   showConfidence(email_json.score);
 
   if (count_json.count > 1) { es = 'es' }
@@ -186,6 +187,24 @@ function showFoundEmailAddress(email_json, count_json) {
   $('#eh_popup_results_link_container').html('<a class="eh_popup_results_link" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">' + count_json.count + ' email address' + es + ' for ' + window.domain + '<i class="fa fa-external-link"></i></a> <span class="eh_popup_separator">•</span> <span class="eh_popup_ask_domain">Try with an other domain name</span>');
 
   $('#eh_popup_results_link_container').slideDown(300);
+}
+
+
+// Add a copy button to copy the email address
+//
+function addCopyButton(email) {
+  $("#eh_popup_content_container").prepend("<div id='eh_copy_email_button_container'><div id='eh_copy_email_button' class='fa fa-files-o' title='Copy to the clipboard'></div></div>")
+
+  $("#eh_copy_email_button").click(function() {
+    executeCopy(email);
+    $("#eh_copy_email_button_container").html("<div class='eh_copied_message'>Copied!</div>")
+    console.log("\""+email+"\" copied in the clipboard!");
+
+    setTimeout(function(){
+      $("#eh_copy_email_button_container").remove();
+      addCopyButton(email);
+    }, 2000);
+  })
 }
 
 
