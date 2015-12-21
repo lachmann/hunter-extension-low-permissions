@@ -60,8 +60,12 @@ function getLastCompanyPath() {
   if (isSalesNavigator()) {
     last_company_path = $(".company-name a").first().attr("href");
   } else if (isRecruiter()) {
-    if ($(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
+    if (typeof($(".position-header h5 a").first().attr("href")) != "undefined" &&
+        $(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
       last_company_path = $(".position-header h5 a").first().attr("href");
+    }
+    else {
+      last_company_path = undefined;
     }
   }
   else {

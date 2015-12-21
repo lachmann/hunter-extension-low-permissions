@@ -45,7 +45,10 @@
 
 .eh_linkedin_button:focus, .eh_linkedin_button:active {
   outline: none;
+}
 
+.eh_linkedin_button:disabled {
+  opacity: 0.5;
 }
 
 .eh_linkedin_button img {
