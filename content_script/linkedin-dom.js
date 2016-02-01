@@ -145,7 +145,8 @@ function cleanName(full_name) {
       ',? MHA': '',
       ',? CGA': '',
       ',? ACCA': '',
-      ',? PMP': ''
+      ',? PMP': '',
+      ',? MSc': ''
     }
   );
 }
