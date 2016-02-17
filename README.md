@@ -4,7 +4,9 @@ Email Hunter for Chrome is an easy way to find email addresses from anywhere on 
 * [Presentation page](https://emailhunter.co/chrome)
 * [Chrome Web Store page](https://chrome.google.com/webstore/detail/email-hunter/hgmhmanijnjhaffoampdlllchpolkdnj)
 
-Email Hunter for Chrome uses our [Email Hunter API](https://emailhunter.co/api) to find email addresses.
+Email Hunter for Chrome uses our [API](https://emailhunter.co/api) to find email addresses.
+
+If you want to install the extension without using the Chrome Webstore, please follow [these steps](https://developer.chrome.com/extensions/packaging) to create a .crx file.
 
 ## Features
 
