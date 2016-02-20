@@ -110,7 +110,7 @@ function loadResults(api_key) {
         });
 
         if (json.emails.length > 20) {
-          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the emails</a>');
+          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses</a>');
         }
 
         // Deploy sources
