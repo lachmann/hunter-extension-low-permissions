@@ -1,9 +1,8 @@
 body {
   width: 600px;
   margin: 0;
-  font-size: 100%;
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 a:focus, a:active {
@@ -11,19 +10,19 @@ a:focus, a:active {
 }
 
 .header {
-  background-color: #3e3328;
+  background-color: #3A3432;
   color: #fff;
   height: 70px;
 }
 
 .logo {
-  height: 20px;
-  margin: 25px;
+  height: 17px;
+  margin: 26px;
 }
 
 #completeSearch {
   float: right;
-  margin: 16px 25px 0 0;
+  margin: 19px 25px 0 0;
   display: inline-block;
   border: 1px solid #fff;
   padding: 7px 20px 6px 20px;
@@ -40,7 +39,7 @@ a:focus, a:active {
 }
 
 #completeSearch:hover {
-  background-color: #272422;
+  background-color: #2c2826;
 }
 
 h1 {
@@ -65,7 +64,7 @@ h1 {
 }
 
 .results p {
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
 }
 
 #resultsNumber {
@@ -97,6 +96,7 @@ h1 {
 .source a {
   color: #3285CC;
   text-decoration: none;
+  font-size: 13px;
 }
 
 .source a:hover {
@@ -112,13 +112,19 @@ h1 {
 .connect-again-container,
 .upgrade-container {
   display: none;
-  margin: 50px 0 30px 0;
+  margin: 30px 0;
 }
 
 .connect-message,
 .connect-again-container,
 .upgrade-message {
   margin-bottom: 15px;
+}
+
+.orange-btn,
+.orange-btn:hover,
+.orange-btn:focus {
+  border: 0 !important;
 }
 
 .signin_link {
