@@ -193,7 +193,8 @@ function showFoundEmailAddress(email_json, count_json) {
 // Add a copy button to copy the email address
 //
 function addCopyButton(email) {
-  $("#eh_popup_content_container").prepend("<div id='eh_copy_email_button_container'><div id='eh_copy_email_button' class='fa fa-files-o' title='Copy to the clipboard'></div></div>")
+  $("#eh_popup_content_container").prepend("<div id='eh_copy_email_button_container'><div id='eh_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy to the clipboard'></div></div>")
+  $('[data-toggle="tooltip"]').tooltip()
 
   $("#eh_copy_email_button").click(function() {
     executeCopy(email);
