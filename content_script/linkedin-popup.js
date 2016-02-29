@@ -427,6 +427,18 @@ function apiCall(api_key, endpoint, callback) {
   });
 }
 
+// Copy in email in LinkedIn popup
+//
+function executeCopy(text) {
+    var input = document.createElement('textarea');
+    $("#eh_popup").prepend(input);
+    input.value = text;
+    input.focus();
+    input.select();
+    document.execCommand('Copy');
+    input.remove();
+}
+
 // Clean domain functions
 //
 function cleanDomain(website){
