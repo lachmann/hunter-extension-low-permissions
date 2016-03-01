@@ -77,6 +77,22 @@ function getLastCompanyPath() {
 
 
 //
+// Get position
+//
+
+function getPosition() {
+  if (isSalesNavigator() || isSalesNavigator()) {
+    position = "";
+  }
+  else {
+    position = $(".current-position h4 a").first().text();
+  }
+
+  return position;
+}
+
+
+//
 // Profile main content
 // Used to find email addresses directly available on the profile.
 //
@@ -165,6 +181,9 @@ function parseLinkedinProfile() {
 
   // Last name
   window.last_name = full_name_array.join(" ");
+
+  // Position
+  window.position = getPosition();
 
   // Company name
   window.last_company = getLastCompany();

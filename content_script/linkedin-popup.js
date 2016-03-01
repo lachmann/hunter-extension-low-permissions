@@ -182,6 +182,15 @@ function showFoundEmailAddress(email_json, count_json) {
   addCopyButton(email_json.email);
   showConfidence(email_json.score);
 
+  chrome.storage.sync.get('api_key', function(value){
+    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
+      api_key = value["api_key"];
+    }
+    else { api_key = ''; }
+
+    addSaveButton(email_json.email, api_key);
+  });
+
   if (count_json.count > 1) { es = 'es' }
   else { es = '' }
   $('#eh_popup_results_link_container').html('<a class="eh_popup_results_link" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">' + count_json.count + ' email address' + es + ' for ' + window.domain + '<i class="fa fa-external-link"></i></a> <span class="eh_popup_separator">•</span> <span class="eh_popup_ask_domain">Try with an other domain name</span>');
@@ -192,8 +201,8 @@ function showFoundEmailAddress(email_json, count_json) {
 // Add a copy button to copy the email address
 //
 function addCopyButton(email) {
-  $("<div id='eh_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy to the clipboard'></div>").insertBefore( "#eh_email_action_message" );
-  $('[data-toggle="tooltip"]').tooltip();
+  $("<div id='eh_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy'></div>").insertBefore( "#eh_email_action_message" );
+  $('#eh_copy_email_button').tooltip();
 
   $("#eh_copy_email_button").click(function() {
     executeCopy(email);
@@ -201,6 +210,27 @@ function addCopyButton(email) {
     console.log("\""+email+"\" copied in the clipboard!");
   })
 }
+
+
+// Add a copy button to copy the email address
+//
+function addSaveButton(email, api_key) {
+  $("<div id='eh_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#eh_email_action_message" );
+  $('#eh_save_email_button').tooltip();
+
+  $("#eh_save_email_button").click(function() {
+    $('#eh_save_email_button').tooltip("hide");
+    $(this).remove();
+    $("<div class='fa fa-spinner fa-spin eh_save_lead_loader'></div>").insertBefore("#eh_email_action_message");
+
+    saveLead(email, api_key, function() {
+      $(".eh_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
+      displayActionMessage("Saved!");
+      console.log(email + " saved in leads!");
+    });
+  })
+}
+
 
 // Message displayed near actions
 //
@@ -428,6 +458,20 @@ function apiCall(api_key, endpoint, callback) {
       else {
         showError('Sorry, something went wrong. Please try again later.');
       }
+    }
+  });
+}
+
+// Save lead in Ajax
+//
+function saveLead(email, api_key, callback) {
+  $.ajax({
+    url : "https://api.emailhunter.co/v1/lead?first_name="+ window.first_name + "&last_name=" + window.last_name + "&company=" + window.last_company + "&position=" + window.position + "&email=" + email + "&api_key=" + api_key,
+    headers: {"Email-Hunter-Origin": "chrome_extension"},
+    type : 'POST',
+    dataType : 'json',
+    success : function(json){
+      callback(json);
     }
   });
 }

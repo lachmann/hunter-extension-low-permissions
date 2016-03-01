@@ -98,8 +98,8 @@
   font-weight: 600;
   font-size: 16px;
   margin: 15px 0 0 0;
-  border: 1px solid #F1D9D3;
-  background-color: #FFFCF4;
+  border: 1px solid #eee;
+  background-color: #fcfcfc;
   padding: 25px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -114,7 +114,7 @@
 }
 
 #eh_popup_content_container:hover {
-  border: 1px solid #ECCAC1;
+  border: 1px solid #e7e7e7;
 }
 
 #eh_popup_content {
@@ -326,9 +326,25 @@
   text-decoration: none;
 }
 
-#eh_copy_email_button {
+#eh_copy_email_button, #eh_save_email_button {
   float: right;
   cursor: pointer;
+  color: #888;
+}
+
+#eh_copy_email_button:hover,
+#eh_save_email_button:hover {
+  color: #555;
+}
+
+#eh_save_email_button {
+  margin-right: 10px;
+}
+
+.eh_save_lead_loader {
+  color: #aaa;
+  float: right;
+  margin-right: 10px;
 }
 
 #eh_email_action_message {
