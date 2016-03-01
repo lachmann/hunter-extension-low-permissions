@@ -117,6 +117,10 @@
   border: 1px solid #ECCAC1;
 }
 
+#eh_popup_content {
+  float: left;
+}
+
 .eh_popup_results_message {
   color: #999;
   margin-top: 25px;
@@ -322,18 +326,17 @@
   text-decoration: none;
 }
 
-#eh_copy_email_button_container {
+#eh_copy_email_button {
   float: right;
-}
-
-#eh_copy_email_button:hover {
   cursor: pointer;
 }
 
-.eh_copied_message {
+#eh_email_action_message {
   font-weight: 500;
   font-size: 12px;
   color: #888;
+  float: right;
+  margin-right: 15px;
 }
 
 

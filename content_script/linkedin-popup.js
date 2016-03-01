@@ -82,7 +82,7 @@ function openPopup(callback) {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
 
-  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.first_name + ' ' + window.last_name + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="clear_cta" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_legal_mention">Email Hunter\'s button and this popup are added by Email Hunter\'s Chrome extension. Email Hunter is not affiliated to LinkedIn. <a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank">Learn more</a>.</div></div>');
+  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.first_name + ' ' + window.last_name + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="clear_cta" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div><div id="eh_email_action_message"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_legal_mention">Email Hunter\'s button and this popup are added by Email Hunter\'s Chrome extension. Email Hunter is not affiliated to LinkedIn. <a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank">Learn more</a>.</div></div>');
 
   $("#eh_popup")
     .css({
@@ -189,23 +189,27 @@ function showFoundEmailAddress(email_json, count_json) {
   $('#eh_popup_results_link_container').slideDown(300);
 }
 
-
 // Add a copy button to copy the email address
 //
 function addCopyButton(email) {
-  $("#eh_popup_content_container").prepend("<div id='eh_copy_email_button_container'><div id='eh_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy to the clipboard'></div></div>")
-  $('[data-toggle="tooltip"]').tooltip()
+  $("<div id='eh_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy to the clipboard'></div>").insertBefore( "#eh_email_action_message" );
+  $('[data-toggle="tooltip"]').tooltip();
 
   $("#eh_copy_email_button").click(function() {
     executeCopy(email);
-    $("#eh_copy_email_button_container").html("<div class='eh_copied_message'>Copied!</div>")
+    displayActionMessage("Copied!");
     console.log("\""+email+"\" copied in the clipboard!");
-
-    setTimeout(function(){
-      $("#eh_copy_email_button_container").remove();
-      addCopyButton(email);
-    }, 2000);
   })
+}
+
+// Message displayed near actions
+//
+function displayActionMessage(message) {
+  $("#eh_email_action_message").text(message);
+
+  setTimeout(function(){
+    $("#eh_email_action_message").text("");
+  }, 2000);
 }
 
 
