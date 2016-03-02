@@ -373,7 +373,29 @@
   border-radius: 5px;
 }
 
+.eh_leads_link {
+  display: inline-block;
+  float: left;
+  padding: 13px 16px;
+  font-size: 13px;
+  border-right: 1px solid #eee;
+  color: #333 !important;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
+}
+
+.eh_leads_link:hover,
+.eh_leads_link:focus,
+.eh_leads_link:active {
+  background-color: #f5f5f5;
+  text-decoration: none;
+}
+
 .eh_deploy_account_information {
+  float: left;
   padding: 13px 16px;
   text-align: left;
   font-size: 13px;
