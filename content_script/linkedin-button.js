@@ -20,21 +20,57 @@ function injectLinkedinButton() {
 //
 chrome.extension.sendMessage({}, function(response) {
   var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
+    if (isLoaded()) {
       clearInterval(readyStateCheckInterval);
-
-      injectLinkedinButton();
-
-      // Parse the page (linkedin-dom.js)
-      setTimeout(function(){
-        parseLinkedinProfile();
-        $(".eh_linkedin_button").prop("disabled", false);
-
-        // Open popup on Linkedin profile
-        $(".eh_linkedin_button").click(function() {
-          launchPopup();
-        });
-      }, 2000);
+      launchEmailHunter();
     }
-  }, 10);
+  }, 20);
 });
+
+
+//
+// Inject the button and start parsing
+//
+
+function launchEmailHunter() {
+  injectLinkedinButton();
+
+  // Parse the page (linkedin-dom.js)
+  setTimeout(function(){
+    parseLinkedinProfile();
+    $(".eh_linkedin_button").prop("disabled", false);
+
+    // Open popup on Linkedin profile
+    $(".eh_linkedin_button").click(function() {
+      launchPopup();
+    });
+  }, parsingDuration());
+}
+
+
+//
+// Is the profile ready?
+//
+
+function isLoaded() {
+  if (isRecruiter() && $(".send-inmail-split-button").length) {
+    console.log("Hey :)");
+    return true;
+  }
+  else if (isRecruiter() == false &&  document.readyState === "complete") {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+
+//
+// Time to wait to make sure the page is parsed
+//
+
+function parsingDuration() {
+  if (isRecruiter()) { return 1000; }
+  else { return 0; }
+}

@@ -3,24 +3,9 @@
 //
 // Every element depending on Linkedin DOM is put in this file.
 // This should be updated on regular basis to make sure it works in every cases.
-// Linkedin DOM changes depending on the type of account (free or premium versions
-// like Sales Navigator or Recruiting)
+// Linkedin DOM changes depending on the type of account (free or premium
+// versions like Sales Navigator or Recruiting)
 //
-
-
-//
-// Determine whether user is on a premium verion of LinkedIn
-//
-
-function isSalesNavigator() {
-  if ($(".logo").text().trim() == "Sales Navigator") { return true; }
-  else { return false; }
-}
-
-function isRecruiter() {
-  if ($(".product span").first().text().trim() == "Recruiter") { return true; }
-  else { return false; }
-}
 
 
 //
