@@ -54,7 +54,6 @@ function launchEmailHunter() {
 
 function isLoaded() {
   if (isRecruiter() && $(".send-inmail-split-button").length) {
-    console.log("Hey :)");
     return true;
   }
   else if (isRecruiter() == false &&  document.readyState === "complete") {
