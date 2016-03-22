@@ -66,14 +66,35 @@ function getLastCompanyPath() {
 //
 
 function getPosition() {
-  if (isSalesNavigator() || isSalesNavigator()) {
-    position = "";
+  if (isSalesNavigator()) {
+    position = ""; // TO DO
+  }
+  else if (isRecruiter()) {
+    position = $(".position-header h4 a").first().text();
   }
   else {
     position = $(".current-position h4 a").first().text();
   }
 
   return position;
+}
+
+//
+// Get LinkedIn URL
+//
+
+function getLinkedinUrl() {
+  if (isSalesNavigator()) {
+    url = ""; // TO DO
+  }
+  else if (isRecruiter()) {
+    url = "https://www.linkedin.com" + $(".public-profile a").attr("href");
+  }
+  else {
+    url = $(".public-profile a").text();
+  }
+
+  return url;
 }
 
 
@@ -178,4 +199,7 @@ function parseLinkedinProfile() {
 
   // Main content
   window.profile_main_content = getMainProfileContent();
+
+  // LinkedIn URL
+  window.linkedin_url = getLinkedinUrl();
 }

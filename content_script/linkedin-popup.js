@@ -243,7 +243,7 @@ function displayActionMessage(message) {
 }
 
 
-// Show the number of email found on a domain name
+// Show the number of email addresses found on a domain name
 //
 function showResultsCountMessage(results_number) {
   if (results_number == 0) {
@@ -466,7 +466,7 @@ function apiCall(api_key, endpoint, callback) {
 //
 function saveLead(email, api_key, callback) {
   $.ajax({
-    url : "https://api.emailhunter.co/v1/lead?first_name="+ window.first_name + "&last_name=" + window.last_name + "&company=" + window.last_company + "&position=" + window.position + "&email=" + email + "&api_key=" + api_key,
+    url : "https://api.emailhunter.co/v1/lead?first_name="+ window.first_name + "&last_name=" + window.last_name + "&company=" + window.last_company + "&position=" + window.position + "&email=" + email + "&website=http://" + window.domain + "&source=Email Hunter (LinkedIn)&linkedin_url=" + window.linkedin_url + "&api_key=" + api_key,
     headers: {"Email-Hunter-Origin": "chrome_extension"},
     type : 'POST',
     dataType : 'json',
