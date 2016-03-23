@@ -395,11 +395,12 @@ function getWebsite(callback) {
         url : linkedin_company_page,
         type : 'GET',
         success : function(response){
-          if (websiteFromCompanyPage(response) == "http://" || websiteFromCompanyPage(response) == false) {
+          website = websiteFromCompanyPage(response);
+          if (website == "http://" || website == false) {
             askDomainName(true);
           }
           else {
-            callback(websiteFromCompanyPage(response));
+            callback(website);
           }
         },
         error : function() {

@@ -133,9 +133,14 @@ function websiteFromCompanyPage(html) {
     return JSON.parse(json)["company"]["websiteUrl"];
   }
   else {
-    html = $(html).find("code").last().html()
-    json = html.replace("<!--", "").replace("-->", "");
-    return JSON.parse(json)["website"];
+    if (typeof $(html).find(".website a").text() != "undefined" && $(html).find(".website a").text() != "") {
+      return $(html).find(".website a").text();
+    }
+    else {
+      html = $(html).find("code").last().html()
+      json = html.replace("<!--", "").replace("-->", "");
+      return JSON.parse(json)["website"];
+    }
   }
 }
 
