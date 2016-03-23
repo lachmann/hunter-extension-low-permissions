@@ -67,7 +67,7 @@ function getLastCompanyPath() {
 
 function getPosition() {
   if (isSalesNavigator()) {
-    position = ""; // TO DO
+    position = $(".position-title").first().text(); // TO DO
   }
   else if (isRecruiter()) {
     position = $(".position-header h4 a").first().text();
@@ -85,7 +85,7 @@ function getPosition() {
 
 function getLinkedinUrl() {
   if (isSalesNavigator()) {
-    url = ""; // TO DO
+    url = $(".linkedin-logo").next().find("a").text();
   }
   else if (isRecruiter()) {
     url = "https://www.linkedin.com" + $(".public-profile a").attr("href");
