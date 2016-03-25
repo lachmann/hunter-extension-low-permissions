@@ -170,7 +170,12 @@ function launchSearch() {
     });
   }
   else {
-    showError(window.first_name + ' has no current professional experience.');
+    if (typeof window.profile_main_content == "undefined") {
+      showError("You don't have access to this profile.");
+      $(".eh_popup_name").text("No access");
+    } else {
+      showError(window.first_name + ' has no current professional experience.');
+    }
   }
 }
 
