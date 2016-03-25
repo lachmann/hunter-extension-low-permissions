@@ -119,7 +119,7 @@ function launchSearch() {
           else { api_key = ''; }
 
           // Generate the email
-          generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.domain + '&first_name=' + window.first_name + '&last_name=' + window.last_name;
+          generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.domain + '&first_name=' + window.first_name + '&last_name=' + window.last_name + '&position=' + window.position + '&company=' + window.last_company;
           apiCall(api_key, generate_email_endpoint, function(email_json) {
 
             // We count call to measure use
