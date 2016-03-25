@@ -12,6 +12,9 @@
   -o-border-radius: 5px;
   border-radius: 5px;
   font-size: 14px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .eh_popup_drag {
@@ -371,6 +374,9 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .eh_leads_link {
