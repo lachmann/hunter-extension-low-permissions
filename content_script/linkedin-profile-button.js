@@ -68,6 +68,9 @@ function isLoaded() {
 //
 // Time to wait to make sure the page is parsed
 //
+// It seems wise to wait one second on LinkedIn Recruiter as the content is
+// loaded asynchronously. To be verified.
+//
 
 function parsingDuration() {
   if (isRecruiter()) { return 1000; }

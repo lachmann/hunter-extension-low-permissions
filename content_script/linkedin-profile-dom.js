@@ -6,6 +6,8 @@
 // Linkedin DOM changes depending on the type of account (free or premium
 // versions like Sales Navigator or Recruiting)
 //
+// The detection of the version is made in the file linkedin-verson.js.
+//
 
 
 //
