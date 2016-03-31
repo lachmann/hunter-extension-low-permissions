@@ -1,0 +1,20 @@
+.eh_checkbox_container {
+  padding: 5px;
+  margin: 10px 6px 0 0;
+  border-radius: 3px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  width: 36px;
+  cursor: pointer;
+}
+
+.eh_checkbox_icon {
+  height: 16px;
+  margin: 0 6px 0 0;
+  vertical-align: top;
+}
+
+.eh_checkbox_container .fa {
+  font-size: 16px;
+  color: #ddd;
+}

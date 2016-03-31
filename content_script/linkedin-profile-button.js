@@ -20,9 +20,9 @@ function injectLinkedinButton() {
 //
 chrome.extension.sendMessage({}, function(response) {
   var readyStateCheckInterval = setInterval(function() {
-    if (isLoaded()) {
+    if (isProfileLoaded()) {
       clearInterval(readyStateCheckInterval);
-      launchEmailHunter();
+      launchEmailHunterOnProfile();
     }
   }, 20);
 });
@@ -32,7 +32,7 @@ chrome.extension.sendMessage({}, function(response) {
 // Inject the button and start parsing
 //
 
-function launchEmailHunter() {
+function launchEmailHunterOnProfile() {
   injectLinkedinButton();
 
   // Parse the page (linkedin-dom.js)
@@ -52,7 +52,7 @@ function launchEmailHunter() {
 // Is the profile ready?
 //
 
-function isLoaded() {
+function isProfileLoaded() {
   if (isRecruiter() && $(".send-inmail-split-button").length) {
     return true;
   }

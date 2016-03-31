@@ -1,7 +1,7 @@
 //
-// --- linkedin-dom.js ---
+// --- linkedin-profile-dom.js ---
 //
-// Every element depending on Linkedin DOM is put in this file.
+// Every element depending on Linkedin DOM on profiles is put in this file.
 // This should be updated on regular basis to make sure it works in every cases.
 // Linkedin DOM changes depending on the type of account (free or premium
 // versions like Sales Navigator or Recruiting)
