@@ -8,7 +8,7 @@ function injectLinkedinCheckboxes() {
 
     // We check if the profile if out of network
     if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK") {
-      result.find(".srp-actions").append("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+      result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
 
       selectProfiles();
     }
@@ -21,8 +21,8 @@ function injectLinkedinCheckboxes() {
 //
 
 function selectProfiles() {
-  $(".eh_checkbox_container").click(function() {
-    checkbox = $(this).find(".fa");
+  $(".eh_checkbox_container").unbind().click(function() {
+    checkbox = $(this).find(".fa").first();
     if (checkbox.hasClass("fa-square")) {
       checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
     }
@@ -30,6 +30,7 @@ function selectProfiles() {
       checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
     }
     updateSelection();
+    updateSelectionView();
   });
 }
 

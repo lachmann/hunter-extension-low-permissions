@@ -1,20 +1,18 @@
-.eh_checkbox_container {
-  padding: 5px;
-  margin: 10px 6px 0 0;
-  border-radius: 3px;
-  background-color: #fafafa;
-  border: 1px solid #ddd;
-  width: 36px;
-  cursor: pointer;
-}
-
-.eh_checkbox_icon {
-  height: 16px;
-  margin: 0 6px 0 0;
-  vertical-align: top;
-}
-
-.eh_checkbox_container .fa {
-  font-size: 16px;
-  color: #ddd;
+#eh_search_selection_popup {
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 150px;
+  right: 50px;
+  padding: 20px;
+  z-index: 11001;
 }
