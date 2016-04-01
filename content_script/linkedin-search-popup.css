@@ -7,12 +7,60 @@
   -o-border-radius: 5px;
   border-radius: 5px;
   font-size: 14px;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   position: fixed;
-  top: 150px;
-  right: 50px;
+  top: 125px;
+  right: 20px;
   padding: 20px;
   z-index: 11001;
+  width: 280px;
+}
+
+
+#eh_search_selection_popup img {
+  height: 20px;
+  margin-bottom: 20px;
+}
+
+#eh_search_selection_popup .orange-btn {
+  margin-top: 20px;
+  border: 0;
+  width: 100%;
+}
+
+#eh_search_popup_close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 22px;
+  line-height: 16px;
+  padding: 10px;
+  color: #888;
+}
+
+#eh_search_popup_close:hover {
+  cursor: pointer;
+  color: #555;
+}
+
+.eh_search_popup_drag {
+  position: absolute;
+  top: 11px;
+  right: 45px;
+  font-size: 16px;
+  padding: 10px;
+  color: #888;
+}
+
+.eh_search_popup_drag:hover {
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+
+.eh_search_popup_drag:active,
+.eh_search_popup_drag:focus {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
 }

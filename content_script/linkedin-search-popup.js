@@ -18,14 +18,33 @@ function updateSelection() {
 
 function updateSelectionView() {
   if (window.selected_profiles.length > 0) {
+    if (window.selected_profiles.length == 1) { s = ""; } else { s = "s"; }
     if ($("#eh_search_selection_popup").length > 0) {
-      $("#eh_search_selection_popup").html(window.selected_profiles.length + ' profiles selected');
+      $("#eh_profile_selected").html('<strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected');
     }
     else {
-      $("body").append('<div id="eh_search_selection_popup">' + window.selected_profiles.length + ' profiles selected</div>');
+      var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><button class="orange-btn">Find email addresses & save leads</button></div>');
+
+      // Drag popup
+      $("#eh_search_selection_popup").draggable({ handle: ".eh_search_popup_drag" });
+
+      // Close popup
+      $("#eh_search_popup_close").click(function() {
+        closeSearchPopup();
+      });
+      $(document).keyup(function(e) {
+        if (e.keyCode == 27) {
+          closeSearchPopup();
+        }
+      });
     }
   }
   else {
-    $("#eh_search_selection_popup").remove();
+    closeSearchPopup();
   }
+}
+
+function closeSearchPopup() {
+  $("#eh_search_selection_popup").remove();
 }

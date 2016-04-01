@@ -157,7 +157,7 @@
   margin: 30px 0 0 0;
 }
 
-.clear_cta {
+.orange-btn {
   text-decoration: none;
   display: inline-block;
   padding: 12px 25px;
@@ -172,9 +172,9 @@
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
 }
-.clear_cta:hover,
-.clear_cta:focus,
-.clear_cta:active {
+.orange-btn:hover,
+.orange-btn:focus,
+.orange-btn:active {
   background: #db411a;
   color: #fff;
   text-decoration: none;
@@ -430,7 +430,7 @@
   border-top: 1px solid #eee;
 }
 
-.eh_account_information_detail .clear_cta {
+.eh_account_information_detail .orange-btn {
   margin-top: 10px;
 }
 
