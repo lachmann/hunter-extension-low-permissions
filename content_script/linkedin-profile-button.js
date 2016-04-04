@@ -37,7 +37,7 @@ function launchEmailHunterOnProfile() {
 
   // Parse the page (linkedin-dom.js)
   setTimeout(function(){
-    parseLinkedinProfile();
+    parseLinkedinProfile($("html").html());
     $(".eh_linkedin_button").prop("disabled", false);
 
     // Open popup on Linkedin profile

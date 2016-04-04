@@ -14,12 +14,14 @@
 // Get first name, last name
 //
 
-function getFullName() {
+function getFullName(html) {
+  var $html = $('<div />',{html:html});
+
   if (isRecruiter()) {
-    var full_name = $("title").text();
+    var full_name = $html.find("title").text();
   }
   else {
-    var full_name = $("title").text().substring(0, $("title").text().indexOf(" |"));
+    var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
   }
 
   return cleanName(full_name);
@@ -30,26 +32,30 @@ function getFullName() {
 // Get last company
 //
 
-function getLastCompany() {
+function getLastCompany(html) {
+  var $html = $('<div />',{html:html});
+
   if (isSalesNavigator()) {
-    last_company = $(".company-name").first().text();
+    last_company = $html.find(".company-name").first().text();
   } else if (isRecruiter()) {
-    last_company = $(".position-header h5").first().text();
+    last_company = $html.find(".position-header h5").first().text();
   }
   else {
-    last_company = $(".current-position h5:last-child a").first().text();
+    last_company = $html.find(".current-position h5:last-child a").first().text();
   }
 
   return last_company;
 }
 
-function getLastCompanyPath() {
+function getLastCompanyPath(html) {
+  var $html = $('<div />',{html:html});
+
   if (isSalesNavigator()) {
-    last_company_path = $(".company-name a").first().attr("href");
+    last_company_path = $html.find(".company-name a").first().attr("href");
   } else if (isRecruiter()) {
-    if (typeof($(".position-header h5 a").first().attr("href")) != "undefined" &&
-        $(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
-      last_company_path = $(".position-header h5 a").first().attr("href");
+    if (typeof($html.find(".position-header h5 a").first().attr("href")) != "undefined" &&
+        $html.find(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
+      last_company_path = $html.find(".position-header h5 a").first().attr("href");
     }
     else {
       last_company_path = undefined;
@@ -67,15 +73,17 @@ function getLastCompanyPath() {
 // Get position
 //
 
-function getPosition() {
+function getPosition(html) {
+  var $html = $('<div />',{html:html});
+
   if (isSalesNavigator()) {
-    position = $(".position-title").first().text(); // TO DO
+    position = $html.find(".position-title").first().text(); // TO DO
   }
   else if (isRecruiter()) {
-    position = $(".position-header h4 a").first().text();
+    position = $html.find(".position-header h4 a").first().text();
   }
   else {
-    position = $(".current-position h4 a").first().text();
+    position = $html.find(".current-position h4 a").first().text();
   }
 
   return position;
@@ -85,15 +93,17 @@ function getPosition() {
 // Get LinkedIn URL
 //
 
-function getLinkedinUrl() {
+function getLinkedinUrl(html) {
+  var $html = $('<div />',{html:html});
+
   if (isSalesNavigator()) {
-    url = $(".linkedin-logo").next().find("a").text();
+    url = $html.find(".linkedin-logo").next().find("a").text();
   }
   else if (isRecruiter()) {
-    url = "https://www.linkedin.com" + $(".public-profile a").attr("href");
+    url = "https://www.linkedin.com" + $html.find(".public-profile a").attr("href");
   }
   else {
-    url = $(".public-profile a").text();
+    url = $html.find(".public-profile a").text();
   }
 
   return url;
@@ -109,11 +119,13 @@ function getLinkedinUrl() {
 // Free LinkedIn : $("#background")
 //
 
-function getMainProfileContent() {
+function getMainProfileContent(html) {
+  var $html = $('<div />',{html:html});
+
   if (isRecruiter()) {
-    profile_main_content = $("#profile-ugc").html();
+    profile_main_content = $html.find("#profile-ugc").html();
   } else {
-    profile_main_content = $("#background").html();
+    profile_main_content = $html.find("#background").html();
   }
 
   return profile_main_content;
@@ -123,6 +135,7 @@ function getMainProfileContent() {
 //
 // Website parse in company page
 //
+
 
 function websiteFromCompanyPage(html) {
   if (isSalesNavigator()) {
@@ -182,8 +195,8 @@ function cleanName(full_name) {
 // Launch the parsing when everything is ready (in linkedin-button.js)
 //
 
-function parseLinkedinProfile() {
-  full_name_array = getFullName().split(" ");
+function parseLinkedinProfile(html) {
+  full_name_array = getFullName(html).split(" ");
 
   // First name
   window.first_name = full_name_array[0];
@@ -193,17 +206,17 @@ function parseLinkedinProfile() {
   window.last_name = full_name_array.join(" ");
 
   // Position
-  window.position = getPosition();
+  window.position = getPosition(html);
 
   // Company name
-  window.last_company = getLastCompany();
+  window.last_company = getLastCompany(html);
 
   // Company path
-  window.last_company_path = getLastCompanyPath();
+  window.last_company_path = getLastCompanyPath(html);
 
   // Main content
-  window.profile_main_content = getMainProfileContent();
+  window.profile_main_content = getMainProfileContent(html);
 
   // LinkedIn URL
-  window.linkedin_url = getLinkedinUrl();
+  window.linkedin_url = getLinkedinUrl(html);
 }
