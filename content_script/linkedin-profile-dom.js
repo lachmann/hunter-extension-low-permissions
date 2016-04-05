@@ -62,7 +62,7 @@ function getLastCompanyPath(html) {
     }
   }
   else {
-    last_company_path = $(".current-position .new-miniprofile-container a").first().attr("href");
+    last_company_path = $html.find(".current-position .new-miniprofile-container a").first().attr("href");
   }
 
   return last_company_path;
@@ -195,7 +195,7 @@ function cleanName(full_name) {
 // Launch the parsing when everything is ready (in linkedin-button.js)
 //
 
-function parseLinkedinProfile(html) {
+function parseLinkedinProfile(html, callback) {
   profile = new Array;
 
   full_name_array = getFullName(html).split(" ");
@@ -222,5 +222,5 @@ function parseLinkedinProfile(html) {
   // LinkedIn URL
   profile['linkedin_url'] = getLinkedinUrl(html);
 
-  return profile;
+  return callback(profile);
 }

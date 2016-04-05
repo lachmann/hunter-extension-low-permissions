@@ -37,12 +37,14 @@ function launchEmailHunterOnProfile() {
 
   // Parse the page (linkedin-dom.js)
   setTimeout(function(){
-    window.profile = parseLinkedinProfile($("html").html());
-    $(".eh_linkedin_button").prop("disabled", false);
+    parseLinkedinProfile($("html").html(), function(profile) {
+      window.profile = profile;
+      $(".eh_linkedin_button").prop("disabled", false);
 
-    // Open popup on Linkedin profile
-    $(".eh_linkedin_button").click(function() {
-      launchPopup();
+      // Open popup on Linkedin profile
+      $(".eh_linkedin_button").click(function() {
+        launchPopup();
+      });
     });
   }, parsingDuration());
 }
