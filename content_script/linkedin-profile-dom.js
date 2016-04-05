@@ -196,27 +196,31 @@ function cleanName(full_name) {
 //
 
 function parseLinkedinProfile(html) {
+  profile = new Array;
+
   full_name_array = getFullName(html).split(" ");
 
   // First name
-  window.first_name = full_name_array[0];
+  profile['first_name'] = full_name_array[0];
   full_name_array.shift();
 
   // Last name
-  window.last_name = full_name_array.join(" ");
+  profile['last_name'] = full_name_array.join(" ");
 
   // Position
-  window.position = getPosition(html);
+  profile['position'] = getPosition(html);
 
   // Company name
-  window.last_company = getLastCompany(html);
+  profile['last_company'] = getLastCompany(html);
 
   // Company path
-  window.last_company_path = getLastCompanyPath(html);
+  profile['last_company_path'] = getLastCompanyPath(html);
 
   // Main content
-  window.profile_main_content = getMainProfileContent(html);
+  profile['profile_main_content'] = getMainProfileContent(html);
 
   // LinkedIn URL
-  window.linkedin_url = getLinkedinUrl(html);
+  profile['linkedin_url'] = getLinkedinUrl(html);
+
+  return profile;
 }
