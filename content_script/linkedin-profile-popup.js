@@ -105,7 +105,7 @@ function launchSearch() {
 
     // Looking for domain name
     mainMessagePopup('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
-    getWebsite(function(website) {
+    getWebsite(window.profile, function(website) {
       if (typeof website !== "undefined") {
         window.profile["domain"] = cleanDomain(website);
 
@@ -228,7 +228,7 @@ function addSaveButton(email, api_key) {
     $(this).remove();
     $("<div class='fa fa-spinner fa-spin eh_save_lead_loader'></div>").insertBefore("#eh_email_action_message");
 
-    saveLead(email, api_key, function() {
+    saveLead(email, window.profile, api_key, function() {
       $(".eh_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
       displayActionMessage("Saved!");
       console.log(email + " saved in leads!");
@@ -389,13 +389,13 @@ function showError(error) {
 
 // Finds the domain name of the last experience or returns false
 //
-function getWebsite(callback) {
-  if (typeof window.profile["domain"] == "undefined") {
-    if (typeof window.profile["last_company"] != "undefined" && typeof window.profile["last_company_path"] != "undefined") {
-      if (window.profile["last_company_path"].indexOf("linkedin.com") > -1) {
-        linkedin_company_page = window.profile["last_company_path"];
+function getWebsite(profile, callback) {
+  if (typeof profile["domain"] == "undefined") {
+    if (typeof profile["last_company"] != "undefined" && typeof profile["last_company_path"] != "undefined") {
+      if (profile["last_company_path"].indexOf("linkedin.com") > -1) {
+        linkedin_company_page = profile["last_company_path"];
       } else {
-        linkedin_company_page = "https://www.linkedin.com" + window.profile["last_company_path"];
+        linkedin_company_page = "https://www.linkedin.com" + profile["last_company_path"];
       }
       $.ajax({
         url : linkedin_company_page,
@@ -419,7 +419,7 @@ function getWebsite(callback) {
     }
   }
   else {
-    callback(window.profile["domain"]);
+    callback(profile["domain"]);
   }
 }
 
@@ -471,9 +471,9 @@ function apiCall(api_key, endpoint, callback) {
 
 // Save lead in Ajax
 //
-function saveLead(email, api_key, callback) {
+function saveLead(email, lead, api_key, callback) {
   $.ajax({
-    url : "https://api.emailhunter.co/v1/lead?first_name="+ window.profile["first_name"] + "&last_name=" + window.profile["last_name"] + "&company=" + window.profile["last_company"] + "&position=" + window.profile["position"] + "&email=" + email + "&website=http://" + window.profile["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + window.profile["linkedin_url"] + "&api_key=" + api_key,
+    url : "https://api.emailhunter.co/v1/lead?first_name="+ lead["first_name"] + "&last_name=" + lead["last_name"] + "&company=" + lead["last_company"] + "&position=" + lead["position"] + "&email=" + email + "&website=http://" + lead["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + lead["linkedin_url"] + "&api_key=" + api_key,
     headers: {"Email-Hunter-Origin": "chrome_extension"},
     type : 'POST',
     dataType : 'json',

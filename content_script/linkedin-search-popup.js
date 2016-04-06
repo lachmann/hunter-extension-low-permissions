@@ -27,19 +27,7 @@ function updateSelectionView() {
       $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><button class="orange-btn">Find email addresses & save leads</button></div>');
 
       // Launch the search
-      html = "";
-      $("#eh_search_selection_popup button").click(function() {
-        window.profile = new Array;
-
-        window.selected_profiles.forEach(function(profile_path, index) {
-          fetchProfileFromSearch(profile_path, function(response) {
-            parseLinkedinProfile(response, function(profile) {
-              window.profile[index] = profile;
-              console.log(window.profile[index]);
-            });
-          });
-        });
-      })
+      launchSearchParsing();
 
       // Drag popup
       $("#eh_search_selection_popup").draggable({ handle: ".eh_search_popup_drag" });
@@ -77,5 +65,51 @@ function fetchProfileFromSearch(profile_path, callback) {
     error : function() {
       // ERROR
     }
+  });
+}
+
+// 1. Launch the parsing of profiles and companies
+//    (full profile & company website)
+//
+function launchSearchParsing() {
+  $("#eh_search_selection_popup button").click(function() {
+    window.profile = new Array;
+
+    window.selected_profiles.forEach(function(profile_path, index) {
+
+      // Fetch and parse the profile
+      fetchProfileFromSearch(profile_path, function(response) {
+        parseLinkedinProfile(response, function(profile) {
+          window.profile[index] = profile;
+
+          // Visit company page and get the website
+          getWebsite(window.profile[index], function(website) {
+            window.profile[index]["domain"] = cleanDomain(website);
+            findEmailAndSave(index);
+          });
+        });
+      });
+    });
+  })
+}
+
+// 2. Find email addresses and save leads
+//
+function findEmailAndSave(index) {
+
+  // First we have to find email addresses
+  chrome.storage.sync.get('api_key', function(value){
+    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
+      api_key = value["api_key"];
+    }
+    else { api_key = ''; }
+
+    generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
+    apiCall(api_key, generate_email_endpoint, function(email_json) {
+      console.log(email_json);
+      saveLead(email_json.email, window.profile[index], api_key, function() {
+        console.log(email_json.email + " saved in leads!");
+      });
+    });
   });
 }
