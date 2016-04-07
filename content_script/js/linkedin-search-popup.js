@@ -9,7 +9,11 @@ function updateSelection() {
     //console.log($(this).find(".fa-check-square").length);
     if($(this).find(".fa-check-square").length) {
       profile_path = $(this).find(".title").attr("href");
-      selected_profiles.push(profile_path);
+      profile_name = $(this).find(".title").html();
+      profile_id = $(this).attr("data-li-entity-id");
+      selected_profiles.push({ "profile_path":  profile_path,
+                               "profile_name": profile_name,
+                               "profile_id": profile_id });
     }
   });
 
@@ -19,12 +23,13 @@ function updateSelection() {
 function updateSelectionView() {
   if (window.selected_profiles.length > 0) {
     if (window.selected_profiles.length == 1) { s = ""; } else { s = "s"; }
+
     if ($("#eh_search_selection_popup").length > 0) {
       $("#eh_profile_selected").html('<strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected');
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><button class="orange-btn">Find email addresses & save leads</button></div>');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button></div>');
 
       // Launch the search
       launchSearchParsing();
@@ -42,6 +47,12 @@ function updateSelectionView() {
         }
       });
     }
+
+    // Display the list in the popup
+    $("#eh_search_status_list").html("");
+    window.selected_profiles.forEach(function(search_profile, index) {
+      $("#eh_search_status_list").append("<li data-profile-id='" + search_profile["profile_id"] + "'><span></span>" + search_profile["profile_name"] + "</li>");
+    });
   }
   else {
     closeSearchPopup();
@@ -78,10 +89,11 @@ function launchSearchParsing() {
     $(this).prepend("<i class='fa fa-spinner fa-spin'></i>");
     window.profile = new Array;
 
-    window.selected_profiles.forEach(function(profile_path, index) {
+    window.selected_profiles.forEach(function(search_profile, index) {
+      //$("#eh_search_status_list[data-profile-id='" + search_profile['profile_id'] + "'] span").text("Loading...");
 
       // Fetch and parse the profile
-      fetchProfileFromSearch(profile_path, function(response) {
+      fetchProfileFromSearch(search_profile["profile_path"], function(response) {
         parseLinkedinProfile(response, function(profile) {
           window.profile[index] = profile;
 
