@@ -24,11 +24,19 @@
   margin-bottom: 20px;
 }
 
-#eh_search_selection_popup .orange-btn {
+#eh_search_selection_popup button {
   margin-top: 20px;
   border: 0;
   width: 100%;
   outline: none;
+}
+
+#eh_search_selection_popup button .fa {
+  margin-right: 10px;
+}
+
+#eh_search_selection_popup button:disabled {
+  opacity: 0.8;
 }
 
 #eh_search_popup_close {

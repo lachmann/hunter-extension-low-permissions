@@ -73,7 +73,9 @@ function fetchProfileFromSearch(profile_path, callback) {
 //
 function launchSearchParsing() {
   $("#eh_search_selection_popup button").click(function() {
-    $(this).prop "disabled", true
+    $(this).prop("disabled", true);
+    $(this).text("Please wait...");
+    $(this).prepend("<i class='fa fa-spinner fa-spin'></i>");
     window.profile = new Array;
 
     window.selected_profiles.forEach(function(profile_path, index) {
