@@ -28,6 +28,7 @@
   margin-top: 20px;
   border: 0;
   width: 100%;
+  outline: none;
 }
 
 #eh_search_popup_close {

@@ -192,6 +192,25 @@ function cleanName(full_name) {
 
 
 //
+// Check if we are on a profile or the search
+// Check our own tags (popups) to avoid more dependences with LinkedIn
+//
+
+function linkedinPageType() {
+  if ($("#eh_popup").length) {
+    return "profile";
+  }
+  else if ($("#eh_popup").length) {
+    return "search";
+  }
+  else {
+    return "other";
+  }
+}
+
+
+
+//
 // Launch the parsing when everything is ready (in linkedin-button.js)
 //
 

@@ -73,6 +73,7 @@ function fetchProfileFromSearch(profile_path, callback) {
 //
 function launchSearchParsing() {
   $("#eh_search_selection_popup button").click(function() {
+    $(this).prop "disabled", true
     window.profile = new Array;
 
     window.selected_profiles.forEach(function(profile_path, index) {
@@ -84,6 +85,7 @@ function launchSearchParsing() {
 
           // Visit company page and get the website
           getWebsite(window.profile[index], function(website) {
+            console.log(window.profile[index]);
             window.profile[index]["domain"] = cleanDomain(website);
             findEmailAndSave(index);
           });
@@ -106,7 +108,6 @@ function findEmailAndSave(index) {
 
     generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
     apiCall(api_key, generate_email_endpoint, function(email_json) {
-      console.log(email_json);
       saveLead(email_json.email, window.profile[index], api_key, function() {
         console.log(email_json.email + " saved in leads!");
       });

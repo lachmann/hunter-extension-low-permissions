@@ -39,8 +39,8 @@
       ],
       "js": [
         "shared/js/jquery.min.js",
-        "content_script/authentification.js",
-        "content_script/install-buttons.js"
+        "content_script/js/authentification.js",
+        "content_script/js/install-buttons.js"
       ]
     },
     {
@@ -51,10 +51,10 @@
         "shared/css/fonts.css",
         "shared/css/font-awesome.min.css",
         "shared/css/bootstrap-tooltip.min.css",
-        "content_script/linkedin-search-checkboxes.css",
-        "content_script/linkedin-search-popup.css",
-        "content_script/linkedin-profile-button.css",
-        "content_script/linkedin-profile-popup.css"
+        "content_script/css/linkedin-search-checkboxes.css",
+        "content_script/css/linkedin-search-popup.css",
+        "content_script/css/linkedin-profile-button.css",
+        "content_script/css/linkedin-profile-popup.css"
       ],
       "js": [
         "shared/js/jquery.min.js",
@@ -62,14 +62,15 @@
         "shared/js/bootstrap-tooltip.min.js",
         "shared/js/use-counter.js",
         "shared/js/utilities.js",
+        "shared/js/api.js",
         "shared/js/account.js",
         "shared/js/analytics.js",
-        "content_script/linkedin-version.js",
-        "content_script/linkedin-search-checkboxes.js",
-        "content_script/linkedin-search-popup.js",
-        "content_script/linkedin-profile-dom.js",
-        "content_script/linkedin-profile-button.js",
-        "content_script/linkedin-profile-popup.js"
+        "content_script/js/linkedin-dom.js",
+        "content_script/js/linkedin-version.js",
+        "content_script/js/linkedin-search-checkboxes.js",
+        "content_script/js/linkedin-search-popup.js",
+        "content_script/js/linkedin-profile-button.js",
+        "content_script/js/linkedin-profile-popup.js"
       ]
     }
   ],
