@@ -6,7 +6,6 @@ function updateSelection() {
   var selected_profiles = new Array;
 
   $(".result.people").each(function(index) {
-    //console.log($(this).find(".fa-check-square").length);
     if($(this).find(".fa-check-square").length) {
       profile_path = $(this).find(".title").attr("href");
       profile_name = $(this).find(".title").html();
@@ -84,11 +83,12 @@ function fetchProfileFromSearch(profile_path, callback) {
 //
 function launchSearchParsing() {
   $("#eh_search_selection_popup button").click(function() {
+    window.number_processed = 0;
     desactivateSearchButton();
+    $("#eh_search_status_list li span").text("Loading...");
 
     window.profile = new Array;
     window.selected_profiles.forEach(function(search_profile, index) {
-      //$("#eh_search_status_list[data-profile-id='" + search_profile['profile_id'] + "'] span").text("Loading...");
       parseProfile(search_profile, index);
     });
   })
@@ -103,12 +103,27 @@ function parseProfile(search_profile, index) {
   fetchProfileFromSearch(search_profile["profile_path"], function(response) {
     parseLinkedinProfile(response, function(parsed_profile) {
       window.profile[index] = parsed_profile;
+      window.profile[index]["profile_id"] = search_profile["profile_id"];
 
-      // Visit company page and get the website
-      getWebsite(window.profile[index], function(website) {
-        window.profile[index]["domain"] = cleanDomain(website);
-        findEmailAndSave(index);
-      });
+      if (typeof window.profile[index]["last_company_path"] == "undefined") {
+        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("No current job");
+        finishStatus();
+      }
+      else {
+        // Visit company page and get the website
+        getWebsite(window.profile[index], function(website) {
+          if (website == "none") {
+            $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Website not found");
+            finishStatus();
+          }
+          else {
+            window.profile[index]["domain"] = cleanDomain(website);
+            findEmailAndSave(index);
+
+            console.log(window.profile);
+          }
+        });
+      }
     });
   });
 }
@@ -126,11 +141,20 @@ function findEmailAndSave(index) {
 
     generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
     apiCall(api_key, generate_email_endpoint, function(email_json) {
-      if (email_json.email == null) { eamil = "" } else { email = email_json.email; }
+
+      if (email_json.email == null) {
+        email = "";
+        email_message = "without email";
+      } else {
+        email = email_json.email;
+        email_message = "with email";
+      }
 
       // Then we can save it in leads (with or without email address)
       saveLead(email, window.profile[index], api_key, function() {
         console.log(email_json.email + " saved in leads!");
+        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Saved " + email_message);
+        finishStatus();
       });
     });
   });
@@ -140,12 +164,21 @@ function findEmailAndSave(index) {
 //
 
 function desactivateSearchButton() {
-  $(this).prop("disabled", true);
-  $(this).text("Please wait...");
-  $(this).prepend("<i class='fa fa-spinner fa-spin'></i>");
+  $("#eh_search_selection_popup button").prop("disabled", true);
+  $("#eh_search_selection_popup button").text("Please wait...");
+  $("#eh_search_selection_popup button").prepend("<i class='fa fa-spinner fa-spin'></i>");
 }
 
 function activateSearchButton() {
-  $(this).prop("disabled", false);
-  $(this).text("Find email addresses & save leads");
+  $("#eh_search_selection_popup button").prop("disabled", false);
+  $("#eh_search_selection_popup button").text("Find email addresses & save leads");
+}
+
+function finishStatus() {
+  window.number_processed ++;
+
+  //console.log(number_processed + " / " + window.selected_profiles.length);
+  if (window.number_processed >= window.selected_profiles.length) {
+    activateSearchButton();
+  }
 }

@@ -106,7 +106,7 @@ function launchSearch() {
     // Looking for domain name
     mainMessagePopup('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
     getWebsite(window.profile, function(website) {
-      if (typeof website !== "undefined") {
+      if (website != "none") {
         window.profile["domain"] = cleanDomain(website);
 
         $('#eh_popup_results_link_container').html('<div class="eh_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
@@ -407,20 +407,20 @@ function getWebsite(profile, callback) {
         type : 'GET',
         success : function(response){
           website = websiteFromCompanyPage(response);
-          if (website == "http://" || website == false) {
-            askDomainName(true);
+          if (typeof website != "undefined" || website == "http://" || website == "http://N/A" || website == false) {
+            callback("none");
           }
           else {
             callback(website);
           }
         },
         error : function() {
-          askDomainName(true);
+          callback("none");
         }
       });
     }
     else {
-      askDomainName(true);
+      callback("none");
     }
   }
   else {
