@@ -84,32 +84,36 @@ function fetchProfileFromSearch(profile_path, callback) {
 //
 function launchSearchParsing() {
   $("#eh_search_selection_popup button").click(function() {
-    $(this).prop("disabled", true);
-    $(this).text("Please wait...");
-    $(this).prepend("<i class='fa fa-spinner fa-spin'></i>");
-    window.profile = new Array;
+    desactivateSearchButton();
 
+    window.profile = new Array;
     window.selected_profiles.forEach(function(search_profile, index) {
       //$("#eh_search_status_list[data-profile-id='" + search_profile['profile_id'] + "'] span").text("Loading...");
-
-      // Fetch and parse the profile
-      fetchProfileFromSearch(search_profile["profile_path"], function(response) {
-        parseLinkedinProfile(response, function(profile) {
-          window.profile[index] = profile;
-
-          // Visit company page and get the website
-          getWebsite(window.profile[index], function(website) {
-            console.log(window.profile[index]);
-            window.profile[index]["domain"] = cleanDomain(website);
-            findEmailAndSave(index);
-          });
-        });
-      });
+      parseProfile(search_profile, index);
     });
   })
 }
 
-// 2. Find email addresses and save leads
+// 2. Parse the profile
+//
+
+function parseProfile(search_profile, index) {
+
+  // Fetch and parse the profile
+  fetchProfileFromSearch(search_profile["profile_path"], function(response) {
+    parseLinkedinProfile(response, function(parsed_profile) {
+      window.profile[index] = parsed_profile;
+
+      // Visit company page and get the website
+      getWebsite(window.profile[index], function(website) {
+        window.profile[index]["domain"] = cleanDomain(website);
+        findEmailAndSave(index);
+      });
+    });
+  });
+}
+
+// 3. Find email addresses and save leads
 //
 function findEmailAndSave(index) {
 
@@ -122,9 +126,26 @@ function findEmailAndSave(index) {
 
     generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
     apiCall(api_key, generate_email_endpoint, function(email_json) {
-      saveLead(email_json.email, window.profile[index], api_key, function() {
+      if (email_json.email == null) { eamil = "" } else { email = email_json.email; }
+
+      // Then we can save it in leads (with or without email address)
+      saveLead(email, window.profile[index], api_key, function() {
         console.log(email_json.email + " saved in leads!");
       });
     });
   });
+}
+
+// View utilities
+//
+
+function desactivateSearchButton() {
+  $(this).prop("disabled", true);
+  $(this).text("Please wait...");
+  $(this).prepend("<i class='fa fa-spinner fa-spin'></i>");
+}
+
+function activateSearchButton() {
+  $(this).prop("disabled", false);
+  $(this).text("Find email addresses & save leads");
 }

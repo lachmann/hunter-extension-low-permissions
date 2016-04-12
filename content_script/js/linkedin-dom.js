@@ -215,31 +215,31 @@ function linkedinPageType() {
 //
 
 function parseLinkedinProfile(html, callback) {
-  profile = new Array;
+  parsed_profile = new Array;
 
   full_name_array = getFullName(html).split(" ");
 
   // First name
-  profile['first_name'] = full_name_array[0];
+  parsed_profile['first_name'] = full_name_array[0];
   full_name_array.shift();
 
   // Last name
-  profile['last_name'] = full_name_array.join(" ");
+  parsed_profile['last_name'] = full_name_array.join(" ");
 
   // Position
-  profile['position'] = getPosition(html);
+  parsed_profile['position'] = getPosition(html);
 
   // Company name
-  profile['last_company'] = getLastCompany(html);
+  parsed_profile['last_company'] = getLastCompany(html);
 
   // Company path
-  profile['last_company_path'] = getLastCompanyPath(html);
+  parsed_profile['last_company_path'] = getLastCompanyPath(html);
 
   // Main content
-  profile['profile_main_content'] = getMainProfileContent(html);
+  parsed_profile['profile_main_content'] = getMainProfileContent(html);
 
   // LinkedIn URL
-  profile['linkedin_url'] = getLinkedinUrl(html);
+  parsed_profile['linkedin_url'] = getLinkedinUrl(html);
 
-  return callback(profile);
+  return callback(parsed_profile);
 }
