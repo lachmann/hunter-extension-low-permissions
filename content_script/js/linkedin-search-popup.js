@@ -142,20 +142,27 @@ function findEmailAndSave(index) {
     generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
     apiCall(api_key, generate_email_endpoint, function(email_json) {
 
-      if (email_json.email == null) {
-        email = "";
-        email_message = "without email";
-      } else {
-        email = email_json.email;
-        email_message = "with email";
+      // If there is no result, we try to remove a subdomain
+      if (email_json.email == null && withoutSubDomain(window.profile[index]["domain"])) {
+        window.profile[index]["domain"] = withoutSubDomain(window.profile[index]["domain"]);
+        findEmailAndSave(index);
       }
+      else {
+        if (email_json.email == null) {
+          email = "";
+          email_message = "without email";
+        } else {
+          email = email_json.email;
+          email_message = "with email";
+        }
 
-      // Then we can save it in leads (with or without email address)
-      saveLead(email, window.profile[index], api_key, function() {
-        console.log(email_json.email + " saved in leads!");
-        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Saved " + email_message);
-        finishStatus();
-      });
+        // Then we can save it in leads (with or without email address)
+        saveLead(email, window.profile[index], api_key, function() {
+          console.log(window.profile[index]["first_name"] + " " + window.profile[index]["last_name"] + " saved in leads!");
+          $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Saved " + email_message);
+          finishStatus();
+        });
+      }
     });
   });
 }

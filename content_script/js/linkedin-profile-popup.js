@@ -252,11 +252,11 @@ function displayActionMessage(message) {
 //
 function showResultsCountMessage(results_number) {
   if (results_number == 0) {
-    $(".eh_popup_found_email_addresses").append('<p>Nothing found on <strong>' + window.profile["domain"] + '</strong>. Maybe <span class="eh_popup_ask_domain">try another domain name</span>?</p>');
+    $(".eh_popup_found_email_addresses").append('<p>Nothing found with the domain <strong>' + window.profile["domain"] + '</strong>. Maybe <span class="eh_popup_ask_domain">try another domain name</span>?</p>');
   } else if (results_number == 1) {
-    $(".eh_popup_found_email_addresses").append('<p>One email address found on ' + window.profile["domain"] + ':</p>');
+    $(".eh_popup_found_email_addresses").append('<p>One email address using the domain ' + window.profile["domain"] + ' found:</p>');
   } else {
-    $(".eh_popup_found_email_addresses").append('<p>' + results_number + ' email addresses found on ' + window.profile["domain"] + ':</p>');
+    $(".eh_popup_found_email_addresses").append('<p>' + results_number + ' email addresses usign the domain ' + window.profile["domain"] + ' found:</p>');
   }
 }
 
