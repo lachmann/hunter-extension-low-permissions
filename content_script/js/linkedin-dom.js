@@ -200,7 +200,7 @@ function linkedinPageType() {
   if ($("#eh_popup").length) {
     return "profile";
   }
-  else if ($("#eh_popup").length) {
+  else if ($("#eh_search_selection_popup").length) {
     return "search";
   }
   else {

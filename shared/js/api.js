@@ -2,7 +2,6 @@
 // Use the API key if it is defined. If there is a limitation issue, show the right limitation message
 //
 function apiCall(api_key, endpoint, callback) {
-
   if (api_key != '') {
     api_key_param = '&api_key=' + api_key;
   }
