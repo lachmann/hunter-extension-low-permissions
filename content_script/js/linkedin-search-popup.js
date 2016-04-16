@@ -153,7 +153,7 @@ function findEmailAndSave(index) {
           email_message = "without email";
         } else {
           email = email_json.email;
-          email_message = "with email";
+          email_message = "";
         }
 
         // Then we can save it in leads (with or without email address)

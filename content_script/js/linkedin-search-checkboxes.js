@@ -43,29 +43,35 @@ function updateSelection() {
 // Start JS injection
 //
 chrome.extension.sendMessage({}, function(response) {
-  checkResultPageLoading();
+  checkResultPageLoadingEnd();
 });
 
 
-function checkResultPageLoading() {
+//
+// Listen when the search page is finally loaded
+//
+function checkResultPageLoadingEnd() {
   var readyStateCheckInterval = setInterval(function() {
-    if (isSearchLoaded()) {
+    if (isSearchLoading() == false) {
       clearInterval(readyStateCheckInterval);
-      launchEmailHunterOnSearch();
+      checkResultPageLoadingStart();
     }
-  }, 20);
+  }, 100);
 }
 
 
 //
-// Inject the button and start parsing
+// Inject the checkboxes and listen if the search is about to be loaded again
 //
-function launchEmailHunterOnSearch() {
+function checkResultPageLoadingStart() {
   injectLinkedinCheckboxes();
 
-  $(".pagination a").click(function() {
-    checkResultPageLoading();
-  });
+  var readyStateCheckInterval = setInterval(function() {
+    if (isSearchLoading()) {
+      clearInterval(readyStateCheckInterval);
+      checkResultPageLoadingEnd();
+    }
+  }, 100);
 }
 
 
@@ -73,8 +79,11 @@ function launchEmailHunterOnSearch() {
 // Check if the search page is displayed
 // Ok if there is no loader & profile are displayed
 //
-function isSearchLoaded() {
-  if ($(".result.people").length && $("#voltron-overlay").css('position') != 'absolute') {
+function isSearchLoading() {
+  if ($("#voltron-overlay").css('position') == 'absolute') {
     return true;
+  }
+  else {
+    return false;
   }
 }
