@@ -96,7 +96,12 @@ function loadResults(api_key) {
 
         // Each email
         $.each(json.emails.slice(0,20), function(email_key, email_val) {
-          $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><p class="email-address">' + email_val.value + ' <a href="https://emailhunter.co/verify/' + email_val.value + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify this email address"><i class="fa fa-check"></i></a></p><div class="sources-list"></div></div>');
+
+          if (email_val.confidence < 30) { confidence_score_class = "low-score"; }
+          else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
+          else { confidence_score_class = "average-score"; }
+
+          $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><a href="https://emailhunter.co/verify/' + email_val.value + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify this email address"><i class="fa fa-check"></i></a></div><div class="sources-list"></div></div>');
           $('[data-toggle="tooltip"]').tooltip();
 
           // Each source

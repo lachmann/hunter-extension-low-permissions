@@ -63,12 +63,18 @@ h1 {
   display: none;
 }
 
-.results p {
-  margin: 0 0 15px 0;
+.result {
+  margin: 0 0 20px 0;
+  font-size: 15px;
+}
+
+.email {
+  font-weight: 600;
+  display: inline-block;
 }
 
 #resultsNumber {
-  margin: 10px 0 20px 0;
+  margin: 10px 0 25px 0;
 }
 
 .sources-link {
@@ -85,7 +91,7 @@ h1 {
 
 .sources-list {
   display: none;
-  padding-bottom: 20px;
+  padding-top: 10px;
 }
 
 .source {
@@ -200,4 +206,35 @@ h1 {
 
 .account-information .fa-user {
   margin-right: 5px;
+}
+
+.score {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 20px;
+  margin: 0 10px;
+  opacity: 0.6;
+  -webkit-transition: opacity 100ms ease-in-out;
+  -moz-transition: opacity 100ms ease-in-out;
+  -o-transition: opacity 100ms ease-in-out;
+  -ms-transition: opacity 100ms ease-in-out;
+  transition: opacity 100ms ease-in-out;
+}
+
+.score:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.low-score {
+  background-color: #a13636;
+}
+
+.average-score {
+  background-color: #e18f00;
+}
+
+.high-score {
+  background-color: #609438;
 }
