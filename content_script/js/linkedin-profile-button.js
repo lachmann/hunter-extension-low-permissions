@@ -20,9 +20,9 @@ function injectLinkedinButton() {
 //
 chrome.extension.sendMessage({}, function(response) {
   var readyStateCheckInterval = setInterval(function() {
-    if (isLoaded()) {
+    if (isProfileLoaded()) {
       clearInterval(readyStateCheckInterval);
-      launchEmailHunter();
+      launchEmailHunterOnProfile();
     }
   }, 20);
 });
@@ -32,17 +32,19 @@ chrome.extension.sendMessage({}, function(response) {
 // Inject the button and start parsing
 //
 
-function launchEmailHunter() {
+function launchEmailHunterOnProfile() {
   injectLinkedinButton();
 
   // Parse the page (linkedin-dom.js)
   setTimeout(function(){
-    parseLinkedinProfile();
-    $(".eh_linkedin_button").prop("disabled", false);
+    parseLinkedinProfile($("html").html(), function(profile) {
+      window.profile = profile;
+      $(".eh_linkedin_button").prop("disabled", false);
 
-    // Open popup on Linkedin profile
-    $(".eh_linkedin_button").click(function() {
-      launchPopup();
+      // Open popup on Linkedin profile
+      $(".eh_linkedin_button").click(function() {
+        launchPopup();
+      });
     });
   }, parsingDuration());
 }
@@ -52,7 +54,7 @@ function launchEmailHunter() {
 // Is the profile ready?
 //
 
-function isLoaded() {
+function isProfileLoaded() {
   if (isRecruiter() && $(".send-inmail-split-button").length) {
     return true;
   }
@@ -67,6 +69,9 @@ function isLoaded() {
 
 //
 // Time to wait to make sure the page is parsed
+//
+// It seems wise to wait one second on LinkedIn Recruiter as the content is
+// loaded asynchronously. To be verified.
 //
 
 function parsingDuration() {
