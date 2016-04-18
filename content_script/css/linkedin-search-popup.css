@@ -21,7 +21,13 @@
 
 #eh_search_selection_popup img {
   height: 20px;
-  margin-bottom: 20px;
+}
+
+.eh_search_popup_beta {
+  font-size: 12px;
+  font-weight: 200;
+  color: #aaa;
+  margin-left: 5px;
 }
 
 #eh_search_selection_popup button {
@@ -76,6 +82,7 @@
 }
 
 #eh_profile_selected {
+  margin-top: 20px;
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
