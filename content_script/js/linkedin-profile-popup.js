@@ -186,15 +186,9 @@ function showFoundEmailAddress(email_json, count_json) {
   mainMessagePopup(email_json.email);
   addCopyButton(email_json.email);
   showConfidence(email_json.score);
+  addSaveButton(email_json.email);
 
-  chrome.storage.sync.get('api_key', function(value){
-    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-      api_key = value["api_key"];
-    }
-    else { api_key = ''; }
-
-    addSaveButton(email_json.email, api_key);
-  });
+  window.profile["email"] = email_json.email;
 
   if (count_json.count > 1) { es = 'es' }
   else { es = '' }
@@ -219,7 +213,7 @@ function addCopyButton(email) {
 
 // Add a copy button to copy the email address
 //
-function addSaveButton(email, api_key) {
+function addSaveButton() {
   $("<div id='eh_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#eh_email_action_message" );
   $('#eh_save_email_button').tooltip();
 
@@ -228,10 +222,10 @@ function addSaveButton(email, api_key) {
     $(this).remove();
     $("<div class='fa fa-spinner fa-spin eh_save_lead_loader'></div>").insertBefore("#eh_email_action_message");
 
-    saveLead(email, window.profile, api_key, function() {
+    saveLead(window.profile, function() {
       $(".eh_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
       displayActionMessage("Saved!");
-      console.log(email + " saved in leads!");
+      console.log("Saved in leads!");
     });
   })
 }

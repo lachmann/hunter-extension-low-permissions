@@ -34,10 +34,6 @@ function selectProfiles() {
   });
 }
 
-function updateSelection() {
-
-}
-
 
 //
 // Start JS injection
@@ -65,10 +61,14 @@ function checkResultPageLoadingEnd() {
 //
 function checkResultPageLoadingStart() {
   injectLinkedinCheckboxes();
+  closeSearchPopup();
 
   var readyStateCheckInterval = setInterval(function() {
     if (isSearchLoading()) {
       clearInterval(readyStateCheckInterval);
+
+      updateSelection();
+      updateSelectionView();
       checkResultPageLoadingEnd();
     }
   }, 100);

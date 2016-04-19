@@ -28,10 +28,13 @@ function updateSelectionView() {
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button></div><div id="eh_search_popup_error"></div></div>');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><input type="checkbox" id="eh_save_without_email"><label for="eh_save_without_email" id="eh_save_without_email_label">Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div></div>');
 
       // Launch the search
       launchSearchParsing();
+
+      // Update "save without email" option
+      saveWithoutEmailListener();
 
       // Drag popup
       $("#eh_search_selection_popup").draggable({ handle: ".eh_search_popup_drag" });
@@ -106,21 +109,17 @@ function parseProfile(search_profile, index) {
       window.profile[index]["profile_id"] = search_profile["profile_id"];
 
       if (typeof window.profile[index]["last_company_path"] == "undefined") {
-        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("No current job");
-        finishStatus();
+        saveOrNotAndUpdateStatus("No current job", index);
       }
       else {
         // Visit company page and get the website
         getWebsite(window.profile[index], function(website) {
           if (website == "none") {
-            $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Website not found");
-            finishStatus();
+            saveOrNotAndUpdateStatus("Website not found", index);
           }
           else {
             window.profile[index]["domain"] = cleanDomain(website);
             findEmailAndSave(index);
-
-            console.log(window.profile);
           }
         });
       }
@@ -137,7 +136,7 @@ function findEmailAndSave(index) {
     if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
       api_key = value["api_key"];
     }
-    else { api_key = ''; }
+    else { api_key = ""; }
 
     generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile[index]["domain"] + '&first_name=' + window.profile[index]["first_name"] + '&last_name=' + window.profile[index]["last_name"] + '&position=' + window.profile[index]["position"] + '&company=' + window.profile[index]["last_company"];
     apiCall(api_key, generate_email_endpoint, function(email_json) {
@@ -148,22 +147,69 @@ function findEmailAndSave(index) {
         findEmailAndSave(index);
       }
       else {
-        if (email_json.email == null) {
-          email = "";
-          email_message = "without email";
-        } else {
-          email = email_json.email;
-          email_message = "";
-        }
+        window.profile[index]["email"] = email_json.email;
+        saveOrNotAndUpdateStatus("Email not found", index);
+      }
+    });
+  });
+}
 
-        // Then we can save it in leads (with or without email address)
-        saveLead(email, window.profile[index], api_key, function() {
-          console.log(window.profile[index]["first_name"] + " " + window.profile[index]["last_name"] + " saved in leads!");
-          $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").text("Saved " + email_message);
+// 4. Save or not and update status
+//
+// fail_status is the error returned if the email address is not found
+//
+function saveOrNotAndUpdateStatus(fail_status, index) {
+  if (typeof window.profile[index]["email"] !== "undefined" && window.profile[index]["email"] != null) {
+    saveLead(window.profile[index], function() {
+      $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved<i class='fa fa-check'></i>");
+      finishStatus();
+    });
+  }
+  else {
+    chrome.storage.sync.get('save_leads_without_emails', function(value){
+      if (typeof value["save_leads_without_emails"] == "undefined" || value["save_leads_without_emails"] == false) {
+        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html(fail_status + "<i class='fa fa-times'></i>");
+        finishStatus();
+      }
+      else {
+        saveLead(window.profile[index], function() {
+          $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved without email<i class='fa fa-check'></i>");
           finishStatus();
         });
       }
     });
+  }
+}
+
+
+// Update the option to save or not a lead if the email is not found
+//
+function saveWithoutEmailListener() {
+  checkOptionSaveWithoutEmail();
+
+  $("#eh_save_without_email").change(function() {
+    updateOptionSaveWithoutEmail();
+  })
+}
+
+function updateOptionSaveWithoutEmail() {
+  if ($("#eh_save_without_email").is(':checked')) {
+    chrome.storage.sync.set({'save_leads_without_emails': true}, function() {
+      // Now leads can be saved ven if the email addresses are not found
+    });
+  }
+  else {
+    chrome.storage.sync.set({'save_leads_without_emails': false}, function() {
+      // Leads aren't saved if the email address is not found (default)
+    });
+  }
+}
+
+function checkOptionSaveWithoutEmail() {
+  chrome.storage.sync.get('save_leads_without_emails', function(value){
+    if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
+      $("#eh_save_without_email").prop("checked", true);
+    }
   });
 }
 

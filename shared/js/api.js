@@ -45,14 +45,21 @@ function apiCall(api_key, endpoint, callback) {
 
 // Save lead in Ajax
 //
-function saveLead(email, lead, api_key, callback) {
-  $.ajax({
-    url : "https://api.emailhunter.co/v1/lead?first_name="+ lead["first_name"] + "&last_name=" + lead["last_name"] + "&company=" + lead["last_company"] + "&position=" + lead["position"] + "&email=" + email + "&website=http://" + lead["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + lead["linkedin_url"] + "&api_key=" + api_key,
-    headers: {"Email-Hunter-Origin": "chrome_extension"},
-    type : 'POST',
-    dataType : 'json',
-    success : function(json){
-      callback(json);
+function saveLead(lead, callback) {
+  chrome.storage.sync.get('api_key', function(value) {
+    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
+      api_key = value["api_key"];
     }
+    else { api_key = ""; }
+
+    $.ajax({
+      url : "https://api.emailhunter.co/v1/lead?first_name="+ lead["first_name"] + "&last_name=" + lead["last_name"] + "&company=" + lead["last_company"] + "&position=" + lead["position"] + "&email=" + lead["email"] + "&website=http://" + lead["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + lead["linkedin_url"] + "&api_key=" + api_key,
+      headers: {"Email-Hunter-Origin": "chrome_extension"},
+      type : 'POST',
+      dataType : 'json',
+      success : function(json){
+        callback(json);
+      }
+    });
   });
 }
