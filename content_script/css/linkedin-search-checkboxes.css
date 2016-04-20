@@ -6,6 +6,10 @@
   border: 1px solid #ddd;
   width: 36px;
   cursor: pointer;
+  -webkit-transition: all .2s ease-in;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  transition: all .2s ease-in;
 }
 
 .eh_checkbox_container:hover {
@@ -22,4 +26,37 @@
 .eh_checkbox_container .fa {
   font-size: 16px;
   color: #ddd;
+}
+
+.eh_selectall_checkbox_container {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  width: 105px;
+  float: right;
+  font-weight: 600;
+  color: #777;
+  margin-top: -9px;
+  -webkit-transition: all .1s ease-in;
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+}
+
+.eh_selectall_checkbox_container:hover {
+  border: 1px solid #d5d5d5;
+  color: #555;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+}
+
+.eh_selectall_checkbox_container .fa {
+  font-size: 16px;
+  color: #ddd;
+  margin-right: 10px;
+}
+
+#results_count {
+  padding: 20px 0 !important;
 }

@@ -15,11 +15,32 @@ function injectLinkedinCheckboxes() {
   });
 }
 
+//
+// Add a "select all" checkbox
+//
+function selectAllCheckbox() {
+  var icon = chrome.extension.getURL('shared/img/icon48.png');
+  $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+
+  $(".eh_selectall_checkbox_container").click(function() {
+    checkbox = $(this).find(".fa").first();
+    if (checkbox.hasClass("fa-square")) {
+      checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+      $(".eh_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+    }
+    else {
+      checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+      $(".eh_checkbox_container .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+    }
+
+    updateSelection();
+    updateSelectionView();
+  });
+}
 
 //
-// Select a a profile to add to the list
+// Select a profile to add to the list
 //
-
 function selectProfiles() {
   $(".eh_checkbox_container").unbind().click(function() {
     checkbox = $(this).find(".fa").first();
@@ -61,6 +82,7 @@ function checkResultPageLoadingEnd() {
 //
 function checkResultPageLoadingStart() {
   injectLinkedinCheckboxes();
+  selectAllCheckbox();
   closeSearchPopup();
 
   var readyStateCheckInterval = setInterval(function() {
