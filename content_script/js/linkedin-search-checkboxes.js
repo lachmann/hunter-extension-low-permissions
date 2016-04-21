@@ -7,7 +7,7 @@ function injectLinkedinCheckboxes() {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     // We check if the profile if out of network
-    if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK") {
+    if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK" || result.find(".degree-icon").length) {
       result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
 
       selectProfiles();
@@ -19,23 +19,25 @@ function injectLinkedinCheckboxes() {
 // Add a "select all" checkbox
 //
 function selectAllCheckbox() {
-  var icon = chrome.extension.getURL('shared/img/icon48.png');
-  $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+  if ($(".eh_checkbox_container").length) {
+    var icon = chrome.extension.getURL('shared/img/icon48.png');
+    $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
 
-  $(".eh_selectall_checkbox_container").click(function() {
-    checkbox = $(this).find(".fa").first();
-    if (checkbox.hasClass("fa-square")) {
-      checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
-      $(".eh_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
-    }
-    else {
-      checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
-      $(".eh_checkbox_container .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
-    }
+    $(".eh_selectall_checkbox_container").click(function() {
+      checkbox = $(this).find(".fa").first();
+      if (checkbox.hasClass("fa-square")) {
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        $(".eh_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+      }
+      else {
+        checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+        $(".eh_checkbox_container .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+      }
 
-    updateSelection();
-    updateSelectionView();
-  });
+      updateSelection();
+      updateSelectionView();
+    });  
+  }
 }
 
 //
@@ -50,6 +52,7 @@ function selectProfiles() {
     else {
       checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
     }
+
     updateSelection();
     updateSelectionView();
   });
