@@ -238,3 +238,7 @@ h1 {
 .high-score {
   background-color: #609438;
 }
+
+.verification_result .fa {
+  margin-right: 5px;
+}

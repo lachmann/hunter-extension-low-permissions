@@ -101,7 +101,7 @@ function loadResults(api_key) {
           else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
           else { confidence_score_class = "average-score"; }
 
-          $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><a href="https://emailhunter.co/verify/' + email_val.value + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify this email address"><i class="fa fa-check"></i></a></div><div class="sources-list"></div></div>');
+          $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span></div><div class="sources-list"></div></div>');
           $('[data-toggle="tooltip"]').tooltip();
 
           // Each source
@@ -117,6 +117,9 @@ function loadResults(api_key) {
         if (json.emails.length > 20) {
           $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses</a>');
         }
+
+        // Verify an email address
+        verifyEmailAddress();
 
         // Deploy sources
         $(".sources-link").click(function () {
@@ -245,5 +248,61 @@ function addAccountInformation() {
     else {
       $(".account-information").html("<i class='fa fa-user'></i> "+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
     }
+  })
+}
+
+// Verify an email address
+//
+function verifyEmailAddress() {
+  $(".verify_email").click(function() {
+    verification_link_tag = $(this);
+    verification_link_tag.hide();
+    verification_link_tag = $(this)
+    verification_link_tag.hide()
+    verification_result_tag = $(this).parent().find(".verification_result");
+    verification_result_tag.html("<span class='light-grey'><i class='fa fa-spinner fa-spin'></i> Verifying...</span>");
+
+    email = verification_result_tag.parent().find(".email").text();
+
+    chrome.storage.sync.get('api_key', function(value){
+      api_key = value["api_key"];
+
+      if (typeof api_key == "undefined") {
+        url = 'https://api.emailhunter.co/trial/v1/verify?email=' + email;
+      }
+      else {
+        url = 'https://api.emailhunter.co/v1/verify?email=' + email + '&api_key=' + api_key;
+      }
+
+      $.ajax({
+        url : url,
+        headers: {"Email-Hunter-Origin": "chrome_extension"},
+        type : 'GET',
+        dataType : 'json',
+        success : function(data){
+          if (data.result == "deliverable") {
+            verification_result_tag.html("<span class='green'><i class='fa fa-check'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Deliverable</a></span>");
+          }
+          else if (data.result == "risky") {
+            verification_result_tag.html("<span class='dark-orange'><i class='fa fa-exclamation-triangle'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Risky</a></span>");
+            }
+          else
+            verification_result_tag.html("<span class='red'><i class='fa fa-times'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Undeliverable</a></span>");
+        },
+        error: function(xhr) {
+          if (xhr.status == 429) {
+            if (typeof api_key == "undefined") {
+              verification_result_tag.html("<span class='light-grey'>Please sign in</span>");
+            }
+            else {
+              verification_result_tag.html("<span class='light-grey'>Please upgrade</span>");
+            }
+          }
+          else {
+            verification_result_tag.html("<span class='light-grey'>Error</span>");
+          }
+        }
+      });
+    });
   })
 }
