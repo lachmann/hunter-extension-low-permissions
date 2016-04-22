@@ -4,12 +4,11 @@ function launchPopup() {
   appendOverlay(function() {
     openPopup(function() {
       launchSearch();
+      addAccountInformation();
 
       // Analytics
       eventTrack("Open LinkedIn popup");
     });
-
-    addAccountInformation();
   });
 
   // Drag popup
@@ -32,7 +31,6 @@ function launchPopup() {
 function closePopup() {
   $("#eh_popup").remove();
   $("#eh_overlay").remove();
-  $("#eh_account_popup").remove();
 }
 
 
@@ -64,13 +62,10 @@ function appendOverlay(callback) {
 function addAccountInformation() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("body").append('<div id="eh_account_popup"><div class="eh_account_not_logged">Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a></div></div>');
+      $("#eh_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
     }
     else {
-      $("body").append('<div id="eh_account_popup"><a class="eh_leads_link" target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">My leads</a><div class="eh_deploy_account_information">'+json.email+' <i class="fa fa-caret-down"></i></div><div style="clear: both;"></div><div class="eh_account_information_detail"><div class="eh_plan_name">'+json.plan_name+' plan</div>'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests<br/><a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Upgrade my account</a></div></div>');
-      $(".eh_deploy_account_information").click(function() {
-        $(".eh_account_information_detail").slideToggle(200);
-      });
+      $("#eh_popup_account").html(json.email+' • <a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+"/"+numberWithCommas(json.calls.available)+' requests</div>');
     }
   })
 }
@@ -82,14 +77,13 @@ function openPopup(callback) {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
 
-  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.profile["first_name"] + ' ' + window.profile["last_name"] + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="orange-btn" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div><div id="eh_email_action_message"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_legal_mention">Email Hunter\'s button and this popup are added by Email Hunter\'s Chrome extension. Email Hunter is not affiliated to LinkedIn.</div></div>');
+  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.profile["first_name"] + ' ' + window.profile["last_name"] + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="orange-btn" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div><div id="eh_email_action_message"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_account">Loading...</div></div>');
 
   $("#eh_popup")
     .css({
       'position': 'fixed',
       'top': windowHeight / 2 - 150,
       'left': windowWidth / 2 - 300,
-      'padding': '30px',
       'width': '560px',
       'z-index': 11001
   });
@@ -156,6 +150,7 @@ function launchSearch() {
               else {
                 showFoundEmailAddress(email_json, count_json);
                 showParsedEmailAddresses();
+                addAccountInformation();
                 $("#eh_popup_results_show").slideDown(300);
               }
 

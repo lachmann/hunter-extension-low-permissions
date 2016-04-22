@@ -199,13 +199,9 @@ h1 {
 
 .account-information {
   margin-top: 30px;
-  padding-top: 10px;
-  font-size: 13px;
+  padding-top: 15px;
+  font-size: 12px;
   border-top: 1px solid #eee;
-}
-
-.account-information .fa-user {
-  margin-right: 5px;
 }
 
 .score {
@@ -237,6 +233,10 @@ h1 {
 
 .high-score {
   background-color: #609438;
+}
+
+.verify_email {
+  cursor: pointer;
 }
 
 .verification_result .fa {
