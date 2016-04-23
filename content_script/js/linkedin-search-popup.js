@@ -74,9 +74,11 @@ function addAccountInformationSearch() {
   getAccountInformation(function(json) {
     if (json == "none") {
       $("#eh_search_selection_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
+      $("#eh_search_selection_popup button").prop("disabled", true);
+      $("#eh_search_selection_popup button").text("Please sign in to save leads");
     }
     else {
-      $("#eh_search_selection_popup_account").html('<a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+"/"+numberWithCommas(json.calls.available)+' requests</div>');
+      $("#eh_search_selection_popup_account").html('<a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests</div>');
     }
   })
 }
@@ -125,7 +127,7 @@ function parseProfile(search_profile, index) {
       window.profile[index]["profile_id"] = search_profile["profile_id"];
 
       if (typeof window.profile[index]["last_company_path"] == "undefined") {
-        saveOrNotAndUpdateStatus("No current job", index);
+        saveOrNotAndUpdateStatus("Company not found", index);
       }
       else {
         // Visit company page and get the website

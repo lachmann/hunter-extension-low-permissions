@@ -59,6 +59,14 @@ function saveLead(lead, callback) {
       dataType : 'json',
       success : function(json){
         callback(json);
+      },
+      error: function(xhr) {
+        if (xhr.status == 401) {
+          callback("please_sign_in");
+        }
+        else {
+          callback("error");
+        }
       }
     });
   });

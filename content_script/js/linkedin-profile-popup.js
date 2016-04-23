@@ -65,7 +65,7 @@ function addAccountInformation() {
       $("#eh_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
     }
     else {
-      $("#eh_popup_account").html(json.email+' • <a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+"/"+numberWithCommas(json.calls.available)+' requests</div>');
+      $("#eh_popup_account").html(json.email+' • <a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests</div>');
     }
   })
 }
@@ -217,10 +217,18 @@ function addSaveButton() {
     $(this).remove();
     $("<div class='fa fa-spinner fa-spin eh_save_lead_loader'></div>").insertBefore("#eh_email_action_message");
 
-    saveLead(window.profile, function() {
+    saveLead(window.profile, function(response) {
+      if (typeof response.status != "undefined" && response.status == "success") {
+        displayActionMessage("Saved!");
+        console.log("Saved in leads!");
+      }
+      else if (response == "please_sign_in") {
+        displayActionMessage("Please sign in!");
+      }
+      else {
+        displayActionMessage("Error. Please try again later.");
+      }
       $(".eh_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
-      displayActionMessage("Saved!");
-      console.log("Saved in leads!");
     });
   })
 }
@@ -233,7 +241,7 @@ function displayActionMessage(message) {
 
   setTimeout(function(){
     $("#eh_email_action_message").text("");
-  }, 2000);
+  }, 3000);
 }
 
 
