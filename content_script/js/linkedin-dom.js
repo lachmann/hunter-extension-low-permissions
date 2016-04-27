@@ -109,6 +109,48 @@ function getLinkedinUrl(html) {
   return url;
 }
 
+//
+// Get country code
+//
+
+function getCountryCode(html) {
+  var $html = $('<div />',{html:html});
+
+  if (isSalesNavigator()) {
+    country_code = "";
+  }
+  else if (isRecruiter()) {
+    country_code = "";
+  }
+  else {
+    path = $html.find(".locality a").attr("href");
+    country_code = extractCountryCodeFromSearchPath(path);
+  }
+
+  return country_code;
+}
+
+
+//
+// Link to search by loacation have this form:
+// /vsearch/p?countryCode=gb&trk=prof-0-ovw-location
+//
+// This function help to extract the country code. In this example: "GB".
+//
+
+function extractCountryCodeFromSearchPath(path) {
+  if (path.indexOf("countryCode=") != -1) {
+    pos = path.indexOf("countryCode=");
+    country_code = path.substring(pos + 12, pos + 14);
+  }
+  else if (path.indexOf("f_G=") != -1) {
+    pos = path.indexOf("f_G=");
+    country_code = path.substring(pos + 4, pos + 6);
+  }
+
+  return country_code.toUpperCase();
+}
+
 
 //
 // Profile main content
@@ -240,6 +282,9 @@ function parseLinkedinProfile(html, callback) {
 
   // LinkedIn URL
   parsed_profile['linkedin_url'] = getLinkedinUrl(html);
+
+  // Country code
+  parsed_profile['country_code'] = getCountryCode(html);
 
   return callback(parsed_profile);
 }
