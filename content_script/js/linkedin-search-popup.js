@@ -177,7 +177,9 @@ function findEmailAndSave(index) {
 // fail_status is the error returned if the email address is not found
 //
 function saveOrNotAndUpdateStatus(fail_status, index) {
-  if (typeof window.profile[index]["email"] !== "undefined" && window.profile[index]["email"] != null) {
+  if (window.profile[index]["email"] == null || typeof window.profile[index]["email"] == "undefined") { window.profile[index]["email"] = ""; }
+
+  if (window.profile[index]["email"] != "") {
     saveLead(window.profile[index], function() {
       $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved<i class='fa fa-check'></i>");
       finishStatus();

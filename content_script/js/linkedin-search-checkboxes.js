@@ -7,7 +7,7 @@ function injectLinkedinCheckboxes() {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     // We check if the profile if out of network
-    if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK" || result.find(".degree-icon").length) {
+    if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK" || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
       result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
 
       selectProfiles();
@@ -36,7 +36,7 @@ function selectAllCheckbox() {
 
       updateSelection();
       updateSelectionView();
-    });  
+    });
   }
 }
 
