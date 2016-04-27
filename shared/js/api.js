@@ -25,7 +25,7 @@ function apiCall(api_key, endpoint, callback) {
         showError('Sorry, something went wrong on the query.');
       }
       else if (xhr.status == 401) {
-        showError('Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.<br/><br/><a href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Sign in</a>');
+        showError('Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.<br/><br/><a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Sign in</a>');
       }
       else if (xhr.status == 429) {
         if (api_key != '') {
