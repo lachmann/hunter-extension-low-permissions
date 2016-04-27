@@ -82,7 +82,7 @@ function openPopup(callback) {
   $("#eh_popup")
     .css({
       'position': 'fixed',
-      'top': windowHeight / 2 - 150,
+      'top': windowHeight / 2 - 200,
       'left': windowWidth / 2 - 300,
       'width': '560px',
       'z-index': 11001
@@ -160,7 +160,7 @@ function launchSearch() {
         });
       }
       else {
-        askDomainName(true);
+        askDomainName();
       }
     });
   }
@@ -251,9 +251,9 @@ function showResultsCountMessage(results_number) {
   if (results_number == 0) {
     $(".eh_popup_found_email_addresses").append('<p>Nothing found with the domain <strong>' + window.profile["domain"] + '</strong>. Maybe <span class="eh_popup_ask_domain">try another domain name</span>?</p>');
   } else if (results_number == 1) {
-    $(".eh_popup_found_email_addresses").append('<p>One email address using the domain ' + window.profile["domain"] + ' found:</p>');
+    $(".eh_popup_found_email_addresses").append('<p>One email address using the domain <strong>' + window.profile["domain"] + '</strong> found:</p>');
   } else {
-    $(".eh_popup_found_email_addresses").append('<p>' + results_number + ' email addresses usign the domain ' + window.profile["domain"] + ' found:</p>');
+    $(".eh_popup_found_email_addresses").append('<p>' + results_number + ' email addresses using the domain <strong>' + window.profile["domain"] + '</strong> found:</p>');
   }
 }
 
@@ -278,7 +278,7 @@ function showParsedEmailAddresses() {
 
       $(".eh_popup_parsed_email_addresses").append("<hr>");
       if (unique_email_addresses.length == 1) {
-        $(".eh_popup_parsed_email_addresses").append('<p>One email address found on the profile:</p>');
+        $(".eh_popup_parsed_email_addresses").append('<p>One email address found on the profile of ' + window.profile["first_name"] + ':</p>');
       }
       else {
         $(".eh_popup_parsed_email_addresses").append('<p>' + unique_email_addresses.length + ' email addresses found on this profile:</p>');
@@ -315,7 +315,7 @@ function askNewDomainListener() {
     $("#eh_popup_results_link_container").hide();
     $("#eh_popup_results_show").hide();
     $(".eh_popup_found_email_addresses").html("");
-    askDomainName(false);
+    askDomainName();
   });
 }
 
@@ -343,9 +343,10 @@ function showConfidence(score) {
 
 
 // Ask for the domain name
-// Appends in two cases :
+// Appends in three cases :
 // - no domain name has been found
 // - a domain has been found but gives no result
+// - it gave result but the user still want to try with another domain name
 //
 function askDomainName(showMessage) {
   $(".eh_popup_confidence_score").slideUp(300);
@@ -355,20 +356,28 @@ function askDomainName(showMessage) {
       $("#eh_popup_ask_domain_field").focus();
     });
 
-    if (showMessage == true) {
-      if (typeof window.profile["domain"] == "undefined") {
-        $("#eh_popup_ask_domain_message").html('We couldn\'t find <strong>' + window.profile["last_company"] + '</strong> website. Please enter the domain name to launch the search. <a href="https://google.com/search?q= ' + window.profile["last_company"] + '" target="_blank">Search the website on Google &#187;</a>');
-      }
-      else {
-        $("#eh_popup_ask_domain_message").text('No email found with <strong>' + window.profile["domain"] + '</strong>. Maybe try another domain name?');
-      }
+    if (typeof window.profile["email"] != "undefined") {
+      $("#eh_popup_ask_domain_message").html('You already found <strong>' + window.profile["email"] + '</strong>. Would you like to find the email address using another domain name?');
+    }
+    else if (typeof window.profile["domain"] != "undefined") {
+      $("#eh_popup_ask_domain_message").text('No email found with <strong>' + window.profile["domain"] + '</strong>. Maybe try another domain name?');
+    }
+    else {
+      $("#eh_popup_ask_domain_message").html('We couldn\'t find <strong>' + window.profile["last_company"] + '</strong> website. Please enter the domain name to launch the search. <a href="https://google.com/search?q= ' + window.profile["last_company"] + '" target="_blank">Search the website on Google &#187;</a>');
     }
 
     $("#eh_popup_ask_domain").submit(function() {
-      $("#eh_popup_ask_domain").slideUp(300);
-      $("#eh_popup_content_container").slideDown(300);
-      window.profile["domain"] = $("#eh_popup_ask_domain_field").val();
-      launchSearch();
+      $("#eh_popup_ask_domain button").prop("disabled", true);
+      $("#eh_popup_ask_domain").delay(500).slideUp(300, function() {
+        $("#eh_popup_ask_domain button").prop("disabled", false);
+        $("#eh_popup_content_container").slideDown(300);
+
+        $(".eh_popup_parsed_email_addresses").html("");
+        $("#eh_save_email_button, #eh_copy_email_button").remove();
+
+        window.profile["domain"] = $("#eh_popup_ask_domain_field").val();
+        launchSearch();
+      });
 
       return false;
     });
