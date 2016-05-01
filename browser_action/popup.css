@@ -74,7 +74,8 @@ h1 {
 }
 
 #domain-pattern {
-  margin: 25px 0 0 0;
+  margin: 5px 0 20px 0;
+  font-size: 13px;
 }
 
 #domain-pattern strong {
@@ -86,7 +87,8 @@ h1 {
 }
 
 #results-number {
-  margin: 10px 0 25px 0;
+  font-size: 13px;
+  margin: 20px 0 0 0;
 }
 
 .sources-link {
@@ -168,6 +170,7 @@ h1 {
 
 .see_more:hover {
   text-decoration: underline;
+  color: #3285CC;
 }
 
 .linkedin-notification {
