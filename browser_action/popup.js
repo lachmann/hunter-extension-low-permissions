@@ -94,6 +94,9 @@ function loadResults(api_key) {
         // We count call to measure use
         countCall();
 
+        // Update the number of requests
+        addAccountInformation();
+
         // We display the email pattern
         if (json.pattern != null) {
           $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.pattern) + "@" + domain + "</strong></span>");
@@ -298,6 +301,10 @@ function verifyEmailAddress() {
         type : 'GET',
         dataType : 'json',
         success : function(data){
+
+          // Update the number of requests
+          addAccountInformation();
+
           if (data.result == "deliverable") {
             verification_result_tag.html("<span class='green'><i class='fa fa-check'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Deliverable</a></span>");
           }
