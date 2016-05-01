@@ -94,6 +94,11 @@ function loadResults(api_key) {
         // We count call to measure use
         countCall();
 
+        // We display the email pattern
+        if (json.pattern != null) {
+          $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.pattern) + "@" + domain + "</strong></span>");
+        }
+
         // Each email
         $.each(json.emails.slice(0,20), function(email_key, email_val) {
 
@@ -168,13 +173,13 @@ function loadResults(api_key) {
 //
 function resultsMessage(results_number) {
   if (results_number == 0) {
-    $("#resultsNumber").text('No email address found.');
+    $("#results-number").text('No email address found.');
   }
   else if (results_number == 1) {
-    $("#resultsNumber").text('One email address found.');
+    $("#results-number").text('One email address found.');
   }
   else {
-    $("#resultsNumber").text(results_number + ' email addresses found.');
+    $("#results-number").text(results_number + ' email addresses found.');
   }
 }
 
@@ -201,6 +206,18 @@ function linkedinNotification() {
   if (window.domain == "linkedin.com") {
     $('.linkedin-notification').slideDown(300);
   }
+}
+
+
+// Add the tooltips to the pattern
+//
+function addPatternTitle(pattern) {
+  pattern = pattern.replace("{first}", "<span data-toggle='tooltip' data-placement='top' title='First name'>{first}</span>")
+                   .replace("{last}", "<span data-toggle='tooltip' data-placement='top' title='Last name'>{last}</span>")
+                   .replace("{f}", "<span data-toggle='tooltip' data-placement='top' title='First name initial'>{f}</span>")
+                   .replace("{l}", "<span data-toggle='tooltip' data-placement='top' title='Last name initial'>{l}</span>");
+
+  return pattern;
 }
 
 

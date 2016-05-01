@@ -73,7 +73,19 @@ h1 {
   display: inline-block;
 }
 
-#resultsNumber {
+#domain-pattern {
+  margin: 25px 0 0 0;
+}
+
+#domain-pattern strong {
+  font-weight: 600;
+}
+
+#domain-pattern span[data-toggle='tooltip'] {
+  cursor: help;
+}
+
+#results-number {
   margin: 10px 0 25px 0;
 }
 
