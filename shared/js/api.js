@@ -53,7 +53,7 @@ function saveLead(lead, callback) {
     else { api_key = ""; }
 
     $.ajax({
-      url : "https://api.emailhunter.co/v1/lead?first_name="+ lead["first_name"] + "&last_name=" + lead["last_name"] + "&company=" + lead["last_company"] + "&position=" + lead["position"] + "&country_code=" + lead["country_code"] + "&email=" + lead["email"] + "&website=http://" + lead["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + lead["linkedin_url"] + "&api_key=" + api_key,
+      url : "https://api.emailhunter.co/v1/lead?first_name="+ lead["first_name"] + "&last_name=" + lead["last_name"] + "&company=" + lead["last_company"] + "&position=" + lead["position"] + "&country_code=" + lead["country_code"] + "&email=" + lead["email"] + "&confidence_score=" + lead["confidence_score"] + "&website=http://" + lead["domain"] + "&source=Email Hunter (LinkedIn)&linkedin_url=" + lead["linkedin_url"] + "&api_key=" + api_key,
       headers: {"Email-Hunter-Origin": "chrome_extension"},
       type : 'POST',
       dataType : 'json',

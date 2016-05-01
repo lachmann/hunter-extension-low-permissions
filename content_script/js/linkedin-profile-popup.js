@@ -184,6 +184,8 @@ function showFoundEmailAddress(email_json, count_json) {
   addSaveButton(email_json.email);
 
   window.profile["email"] = email_json.email;
+  window.profile["confidence_score"] = email_json.score;
+  console.log(window.profile);
 
   if (count_json.count > 1) { es = 'es' }
   else { es = '' }

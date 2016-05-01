@@ -166,6 +166,8 @@ function findEmailAndSave(index) {
       }
       else {
         window.profile[index]["email"] = email_json.email;
+        window.profile[index]["confidence_score"] = email_json.score;
+
         saveOrNotAndUpdateStatus("Email not found", index);
       }
     });
@@ -178,6 +180,7 @@ function findEmailAndSave(index) {
 //
 function saveOrNotAndUpdateStatus(fail_status, index) {
   if (window.profile[index]["email"] == null || typeof window.profile[index]["email"] == "undefined") { window.profile[index]["email"] = ""; }
+  if (window.profile[index]["confidence_score"] == null || typeof window.profile[index]["confidence_score"] == "undefined") { window.profile[index]["confidence_score"] = ""; }
 
   if (window.profile[index]["email"] != "") {
     saveLead(window.profile[index], function() {

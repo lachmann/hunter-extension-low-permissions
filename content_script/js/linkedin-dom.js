@@ -139,13 +139,18 @@ function getCountryCode(html) {
 //
 
 function extractCountryCodeFromSearchPath(path) {
-  if (path.indexOf("countryCode=") != -1) {
-    pos = path.indexOf("countryCode=");
-    country_code = path.substring(pos + 12, pos + 14);
+  if (typeof path != "undefined") {
+    if (path.indexOf("countryCode=") != -1) {
+      pos = path.indexOf("countryCode=");
+      country_code = path.substring(pos + 12, pos + 14);
+    }
+    else if (path.indexOf("f_G=") != -1) {
+      pos = path.indexOf("f_G=");
+      country_code = path.substring(pos + 4, pos + 6);
+    }
   }
-  else if (path.indexOf("f_G=") != -1) {
-    pos = path.indexOf("f_G=");
-    country_code = path.substring(pos + 4, pos + 6);
+  else {
+    country_code = "";
   }
 
   return country_code.toUpperCase();
