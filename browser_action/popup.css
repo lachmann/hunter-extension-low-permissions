@@ -36,6 +36,7 @@ a:focus, a:active {
   -o-transition: background-color 200ms ease-in-out;
   -ms-transition: background-color 200ms ease-in-out;
   transition: background-color 200ms ease-in-out;
+  display: none;
 }
 
 #completeSearch:hover {
