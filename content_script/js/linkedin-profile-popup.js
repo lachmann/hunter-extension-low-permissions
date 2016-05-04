@@ -287,10 +287,48 @@ function showParsedEmailAddresses() {
       }
 
       $.each(unique_email_addresses.slice(0,5), function(email_key, email_val) {
-        $(".eh_popup_parsed_email_addresses").append('<div class="eh_popup_email_list">' + email_val + '</div>');
+        $(".eh_popup_parsed_email_addresses").append('<div class="eh_popup_email_list">' + email_val + '<i class="fa fa-floppy-o eh_save_other_email" data-toggle="tooltip" data-placement="top" data-email="' + email_val + '" title="Save the lead with this email address"></i></div>');
       });
+
+      saveOtherEmailAddress();
     }
   }
+}
+
+// Save the lead with an other email address
+//
+function saveOtherEmailAddress() {
+  $(".eh_save_other_email").tooltip();
+
+  $(".eh_save_other_email").click(function() {
+    container = $(this).parent();
+    container.append("<i class='eh_save_other_email_icon fa fa-spinner fa-spin'></i>");
+
+    $(this).tooltip("hide");
+    $(this).remove();
+
+    window.profile["email"] = $(this).attr("data-email");
+
+    saveLead(window.profile, function(response) {
+      container.find(".fa-spinner").remove();
+      container.append("<i class='eh_save_other_email_icon fa fa-floppy-o'></i>");
+
+      if (typeof response.status != "undefined" && response.status == "success") {
+        container.append("<span class='eh_save_other_email_status'>Saved!</span>");
+        console.log("Saved in leads!");
+      }
+      else if (response == "please_sign_in") {
+        container.append("<span class='eh_save_other_email_status'>Please sign in!</span>");
+      }
+      else {
+        container.append("<span class='eh_save_other_email_status'>Error. Please try again later.</span>");
+      }
+
+      $(".eh_save_other_email_status").delay(3000).queue(function() {
+        $(this).remove();
+      })
+    });
+  })
 }
 
 // Show a list of email addresses found on the domain name
@@ -299,8 +337,9 @@ function showEmailList() {
   domain_search_endpoint = 'https://api.emailhunter.co/v1/search?domain=' + window.profile["domain"];
   apiCall(api_key, domain_search_endpoint, function(domain_json) {
     $.each(domain_json.emails.slice(0,5), function(email_key, email_val) {
-      $(".eh_popup_found_email_addresses").append('<div class="eh_popup_email_list">' + email_val.value + '</div>');
+      $(".eh_popup_found_email_addresses").append('<div class="eh_popup_email_list">' + email_val.value + '<i class="fa fa-floppy-o eh_save_other_email" data-toggle="tooltip" data-placement="top" data-email="' + email_val.value + '" title="Save the lead with this email address"></i></div>');
     });
+    saveOtherEmailAddress();
 
     $(".eh_popup_found_email_addresses").append('<div class="eh_popup_email_list"><a class="eh_popup_results_link" href="https://emailhunter.co/search/' + window.profile["domain"] + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">See results for ' + window.profile["domain"] + '<i class="fa fa-external-link"></i></a> <span class="eh_popup_separator">•</span> <span class="eh_popup_ask_domain">Try with another domain name</span></div>');
     askNewDomainListener();
