@@ -63,7 +63,11 @@ function selectProfiles() {
 // Start JS injection
 //
 chrome.extension.sendMessage({}, function(response) {
-  checkResultPageLoadingEnd();
+  chrome.storage.sync.get("linkedin_profiles_desactivated", function(value){
+    if (value["linkedin_profiles_desactivated"] != true) {
+      checkResultPageLoadingEnd();
+    }
+  });
 });
 
 

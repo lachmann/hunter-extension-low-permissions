@@ -79,6 +79,10 @@ function loadResults(api_key) {
     $('#completeSearch').hide();
     $('.results').hide();
     $(".loader").hide();
+
+    // Activate or not features on LinkedIn
+    linkedinProfileFeature();
+    linkedinSearchFeature();
   }
   else {
     $.ajax({
@@ -131,7 +135,7 @@ function loadResults(api_key) {
         if (json.emails.length > 0) {
           $("#completeSearch").fadeIn();
         }
-        
+
         // Verify an email address
         verifyEmailAddress();
 
@@ -335,4 +339,36 @@ function verifyEmailAddress() {
       });
     });
   })
+}
+
+
+// Activate or not EH on LinkedIn Profiles
+//
+function linkedinProfileFeature() {
+  chrome.storage.sync.get("linkedin_profiles_desactivated", function(value){
+    if (value["linkedin_profiles_desactivated"] == true) {
+      $("#linkedin_profiles_desactivated").prop("checked", true);
+    }
+  });
+
+  $("#linkedin_profiles_desactivated").change(function() {
+    feature_value = $(this).prop("checked");
+    chrome.storage.sync.set({"linkedin_profiles_desactivated": feature_value}, function() { });
+  });
+}
+
+
+// Activate or not EH on LinkedIn Search
+//
+function linkedinSearchFeature() {
+  chrome.storage.sync.get("linkedin_search_desactivated", function(value){
+    if (value["linkedin_search_desactivated"] == true) {
+      $("#linkedin_search_desactivated").prop("checked", true);
+    }
+  });
+
+  $("#linkedin_search_desactivated").change(function() {
+    feature_value = $(this).prop("checked");
+    chrome.storage.sync.set({"linkedin_search_desactivated": feature_value}, function() { });
+  });
 }

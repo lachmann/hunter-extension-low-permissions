@@ -182,8 +182,16 @@ h1 {
 .linkedin-notification .fa-linkedin {
   font-size: 50px;
   float: left;
-  margin-right: 20px;
+  margin: 0 25px 40px 0;
   color: #0077B5;
+}
+
+.linkedin_browser_popup_checkbox {
+  color: #bbb;
+}
+
+.linkedin_browser_popup_checkbox input {
+  margin-right: 5px;
 }
 
 .feedback-notification, .rate-notification, .contact-notification {

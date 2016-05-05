@@ -19,12 +19,16 @@ function injectLinkedinButton() {
 // Start JS injection
 //
 chrome.extension.sendMessage({}, function(response) {
-  var readyStateCheckInterval = setInterval(function() {
-    if (isProfileLoaded()) {
-      clearInterval(readyStateCheckInterval);
-      launchEmailHunterOnProfile();
+  chrome.storage.sync.get("linkedin_profiles_desactivated", function(value){
+    if (value["linkedin_profiles_desactivated"] != true) {
+      var readyStateCheckInterval = setInterval(function() {
+        if (isProfileLoaded()) {
+          clearInterval(readyStateCheckInterval);
+          launchEmailHunterOnProfile();
+        }
+      }, 20);
     }
-  }, 20);
+  });
 });
 
 
