@@ -6,7 +6,7 @@ function withoutSubDomain(domain) {
     newdomain = domain;
     newdomain = newdomain.substring(newdomain.indexOf(".") + 1);
 
-    if (newdomain.length > 5) {
+    if (newdomain.length > 6) {
      return newdomain;
     }
     else {

@@ -369,16 +369,16 @@
 
 .eh_save_other_email {
   margin-left: 10px;
-  color: #999;
+  color: #ddd;
   cursor: pointer;
 }
 
 .eh_popup_email_list:hover .eh_save_other_email {
-  color: #888;
+  color: #aaa;
 }
 
 .eh_save_other_email:hover {
-  color: #555 !important;
+  color: #999 !important;
 }
 
 .eh_save_other_email_status,
