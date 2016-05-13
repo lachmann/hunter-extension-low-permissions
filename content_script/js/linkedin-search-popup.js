@@ -73,7 +73,7 @@ function closeSearchPopup() {
 function addAccountInformationSearch() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("#eh_search_selection_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
+      $("#eh_search_selection_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
       $("#eh_search_selection_popup button").prop("disabled", true);
       $("#eh_search_selection_popup button").text("Please sign in to save leads");
     }

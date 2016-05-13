@@ -62,7 +62,7 @@ function appendOverlay(callback) {
 function addAccountInformation() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("#eh_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/users/sign_in?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
+      $("#eh_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
     }
     else {
       $("#eh_popup_account").html(json.email+' • <a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests</div>');

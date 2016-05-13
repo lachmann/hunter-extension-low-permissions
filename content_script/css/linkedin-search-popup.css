@@ -126,3 +126,7 @@
 #eh_search_selection_popup_account a:hover {
   text-decoration: none;
 }
+
+#eh_search_popup_error {
+  margin-top: 30px;
+}
