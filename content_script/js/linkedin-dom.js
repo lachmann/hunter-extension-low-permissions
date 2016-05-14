@@ -208,6 +208,29 @@ function websiteFromCompanyPage(html) {
 
 
 //
+// Size parse in company page
+//
+
+function employeesFromCompanyPage(html) {
+  if (isSalesNavigator()) {
+
+  } else if(isRecruiter()) {
+
+  }
+  else {
+    if (typeof $(html).find(".company-size p").text() != "undefined" && $(html).find(".company-size p").text() != "") {
+      return $(html).find(".company-size p").text();
+    }
+    else {
+      html = $(html).find("code").last().html()
+      json = html.replace("<!--", "").replace("-->", "");
+      return JSON.parse(json)["size"];
+    }
+  }
+}
+
+
+//
 // Clean the name by removing some titles
 //
 
