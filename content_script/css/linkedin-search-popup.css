@@ -113,7 +113,6 @@
 #eh_search_selection_popup_account {
   color: #aaa;
   border-top: 1px solid #eee;
-  margin-top: 20px;
   padding-top: 12px;
   font-size: 12px;
 }
@@ -128,5 +127,5 @@
 }
 
 #eh_search_popup_error {
-  margin-top: 30px;
+  padding-top: 15px;
 }

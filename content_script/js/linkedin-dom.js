@@ -183,7 +183,6 @@ function getMainProfileContent(html) {
 // Website parse in company page
 //
 
-
 function websiteFromCompanyPage(html) {
   if (isSalesNavigator()) {
     html = $(html).find("code").last().html();
