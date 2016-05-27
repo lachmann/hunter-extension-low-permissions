@@ -113,14 +113,14 @@ function launchSearch() {
           else { api_key = ''; }
 
           // Generate the email
-          generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + window.profile["domain"] + '&first_name=' + window.profile["first_name"] + '&last_name=' + window.profile["last_name"] + '&position=' + window.profile["position"] + '&company=' + window.profile["last_company"];
+          generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + encodeURI(window.profile["domain"]) + '&first_name=' + encodeURI(window.profile["first_name"]) + '&last_name=' + encodeURI(window.profile["last_name"]) + '&position=' + encodeURI(window.profile["position"]) + '&company=' + encodeURI(window.profile["last_company"]);
           apiCall(api_key, generate_email_endpoint, function(email_json) {
 
             // We count call to measure use
             countCall();
 
             // Count how much email addresses there is on the domain
-            count_endpoint = 'https://api.emailhunter.co/v1/email-count?domain=' + window.profile["domain"];
+            count_endpoint = 'https://api.emailhunter.co/v1/email-count?domain=' + encodeURI(window.profile["domain"]);
             apiCall(api_key, count_endpoint, function(count_json) {
 
               // If email addresses has NOT been found
