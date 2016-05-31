@@ -99,9 +99,11 @@ function launchSearch() {
 
     // Looking for domain name
     mainMessagePopup('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
-    getWebsite(window.profile, function(website) {
-      if (website != "none") {
-        window.profile["domain"] = cleanDomain(website);
+    getCompanyPage(window.profile, function(company_data) {
+      if (company_data != "none") {
+        window.profile["domain"] = cleanDomain(company_data.website);
+        window.profile["company_size"] = company_data.company_size;
+        window.profile["company_industry"] = company_data.company_industry;
 
         $('#eh_popup_results_link_container').html('<div class="eh_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
 
@@ -437,47 +439,6 @@ function showError(error) {
     $("#eh_search_popup_content_container").slideUp(300);
     $("#eh_search_popup_error").html(error).slideDown(300);
     console.log("ok");
-  }
-}
-
-
-// Finds the domain name of the last experience or returns false
-//
-function getWebsite(profile, callback) {
-  if (typeof profile["domain"] == "undefined") {
-    if (typeof profile["last_company"] != "undefined" && typeof profile["last_company_path"] != "undefined") {
-      if (profile["last_company_path"].indexOf("linkedin.com") > -1) {
-        linkedin_company_page = profile["last_company_path"];
-      } else {
-        linkedin_company_page = "https://www.linkedin.com" + profile["last_company_path"];
-      }
-      $.ajax({
-        url : linkedin_company_page,
-        type : 'GET',
-        success : function(response){
-          website = websiteFromCompanyPage(response);
-          company_size = employeesFromCompanyPage(response);
-          company_industry = industryFromCompanyPage(response);
-          console.log(company_size);
-          console.log(company_industry);
-          if (typeof website == "undefined" || website == "http://" || website == "http://N/A" || website == false) {
-            callback("none");
-          }
-          else {
-            callback(website);
-          }
-        },
-        error : function() {
-          callback("none");
-        }
-      });
-    }
-    else {
-      callback("none");
-    }
-  }
-  else {
-    callback(profile["domain"]);
   }
 }
 

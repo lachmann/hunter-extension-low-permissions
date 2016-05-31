@@ -131,12 +131,14 @@ function parseProfile(search_profile, index) {
       }
       else {
         // Visit company page and get the website
-        getWebsite(window.profile[index], function(website) {
-          if (website == "none") {
+        getCompanyPage(window.profile[index], function(company_data) {
+          if (company_data == "none") {
             saveOrNotAndUpdateStatus("Website not found", index);
           }
           else {
-            window.profile[index]["domain"] = cleanDomain(website);
+            window.profile[index]["domain"] = cleanDomain(company_data.website);
+            window.profile[index]["company_size"] = company_data.company_size;
+            window.profile[index]["company_industry"] = company_data.company_industry;
             findEmailAndSave(index);
           }
         });
