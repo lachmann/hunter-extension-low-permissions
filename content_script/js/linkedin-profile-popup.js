@@ -457,7 +457,9 @@ function getWebsite(profile, callback) {
         success : function(response){
           website = websiteFromCompanyPage(response);
           company_size = employeesFromCompanyPage(response);
+          company_industry = industryFromCompanyPage(response);
           console.log(company_size);
+          console.log(company_industry);
           if (typeof website == "undefined" || website == "http://" || website == "http://N/A" || website == false) {
             callback("none");
           }

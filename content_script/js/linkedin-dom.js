@@ -180,7 +180,7 @@ function getMainProfileContent(html) {
 
 
 //
-// Website parse in company page
+// Website parsing in company page
 //
 
 function websiteFromCompanyPage(html) {
@@ -207,14 +207,17 @@ function websiteFromCompanyPage(html) {
 
 
 //
-// Size parse in company page
+// Size parsing in company page
 //
 
 function employeesFromCompanyPage(html) {
   if (isSalesNavigator()) {
-
+    html = $(html).find("code").last().html();
+    json = html.replace("<!--", "").replace("-->", "");
+    return JSON.parse(json)["account"]["fmtSize"];
   } else if(isRecruiter()) {
-
+    // TO DO
+    return "";
   }
   else {
     if (typeof $(html).find(".company-size p").text() != "undefined" && $(html).find(".company-size p").text() != "") {
@@ -224,6 +227,31 @@ function employeesFromCompanyPage(html) {
       html = $(html).find("code").last().html()
       json = html.replace("<!--", "").replace("-->", "");
       return JSON.parse(json)["size"];
+    }
+  }
+}
+
+//
+// Industry parsing in company page
+//
+
+function industryFromCompanyPage(html) {
+  if (isSalesNavigator()) {
+    html = $(html).find("code").last().html();
+    json = html.replace("<!--", "").replace("-->", "");
+    return JSON.parse(json)["account"]["industry"];
+  } else if(isRecruiter()) {
+    // TO DO
+    return "";
+  }
+  else {
+    if (typeof $(html).find(".industry p").text() != "undefined" && $(html).find(".industry p").text() != "") {
+      return $(html).find(".industry p").text();
+    }
+    else {
+      html = $(html).find("code").last().html()
+      json = html.replace("<!--", "").replace("-->", "");
+      return JSON.parse(json)["industry"];
     }
   }
 }
