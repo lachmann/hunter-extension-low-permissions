@@ -107,7 +107,7 @@ function loadResults(api_key) {
         }
 
         // Each email
-        $.each(json.emails.slice(0,20), function(email_key, email_val) {
+        $.each(json.emails.slice(0,10), function(email_key, email_val) {
 
           if (email_val.confidence < 30) { confidence_score_class = "low-score"; }
           else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
@@ -126,9 +126,9 @@ function loadResults(api_key) {
           });
         });
 
-        if (json.emails.length > 20) {
-          remaining_results = json.emails.length - 20;
-          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + remaining_results + ' more)</a>');
+        if (json.emails.length > 10) {
+          remaining_results = json.results - 10;
+          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
         }
 
         // Complete Search button
@@ -192,7 +192,7 @@ function resultsMessage(results_number) {
     $("#results-number").text('One email address found.');
   }
   else {
-    $("#results-number").text(results_number + ' email addresses found.');
+    $("#results-number").text(numberWithCommas(results_number) + ' email addresses found.');
   }
 }
 
