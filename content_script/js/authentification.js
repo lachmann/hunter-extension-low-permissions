@@ -4,7 +4,6 @@
 // Chrome local storage.
 //
 
-console.log(window.location.href);
 if (location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/chrome/welcome" ||
     location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/search") {
   api_key = document.getElementById("api_key").innerHTML;

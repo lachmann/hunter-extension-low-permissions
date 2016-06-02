@@ -438,7 +438,6 @@ function showError(error) {
   else if (linkedinPageType() == "search") {
     $("#eh_search_popup_content_container").slideUp(300);
     $("#eh_search_popup_error").html(error).slideDown(300);
-    console.log("ok");
   }
 }
 

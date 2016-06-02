@@ -383,5 +383,11 @@ function parseLinkedinProfile(html, callback) {
   // Country code
   parsed_profile['country_code'] = getCountryCode(html);
 
+  // Count the fact that a profile has been seen to display the warning at a
+  // good moment and avoid to be blocked by LinkedIn
+  if (parsed_profile['last_company'] != "") {
+    countOneProfileView();
+  }
+
   return callback(parsed_profile);
 }

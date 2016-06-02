@@ -255,7 +255,6 @@ function activateSearchButton() {
 function finishStatus() {
   window.number_processed ++;
 
-  //console.log(number_processed + " / " + window.selected_profiles.length);
   if (window.number_processed >= window.selected_profiles.length) {
     activateSearchButton();
     addAccountInformationSearch();

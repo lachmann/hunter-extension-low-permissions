@@ -1,0 +1,38 @@
+#eh_bar_usage_warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 30px 35px 30px;
+  background: #fff;
+  z-index: 11001;
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  border-bottom: 1px solid #eee;
+  -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  line-height: 24px;
+}
+
+#eh_bar_usage_warning .fa {
+  color: #e86240;
+  margin-right: 5px;
+}
+
+#eh_bar_usage_warning img {
+  height: 20px;
+  display: inline-block;;
+  margin-bottom: 25px;
+}
+
+.eh_usage_warning_container {
+  max-width: 800px;
+  margin: auto;
+}
+
+#eh_close_bar_usage_warning {
+  color: #888;
+  border-bottom: 1px dotted #999;
+  cursor: pointer;
+}
