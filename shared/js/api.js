@@ -53,7 +53,7 @@ function saveLead(lead, callback) {
     else { api_key = ""; }
 
     $.ajax({
-      url : "https://api.emailhunter.co/v1/lead?first_name="+ encodeURI(lead["first_name"]) + "&last_name=" + encodeURI(lead["last_name"]) + "&company=" + encodeURI(lead["last_company"]) + "&company_industry=" + encodeURI(lead["company_industry"]) + "&company_size=" + encodeURI(lead["company_size"]) + "&position=" + encodeURI(lead["position"]) + "&country_code=" + encodeURI(lead["country_code"]) + "&email=" + encodeURI(lead["email"]) + "&confidence_score=" + encodeURI(lead["confidence_score"]) + "&website=http://" + encodeURI(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURI(lead["linkedin_url"]) + "&api_key=" + api_key,
+      url : "https://api.emailhunter.co/v1/lead?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&api_key=" + api_key,
       headers: {"Email-Hunter-Origin": "chrome_extension"},
       type : 'POST',
       dataType : 'json',

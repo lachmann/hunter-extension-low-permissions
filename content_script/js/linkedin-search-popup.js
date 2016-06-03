@@ -158,7 +158,7 @@ function findEmailAndSave(index) {
     }
     else { api_key = ""; }
 
-    generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + encodeURI(window.profile[index]["domain"]) + '&first_name=' + encodeURI(window.profile[index]["first_name"]) + '&last_name=' + encodeURI(window.profile[index]["last_name"]) + '&position=' + encodeURI(window.profile[index]["position"]) + '&company=' + encodeURI(window.profile[index]["last_company"]);
+    generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + encodeURIComponent(window.profile[index]["domain"]) + '&first_name=' + encodeURIComponent(window.profile[index]["first_name"]) + '&last_name=' + encodeURIComponent(window.profile[index]["last_name"]) + '&position=' + encodeURIComponent(window.profile[index]["position"]) + '&company=' + encodeURIComponent(window.profile[index]["last_company"]);
     apiCall(api_key, generate_email_endpoint, function(email_json) {
 
       // If there is no result, we try to remove a subdomain
