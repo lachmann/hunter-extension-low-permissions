@@ -2,26 +2,51 @@
 // Inject Email Hunter checkboxes in the search
 //
 function injectLinkedinCheckboxes() {
-  $(".result.people").each(function(index) {
-    result = $(this);
-    var icon = chrome.extension.getURL('shared/img/icon48.png');
+  var icon = chrome.extension.getURL('shared/img/icon48.png');
 
-    // We check if the profile if out of network
-    if (result.find(".result-image").attr("href").slice(-14) != "OUT_OF_NETWORK" || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
-      result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+  if (isSalesNavigator()) {
+    $(".entity").not(".company-summary-entity").each(function(index) {
+      result = $(this);
 
-      selectProfiles();
-    }
-  });
+      // We check if the profile if out of network
+      if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1) {
+        result.find(".actions").append("<div class='eh_checkbox_container' style='margin-top: 7px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
+      }
+    });
+  } else if (isRecruiter()) {
+    // TO DO : compatibility with LinkedIn Recruiter
+  }
+  else {
+    $(".result.people").each(function(index) {
+      result = $(this);
+
+      // We check if the profile if out of network
+      if (result.find(".result-image").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
+        result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+      }
+    });
+  }
+
+  selectProfiles();
 }
 
 //
 // Add a "select all" checkbox
 //
 function selectAllCheckbox() {
+  // If there is at least one checkbox to check
   if ($(".eh_checkbox_container").length) {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
-    $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+
+
+    if (isSalesNavigator()) {
+      $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+    } else if (isRecruiter()) {
+      // TO DO : compatibility with LinkedIn Recruiter
+    }
+    else {
+      $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+    }
 
     $(".eh_selectall_checkbox_container").click(function() {
       checkbox = $(this).find(".fa").first();
@@ -109,7 +134,10 @@ function checkResultPageLoadingStart() {
 // Ok if there is no loader & profile are displayed
 //
 function isSearchLoading() {
-  if ($("#voltron-overlay").css('position') == 'absolute') {
+  if (isSalesNavigator() && $(".search-loader").length > 0) {
+    return true;
+  }
+  else if ($("#voltron-overlay").css('position') == 'absolute') {
     return true;
   }
   else {

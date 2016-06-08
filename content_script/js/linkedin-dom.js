@@ -51,7 +51,8 @@ function getLastCompanyPath(html) {
   var $html = $('<div />',{html:html});
 
   if (isSalesNavigator()) {
-    last_company_path = $html.find(".company-name a").first().attr("href");
+    url_position = html.indexOf("/sales/accounts/insights?companyId=");
+    last_company_path = html.slice(url_position, url_position + 45).split("\"")[0]
   } else if (isRecruiter()) {
     if (typeof($html.find(".position-header h5 a").first().attr("href")) != "undefined" &&
         $html.find(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {

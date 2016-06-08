@@ -4,16 +4,32 @@
 function updateSelection() {
   var selected_profiles = new Array;
 
-  $(".result.people").each(function(index) {
-    if($(this).find(".fa-check-square").length) {
-      profile_path = $(this).find(".title").attr("href");
-      profile_name = $(this).find(".title").html();
-      profile_id = $(this).attr("data-li-entity-id");
-      selected_profiles.push({ "profile_path":  profile_path,
-                               "profile_name": profile_name,
-                               "profile_id": profile_id });
-    }
-  });
+  if (isSalesNavigator()) {
+    $(".entity").each(function(index) {
+      if($(this).find(".fa-check-square").length) {
+        profile_path = $(this).find(".name a").attr("href");
+        profile_name = $(this).find(".name a").html();
+        profile_id = profile_path.slice(15,23);
+        selected_profiles.push({ "profile_path":  profile_path,
+                                 "profile_name": profile_name,
+                                 "profile_id": profile_id });
+      }
+    });
+  } else if (isRecruiter()) {
+    // TO DO : compatibility with LinkedIn Recruiter
+  }
+  else {
+    $(".result.people").each(function(index) {
+      if($(this).find(".fa-check-square").length) {
+        profile_path = $(this).find(".title").attr("href");
+        profile_name = $(this).find(".title").html();
+        profile_id = $(this).attr("data-li-entity-id");
+        selected_profiles.push({ "profile_path":  profile_path,
+                                 "profile_name": profile_name,
+                                 "profile_id": profile_id });
+      }
+    });
+  }
 
   window.selected_profiles = selected_profiles;
 }
@@ -61,6 +77,9 @@ function updateSelectionView() {
   else {
     closeSearchPopup();
   }
+
+  // Adapt the DOM in Sales Navigator
+  adaptSalesNavigatorBody();
 }
 
 function closeSearchPopup() {
@@ -236,6 +255,19 @@ function checkOptionSaveWithoutEmail() {
       $("#eh_save_without_email").prop("checked", true);
     }
   });
+}
+
+// Fix for Sales Navigator to avoid the popup to hide the body
+//
+function adaptSalesNavigatorBody() {
+  if (isSalesNavigator()) {
+    if (window.selected_profiles.length > 0) {
+      $("#body, .nav-wrapper").animate({ "margin-left": "50px" }, 300);
+    }
+    else {
+      $("#body, .nav-wrapper").removeAttr("style");
+    }
+  }
 }
 
 // View utilities

@@ -4,7 +4,7 @@
   border-radius: 3px;
   background-color: #fafafa;
   border: 1px solid #ddd;
-  width: 36px;
+  width: 38px;
   cursor: pointer;
   -webkit-transition: all .2s ease-in;
   -moz-transition: all .2s ease-in;
@@ -59,4 +59,12 @@
 
 #results_count {
   padding: 20px 0 !important;
+}
+
+/*
+Sales Navigator
+*/
+
+#search-results-container .spotlights-count-wrapper {
+  padding: 20px !important;
 }
