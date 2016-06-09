@@ -20,13 +20,13 @@ function injectLinkedinButton() {
 //
 chrome.extension.sendMessage({}, function(response) {
   chrome.storage.sync.get("linkedin_profiles_desactivated", function(value){
-    if (value["linkedin_profiles_desactivated"] != true) {
+    if (value["linkedin_profiles_desactivated"] != true && isProfilePage()) {
       var readyStateCheckInterval = setInterval(function() {
         if (isProfileLoaded()) {
           clearInterval(readyStateCheckInterval);
           launchEmailHunterOnProfile();
         }
-      }, 20);
+      }, 50);
     }
   });
 });
@@ -68,6 +68,16 @@ function isProfileLoaded() {
   else {
     return false;
   }
+}
+
+
+//
+// Is it a profile page?
+//
+
+function isProfilePage() {
+  if ($(".profile-actions").length) { return true }
+  else { return false }
 }
 
 

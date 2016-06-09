@@ -11,6 +11,7 @@
 
 
 //
+// PROFILE
 // Get first name, last name
 //
 
@@ -19,6 +20,16 @@ function getFullName(html) {
 
   if (isRecruiter()) {
     var full_name = $html.find("title").text();
+  }
+  else if (isSalesNavigator()) {
+    if ($html.find("title").text().substring(0, $html.find("title").text().indexOf(" |")) != "Profile Page") {
+      full_name = $html.find(".company-name").first().text();
+    }
+    else {
+      html = $html.find("code").last().html();
+      json = html.replace("<!--", "").replace("-->", "");
+      full_name = JSON.parse(json)["profile"]["fullName"];
+    }
   }
   else {
     var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
@@ -29,6 +40,7 @@ function getFullName(html) {
 
 
 //
+// PROFILE
 // Get last company
 //
 
@@ -36,7 +48,14 @@ function getLastCompany(html) {
   var $html = $('<div />',{html:html});
 
   if (isSalesNavigator()) {
-    last_company = $html.find(".company-name").first().text();
+    if (typeof $html.find(".company-name").first().text() != "undefined" && $html.find(".company-name").first().text() != "") {
+      last_company = $html.find(".company-name").first().text();
+    }
+    else {
+      html = $html.find("code").last().html();
+      json = html.replace("<!--", "").replace("-->", "");
+      last_company = JSON.parse(json)["positionsView"]["positions"][0]["position"]["companyName"];
+    }
   } else if (isRecruiter()) {
     last_company = $html.find(".position-header h5").first().text();
   }
@@ -51,11 +70,18 @@ function getLastCompanyPath(html) {
   var $html = $('<div />',{html:html});
 
   if (isSalesNavigator()) {
-    url_position = html.indexOf("/sales/accounts/insights?companyId=");
-    last_company_path = html.slice(url_position, url_position + 45).split("\"")[0]
+    if (typeof $html.find(".company-name a").first().attr("href") != "undefined" && $html.find(".company-name a").first().attr("href") != "") {
+      last_company_path = $html.find(".company-name a").first().attr("href");
+    }
+    else {
+      html = $html.find("code").last().html();
+      json = html.replace("<!--", "").replace("-->", "");
+      last_company_path = JSON.parse(json)["positionsView"]["positions"][0]["companyUrl"];
+
+      if (typeof last_company_path != "undefined") { last_company_path = last_company_path.replace("http://", "https://"); }
+    }
   } else if (isRecruiter()) {
-    if (typeof($html.find(".position-header h5 a").first().attr("href")) != "undefined" &&
-        $html.find(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
+    if (typeof($html.find(".position-header h5 a").first().attr("href")) != "undefined" && $html.find(".position-header h5 a").first().attr("href").indexOf("search?") == -1) {
       last_company_path = $html.find(".position-header h5 a").first().attr("href");
     }
     else {
@@ -71,6 +97,7 @@ function getLastCompanyPath(html) {
 
 
 //
+// PROFILE
 // Get position
 //
 
@@ -78,7 +105,14 @@ function getPosition(html) {
   var $html = $('<div />',{html:html});
 
   if (isSalesNavigator()) {
-    position = $html.find(".position-title").first().text(); // TO DO
+    if (typeof $html.find(".position-title").first().text() != "undefined" && $html.find(".position-title").first().text() != "") {
+      position = $html.find(".position-title").first().text();
+    }
+    else {
+      html = $html.find("code").last().html();
+      json = html.replace("<!--", "").replace("-->", "");
+      position = JSON.parse(json)["positionsView"]["positions"][0]["position"]["title"];
+    }
   }
   else if (isRecruiter()) {
     position = $html.find(".position-header h4 a").first().text();
@@ -91,6 +125,7 @@ function getPosition(html) {
 }
 
 //
+// PROFILE
 // Get LinkedIn URL
 //
 
@@ -98,7 +133,14 @@ function getLinkedinUrl(html) {
   var $html = $('<div />',{html:html});
 
   if (isSalesNavigator()) {
-    url = $html.find(".linkedin-logo").next().find("a").text();
+    if (typeof $html.find(".linkedin-logo").next().find("a").text() != "undefined" && $html.find(".linkedin-logo").next().find("a").text() != "") {
+      url = $html.find(".linkedin-logo").next().find("a").text();
+    }
+    else {
+      html = $html.find("code").last().html();
+      json = html.replace("<!--", "").replace("-->", "");
+      url = JSON.parse(json)["profile"]["publicLink"];
+    }
   }
   else if (isRecruiter()) {
     url = "https://www.linkedin.com" + $html.find(".public-profile a").attr("href");
@@ -111,6 +153,7 @@ function getLinkedinUrl(html) {
 }
 
 //
+// PROFILE
 // Get country code
 //
 
@@ -161,6 +204,7 @@ function extractCountryCodeFromSearchPath(path) {
 
 
 //
+// PROFILE
 // Profile main content
 // Used to find email addresses directly available on the profile.
 //
@@ -183,6 +227,7 @@ function getMainProfileContent(html) {
 
 
 //
+// COMPANY
 // Website parsing in company page
 //
 
@@ -210,6 +255,7 @@ function websiteFromCompanyPage(html) {
 
 
 //
+// COMPANY
 // Size parsing in company page
 //
 
@@ -235,6 +281,7 @@ function employeesFromCompanyPage(html) {
 }
 
 //
+// COMPANY
 // Industry parsing in company page
 //
 
@@ -261,6 +308,7 @@ function industryFromCompanyPage(html) {
 
 
 //
+// COMPANY
 // Parse the company of the last experience or returns "none"
 //
 function getCompanyPage(profile, callback) {
