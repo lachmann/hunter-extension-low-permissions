@@ -53,7 +53,7 @@ function incrementProfileViewsCount() {
 }
 
 function prepareLimitationWarning(views_count) {
-  if (views_count >= 300) {
+  if (views_count >= 400) {
     chrome.storage.sync.get('usage_warning_viewed', function(value) {
       if (typeof value["usage_warning_viewed"] === "undefined" || value["usage_warning_viewed"] == false) {
         displayLimitationWarning();
