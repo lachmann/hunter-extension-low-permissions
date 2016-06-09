@@ -38,14 +38,15 @@ function selectAllCheckbox() {
   if ($(".eh_checkbox_container").length) {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
-
-    if (isSalesNavigator()) {
-      $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
-    } else if (isRecruiter()) {
-      // TO DO : compatibility with LinkedIn Recruiter
-    }
-    else {
-      $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+    if ($(".eh_selectall_checkbox_container").length == 0) {
+      if (isSalesNavigator()) {
+        $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+      } else if (isRecruiter()) {
+        // TO DO : compatibility with LinkedIn Recruiter
+      }
+      else {
+        $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+      }
     }
 
     $(".eh_selectall_checkbox_container").click(function() {
