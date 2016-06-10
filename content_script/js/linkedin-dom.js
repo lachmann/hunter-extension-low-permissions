@@ -23,7 +23,7 @@ function getFullName(html) {
   }
   else if (isSalesNavigator()) {
     if ($html.find("title").text().substring(0, $html.find("title").text().indexOf(" |")) != "Profile Page") {
-      full_name = $html.find(".company-name").first().text();
+      full_name = $html.find("title").text().split(" |")[0];
     }
     else {
       html = $html.find("code").last().html();
@@ -35,6 +35,7 @@ function getFullName(html) {
     var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
   }
 
+  console.log(full_name);
   return cleanName(full_name);
 }
 
