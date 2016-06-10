@@ -36,17 +36,16 @@ function injectLinkedinCheckboxes() {
 function selectAllCheckbox() {
   // If there is at least one checkbox to check
   if ($(".eh_checkbox_container").length) {
+    $(".eh_selectall_checkbox_container").remove();
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
-    if ($(".eh_selectall_checkbox_container").length == 0) {
-      if (isSalesNavigator()) {
-        $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
-      } else if (isRecruiter()) {
-        // TO DO : compatibility with LinkedIn Recruiter
-      }
-      else {
-        $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
-      }
+    if (isSalesNavigator()) {
+      $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+    } else if (isRecruiter()) {
+      // TO DO : compatibility with LinkedIn Recruiter
+    }
+    else {
+      $("#results_count").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
     }
 
     $(".eh_selectall_checkbox_container").click(function() {
