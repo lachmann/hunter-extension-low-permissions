@@ -27,6 +27,8 @@ function getFullName(html) {
     }
     else {
       html = $html.find("code").last().html();
+      if (typeof html == "undefined") { return undefined; }
+
       json = html.replace("<!--", "").replace("-->", "");
       full_name = JSON.parse(json)["profile"]["fullName"];
     }
@@ -35,7 +37,6 @@ function getFullName(html) {
     var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
   }
 
-  console.log(full_name);
   return cleanName(full_name);
 }
 
@@ -54,6 +55,8 @@ function getLastCompany(html) {
     }
     else {
       html = $html.find("code").last().html();
+      if (typeof html == "undefined") { return undefined; }
+
       json = html.replace("<!--", "").replace("-->", "");
       last_company = JSON.parse(json)["positionsView"]["positions"][0]["position"]["companyName"];
     }
@@ -76,6 +79,8 @@ function getLastCompanyPath(html) {
     }
     else {
       html = $html.find("code").last().html();
+      if (typeof html == "undefined") { return undefined; }
+
       json = html.replace("<!--", "").replace("-->", "");
       last_company_path = JSON.parse(json)["positionsView"]["positions"][0]["companyUrl"];
 
@@ -111,6 +116,8 @@ function getPosition(html) {
     }
     else {
       html = $html.find("code").last().html();
+      if (typeof html == "undefined") { return undefined; }
+
       json = html.replace("<!--", "").replace("-->", "");
       position = JSON.parse(json)["positionsView"]["positions"][0]["position"]["title"];
     }
@@ -139,6 +146,8 @@ function getLinkedinUrl(html) {
     }
     else {
       html = $html.find("code").last().html();
+      if (typeof html == "undefined") { return undefined; }
+
       json = html.replace("<!--", "").replace("-->", "");
       url = JSON.parse(json)["profile"]["publicLink"];
     }
