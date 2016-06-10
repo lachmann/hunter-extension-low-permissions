@@ -22,7 +22,7 @@ function getFullName(html) {
     var full_name = $html.find("title").text();
   }
   else if (isSalesNavigator()) {
-    if ($html.find("title").text().substring(0, $html.find("title").text().indexOf(" |")) != "Profile Page") {
+    if ($("html").find("code").length) {
       full_name = $html.find("title").text().split(" |")[0];
     }
     else {
@@ -58,6 +58,8 @@ function getLastCompany(html) {
       if (typeof html == "undefined") { return undefined; }
 
       json = html.replace("<!--", "").replace("-->", "");
+      if (typeof JSON.parse(json)["positionsView"]["positions"] == "undefined") { return undefined; }
+      
       last_company = JSON.parse(json)["positionsView"]["positions"][0]["position"]["companyName"];
     }
   } else if (isRecruiter()) {
@@ -82,6 +84,8 @@ function getLastCompanyPath(html) {
       if (typeof html == "undefined") { return undefined; }
 
       json = html.replace("<!--", "").replace("-->", "");
+      if (typeof JSON.parse(json)["positionsView"]["positions"] == "undefined") { return undefined; }
+
       last_company_path = JSON.parse(json)["positionsView"]["positions"][0]["companyUrl"];
 
       if (typeof last_company_path != "undefined") { last_company_path = last_company_path.replace("http://", "https://"); }
@@ -119,6 +123,8 @@ function getPosition(html) {
       if (typeof html == "undefined") { return undefined; }
 
       json = html.replace("<!--", "").replace("-->", "");
+      if (typeof JSON.parse(json)["positionsView"]["positions"] == "undefined") { return undefined; }
+
       position = JSON.parse(json)["positionsView"]["positions"][0]["position"]["title"];
     }
   }
