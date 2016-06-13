@@ -22,7 +22,7 @@ function getFullName(html) {
     var full_name = $html.find("title").text();
   }
   else if (isSalesNavigator()) {
-    if (!$("html").find("code").length) {
+    if ($("html").find(".profile-actions").length != 0) {
       full_name = $html.find("title").text().split(" |")[0];
     }
     else {
