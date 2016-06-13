@@ -84,6 +84,10 @@ function updateSelectionView() {
 
 function closeSearchPopup() {
   $("#eh_search_selection_popup").remove();
+
+  if (isSalesNavigator()) {
+    $("#body, .nav-wrapper").removeAttr("style");
+  }
 }
 
 
