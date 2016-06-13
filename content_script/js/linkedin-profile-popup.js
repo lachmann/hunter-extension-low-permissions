@@ -95,7 +95,7 @@ function openPopup(callback) {
 // Launch email search
 //
 function launchSearch() {
-  if (window.profile["last_company"].length) {
+  if (typeof window.profile["last_company"] != "undefined" || window.profile["last_company"] != "") {
 
     // Looking for domain name
     mainMessagePopup('Looking for ' + window.profile["first_name"] + '\'s email address...', true);

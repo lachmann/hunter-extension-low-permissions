@@ -5,7 +5,8 @@
 //
 
 if (location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/chrome/welcome" ||
-    location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/search") {
+    location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/search" ||
+    location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/dashboard") {
   api_key = document.getElementById("api_key").innerHTML;
   chrome.storage.sync.set({'api_key': api_key}, function() {
     console.log("Email Hunter extension successfully installed.");

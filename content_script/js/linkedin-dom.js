@@ -22,7 +22,7 @@ function getFullName(html) {
     var full_name = $html.find("title").text();
   }
   else if (isSalesNavigator()) {
-    if ($("html").find("code").length) {
+    if (!$("html").find("code").length) {
       full_name = $html.find("title").text().split(" |")[0];
     }
     else {
@@ -59,7 +59,7 @@ function getLastCompany(html) {
 
       json = html.replace("<!--", "").replace("-->", "");
       if (typeof JSON.parse(json)["positionsView"]["positions"] == "undefined") { return undefined; }
-      
+
       last_company = JSON.parse(json)["positionsView"]["positions"][0]["position"]["companyName"];
     }
   } else if (isRecruiter()) {
