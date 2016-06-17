@@ -44,7 +44,7 @@ function incrementProfileViewsCount() {
     if (typeof value["linkedin_profile_views"] !== "undefined") {
       views_count = value["linkedin_profile_views"] + 1;
       updateProfileViewsCount(views_count);
-      prepareLimitationWarning(views_count);
+      //prepareLimitationWarning(views_count);
     }
     else {
       updateProfileViewsCount(1);
