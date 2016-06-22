@@ -86,7 +86,7 @@ function closeSearchPopup() {
   $("#eh_search_selection_popup").remove();
 
   if (isSalesNavigator()) {
-    $("#body, .nav-wrapper").removeAttr("style");
+    $("#body, .nav-wrapper").css( { "margin-left": "auto" } );
   }
 }
 
@@ -269,7 +269,7 @@ function adaptSalesNavigatorBody() {
       $("#body, .nav-wrapper").animate({ "margin-left": "50px" }, 300);
     }
     else {
-      $("#body, .nav-wrapper").removeAttr("style");
+      $("#body, .nav-wrapper").css( { "margin-left": "auto" } );
     }
   }
 }

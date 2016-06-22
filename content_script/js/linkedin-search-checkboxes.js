@@ -8,8 +8,8 @@ function injectLinkedinCheckboxes() {
     $(".entity").not(".company-summary-entity").each(function(index) {
       result = $(this);
 
-      // We check if the profile if out of network
-      if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1) {
+      // We check if it's a company or if the profile is out of network
+      if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1 && result.find(".name a").attr("href").indexOf("/sales/accounts") == -1) {
         result.find(".actions").append("<div class='eh_checkbox_container' style='margin-top: 7px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
       }
     });
@@ -34,9 +34,10 @@ function injectLinkedinCheckboxes() {
 // Add a "select all" checkbox
 //
 function selectAllCheckbox() {
+  $(".eh_selectall_checkbox_container").remove();
+  
   // If there is at least one checkbox to check
   if ($(".eh_checkbox_container").length) {
-    $(".eh_selectall_checkbox_container").remove();
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     if (isSalesNavigator()) {
