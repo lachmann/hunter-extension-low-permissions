@@ -56,7 +56,7 @@
   color: #555;
 }
 
-label {
+#eh_usage_warning_form label {
   color: #888 !important;
   cursor: pointer !important;
   margin-right: 20px !important;
