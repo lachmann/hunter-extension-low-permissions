@@ -4,7 +4,7 @@
 
 
 #eh_popup {
-  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
   background-color: #fff;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

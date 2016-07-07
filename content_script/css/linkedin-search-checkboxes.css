@@ -26,6 +26,7 @@
 .eh_checkbox_container .fa {
   font-size: 16px;
   color: #ddd;
+  vertical-align: top;
 }
 
 .eh_selectall_checkbox_container {

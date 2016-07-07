@@ -5,6 +5,7 @@ function injectLinkedinCheckboxes() {
   var icon = chrome.extension.getURL('shared/img/icon48.png');
 
   if (isSalesNavigator()) {
+    // Old version of Sales Navigator (still running on some account)
     $(".entity").not(".company-summary-entity").each(function(index) {
       result = $(this);
 
@@ -13,6 +14,17 @@ function injectLinkedinCheckboxes() {
         result.find(".actions").append("<div class='eh_checkbox_container' style='margin-top: 7px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
       }
     });
+
+    // New version of Sales Navigator
+    $("#results-list .result").each(function(index) {
+      result = $(this);
+
+      // We check if the profile if out of network
+      if (result.find(".profile-link").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
+        result.find(".actions").append("<div class='eh_checkbox_container' style='margin: 35px 0 0 0; line-height: 17px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+      }
+    });
+
   } else if (isRecruiter()) {
     // TO DO : compatibility with LinkedIn Recruiter
   }
@@ -35,7 +47,7 @@ function injectLinkedinCheckboxes() {
 //
 function selectAllCheckbox() {
   $(".eh_selectall_checkbox_container").remove();
-  
+
   // If there is at least one checkbox to check
   if ($(".eh_checkbox_container").length) {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
@@ -135,7 +147,7 @@ function checkResultPageLoadingStart() {
 // Ok if there is no loader & profile are displayed
 //
 function isSearchLoading() {
-  if (isSalesNavigator() && $(".search-loader").length > 0) {
+  if (isSalesNavigator() && ($(".search-loader").length > 0 || $(".results-loader-wrapper").not(".hidden").length > 0)) {
     return true;
   }
   else if ($("#voltron-overlay").css('position') == 'absolute') {

@@ -5,9 +5,22 @@ function updateSelection() {
   var selected_profiles = new Array;
 
   if (isSalesNavigator()) {
+    // Old version of Sales Navigator
     $(".entity").each(function(index) {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".name a").attr("href");
+        profile_name = $(this).find(".name a").html();
+        profile_id = profile_path.slice(15,23);
+        selected_profiles.push({ "profile_path":  profile_path,
+                                 "profile_name": profile_name,
+                                 "profile_id": profile_id });
+      }
+    });
+
+    // New version of Sales Navigator
+    $("#results-list .result").each(function(index) {
+      if($(this).find(".fa-check-square").length) {
+        profile_path = $(this).find(".profile-link").attr("href");
         profile_name = $(this).find(".name a").html();
         profile_id = profile_path.slice(15,23);
         selected_profiles.push({ "profile_path":  profile_path,
@@ -43,7 +56,7 @@ function updateSelectionView() {
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><input type="checkbox" id="eh_save_without_email"><label for="eh_save_without_email" id="eh_save_without_email_label">Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account">Loading...</div></div>');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account">Loading...</div></div>');
 
       // Add account information in the search
       addAccountInformationSearch();
@@ -235,13 +248,21 @@ function saveOrNotAndUpdateStatus(fail_status, index) {
 function saveWithoutEmailListener() {
   checkOptionSaveWithoutEmail();
 
-  $("#eh_save_without_email").change(function() {
+  $("#eh_save_without_email_label").unbind().click(function() {
+    checkbox = $(this).find(".fa").first();
+    if (checkbox.hasClass("fa-square")) {
+      checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+    }
+    else {
+      checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+    }
+
     updateOptionSaveWithoutEmail();
-  })
+  });
 }
 
 function updateOptionSaveWithoutEmail() {
-  if ($("#eh_save_without_email").is(':checked')) {
+  if ($("#eh_save_without_email_label .fa").hasClass("fa-check-square")) {
     chrome.storage.sync.set({'save_leads_without_emails': true}, function() {
       // Now leads can be saved ven if the email addresses are not found
     });
@@ -256,7 +277,7 @@ function updateOptionSaveWithoutEmail() {
 function checkOptionSaveWithoutEmail() {
   chrome.storage.sync.get('save_leads_without_emails', function(value){
     if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
-      $("#eh_save_without_email").prop("checked", true);
+      $("#eh_save_without_email_label .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
     }
   });
 }
@@ -266,7 +287,7 @@ function checkOptionSaveWithoutEmail() {
 function adaptSalesNavigatorBody() {
   if (isSalesNavigator()) {
     if (window.selected_profiles.length > 0) {
-      $("#body, .nav-wrapper").animate({ "margin-left": "50px" }, 300);
+      $("#body, .nav-wrapper").animate({ "margin-left": "20px" }, 300);
     }
     else {
       $("#body, .nav-wrapper").css( { "margin-left": "auto" } );
