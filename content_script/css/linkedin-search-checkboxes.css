@@ -30,6 +30,8 @@
 }
 
 .eh_selectall_checkbox_container {
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
+  font-size: 13px;
   padding: 5px;
   border-radius: 3px;
   background-color: #fafafa;
@@ -68,4 +70,8 @@ Sales Navigator
 
 #search-results-container .spotlights-count-wrapper {
   padding: 20px !important;
+}
+
+section.status-bar {
+  line-height: 27px;
 }

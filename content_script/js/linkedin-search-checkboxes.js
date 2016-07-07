@@ -53,7 +53,11 @@ function selectAllCheckbox() {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     if (isSalesNavigator()) {
-      $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+      // Old Sales Navigator
+      $(".spotlights-count-wrapper").prepend("<div class='eh_selectall_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
+
+      // New Sales Navigator
+      $(".status-container").append("<div class='eh_selectall_checkbox_container' style='line-height: 17px; margin: 0 0 0 10px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
     } else if (isRecruiter()) {
       // TO DO : compatibility with LinkedIn Recruiter
     }

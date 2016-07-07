@@ -15,12 +15,12 @@
   right: 20px;
   padding: 20px 20px 15px 20px;
   z-index: 11001;
-  width: 290px;
+  width: 300px;
 }
 
 
 #eh_search_selection_popup img {
-  height: 20px;
+  height: 18px;
 }
 
 .eh_search_popup_beta {
@@ -91,9 +91,31 @@
   border-bottom: 1px solid #eee;
 }
 
+#eh_search_status_list {
+  overflow-y: scroll;
+  max-height: 300px;
+  padding-right: 10px;
+}
+
+#eh_search_status_list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#eh_search_status_list::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background-color: #f3f3f3;
+}
+
+#eh_search_status_list::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #aaa;
+}
+
 #eh_search_status_list li {
-  margin: 8px 0;
+  margin: 12px 0;
   font-size: 13px;
+  line-height: 13px;
+  color: #555;
 }
 
 #eh_search_status_list li span {
