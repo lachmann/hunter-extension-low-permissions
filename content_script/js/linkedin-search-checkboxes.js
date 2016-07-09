@@ -9,9 +9,11 @@ function injectLinkedinCheckboxes() {
     $(".entity").not(".company-summary-entity").each(function(index) {
       result = $(this);
 
-      // We check if it's a company or if the profile is out of network
+      // If it's a company or if the profile is out of network
       if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1 && result.find(".name a").attr("href").indexOf("/sales/accounts") == -1) {
-        result.find(".actions").append("<div class='eh_checkbox_container' style='margin-top: 7px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
+        if (result.find(".actions .eh_checkbox_container").length == 0) {
+          result.find(".actions").append("<div class='eh_checkbox_container' style='margin-top: 7px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
+        }
       }
     });
 
@@ -21,7 +23,9 @@ function injectLinkedinCheckboxes() {
 
       // We check if the profile if out of network
       if (result.find(".profile-link").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
-        result.find(".actions").append("<div class='eh_checkbox_container' style='margin: 35px 0 0 0; line-height: 17px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+        if (result.find(".actions .eh_checkbox_container").length == 0) {
+          result.find(".actions").append("<div class='eh_checkbox_container' style='margin: 35px 0 0 0; line-height: 17px;'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+        }
       }
     });
 
@@ -34,7 +38,9 @@ function injectLinkedinCheckboxes() {
 
       // We check if the profile if out of network
       if (result.find(".result-image").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
-        result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+        if (result.find(".srp-actions .eh_checkbox_container").length == 0) {
+          result.find(".srp-actions").prepend("<div class='eh_checkbox_container'><img class='eh_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+        }
       }
     });
   }
@@ -45,11 +51,9 @@ function injectLinkedinCheckboxes() {
 //
 // Add a "select all" checkbox
 //
-function selectAllCheckbox() {
-  $(".eh_selectall_checkbox_container").remove();
-
-  // If there is at least one checkbox to check
-  if ($(".eh_checkbox_container").length) {
+function injectSelectAllCheckbox() {
+  // If there is at least one checkbox to check and no 'select all' yet
+  if ($(".eh_checkbox_container").length && $(".eh_selectall_checkbox_container").length == 0) {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     if (isSalesNavigator()) {
@@ -82,6 +86,7 @@ function selectAllCheckbox() {
   }
 }
 
+
 //
 // Select a profile to add to the list
 //
@@ -107,57 +112,18 @@ function selectProfiles() {
 chrome.extension.sendMessage({}, function(response) {
   chrome.storage.sync.get("linkedin_search_desactivated", function(value){
     if (value["linkedin_search_desactivated"] != true) {
-      checkResultPageLoadingEnd();
+      injectCheckboxes();
     }
   });
 });
 
 
 //
-// Listen when the search page is finally loaded
+// Inject the checkboxes
 //
-function checkResultPageLoadingEnd() {
+function injectCheckboxes() {
   var readyStateCheckInterval = setInterval(function() {
-    if (isSearchLoading() == false) {
-      clearInterval(readyStateCheckInterval);
-      checkResultPageLoadingStart();
-    }
-  }, 100);
-}
-
-
-//
-// Inject the checkboxes and listen if the search is about to be loaded again
-//
-function checkResultPageLoadingStart() {
-  injectLinkedinCheckboxes();
-  selectAllCheckbox();
-  closeSearchPopup();
-
-  var readyStateCheckInterval = setInterval(function() {
-    if (isSearchLoading()) {
-      clearInterval(readyStateCheckInterval);
-
-      updateSelection();
-      updateSelectionView();
-      checkResultPageLoadingEnd();
-    }
-  }, 100);
-}
-
-
-//
-// Check if the search page is displayed
-// Ok if there is no loader & profile are displayed
-//
-function isSearchLoading() {
-  if (isSalesNavigator() && ($(".search-loader").length > 0 || $(".results-loader-wrapper").not(".hidden").length > 0)) {
-    return true;
-  }
-  else if ($("#voltron-overlay").css('position') == 'absolute') {
-    return true;
-  }
-  else {
-    return false;
-  }
+    injectLinkedinCheckboxes();
+    injectSelectAllCheckbox();
+  }, 800);
 }
