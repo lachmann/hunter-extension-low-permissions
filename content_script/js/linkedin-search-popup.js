@@ -10,7 +10,7 @@ function updateSelection() {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".name a").attr("href");
         profile_name = $(this).find(".name a").html();
-        profile_id = profile_path.slice(15,23);
+        profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
                                  "profile_id": profile_id });
@@ -22,7 +22,7 @@ function updateSelection() {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".profile-link").attr("href");
         profile_name = $(this).find(".name a").html();
-        profile_id = profile_path.slice(15,23);
+        profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
                                  "profile_id": profile_id });
@@ -36,7 +36,7 @@ function updateSelection() {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".title").attr("href");
         profile_name = $(this).find(".title").html();
-        profile_id = $(this).attr("data-li-entity-id");
+        profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
                                  "profile_id": profile_id });
