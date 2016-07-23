@@ -83,8 +83,6 @@ function injectSelectAllCheckbox() {
       updateSelection();
       updateSelectionView();
     });
-
-    closeSearchPopup();
   }
 }
 
