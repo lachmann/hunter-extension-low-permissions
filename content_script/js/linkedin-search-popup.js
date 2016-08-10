@@ -9,7 +9,7 @@ function updateSelection() {
     $(".entity").each(function(index) {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".name a").attr("href");
-        profile_name = $(this).find(".name a").html();
+        profile_name = $(this).find(".name a").text();
         profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
@@ -21,7 +21,7 @@ function updateSelection() {
     $("#results-list .result").each(function(index) {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".profile-link").attr("href");
-        profile_name = $(this).find(".name a").html();
+        profile_name = $(this).find(".name a").text();
         profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
@@ -35,7 +35,7 @@ function updateSelection() {
     $(".result.people").each(function(index) {
       if($(this).find(".fa-check-square").length) {
         profile_path = $(this).find(".title").attr("href");
-        profile_name = $(this).find(".title").html();
+        profile_name = $(this).find(".main-headline").text();
         profile_id = profile_name.hashCode();
         selected_profiles.push({ "profile_path":  profile_path,
                                  "profile_name": profile_name,
@@ -114,7 +114,7 @@ function addAccountInformationSearch() {
       $("#eh_search_selection_popup button").text("Please sign in to save leads");
     }
     else {
-      $("#eh_search_selection_popup_account").html('<a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests</div>');
+      $("#eh_search_selection_popup_account").html('<a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+'</div>');
     }
   })
 }
