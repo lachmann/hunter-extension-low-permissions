@@ -45,6 +45,7 @@
   font-size: 18px;
   padding: 10px;
   color: #888;
+  transition: all 0.2s;
 }
 
 .eh_popup_question:hover {
@@ -60,6 +61,7 @@
   line-height: 16px;
   padding: 10px;
   color: #888;
+  transition: all 0.2s;
 }
 
 .eh_popup_close:hover {
@@ -68,11 +70,10 @@
 }
 
 .eh_popup_name {
-  margin-top: -10px;
-  font-size: 30px;
+  margin-top: -6px;
+  font-size: 24px;
   line-height: 33px;
   font-weight: 700;
-  margin-bottom: 10px;
 }
 
 .eh_popup_email_intro {
@@ -139,7 +140,7 @@
 #eh_popup_error {
   font-size: 16px;
   line-height: 22px;
-  margin: 30px 0 0 0;
+  margin: 20px 0 0 0;
 }
 
 .orange-btn {
@@ -241,12 +242,12 @@
   height: 1px;
   background: #eee;
   display: block;
-  margin: 30px 0 0 0;
+  margin: 25px 0 0 0;
 }
 
 #eh_popup_results_show p {
   font-size: 15px;
-  margin: 30px 0 15px 0;
+  margin: 25px 0 15px 0;
   color: #999;
 }
 
@@ -283,7 +284,7 @@
 }
 
 .eh_popup_confidence {
-  margin-top: 15px;
+  margin-top: 20px;
   color: #333;
 }
 
@@ -353,7 +354,7 @@
 #eh_popup_account {
   color: #aaa;
   border-top: 1px solid #eee;
-  margin-top: 30px;
+  margin-top: 25px;
   padding-top: 15px;
   font-size: 12px;
 }
@@ -371,6 +372,7 @@
   margin-left: 10px;
   color: #ddd;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .eh_popup_email_list:hover .eh_save_other_email {
@@ -385,4 +387,8 @@
 .eh_save_other_email_icon {
   margin-left: 10px;
   color: #aaa;
+}
+
+#eh_popup_requests {
+  line-height: 24px;
 }

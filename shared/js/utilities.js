@@ -50,6 +50,16 @@ function cleanUrlEnd(str) {
 
 
 //
+// Open in a new tab
+//
+
+function OpenInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
+
+//
 // Search and replace several elements in a string
 //
 String.prototype.allReplace = function(obj) {

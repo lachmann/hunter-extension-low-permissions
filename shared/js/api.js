@@ -52,22 +52,50 @@ function saveLead(lead, callback) {
     }
     else { api_key = ""; }
 
-    $.ajax({
-      url : "https://api.emailhunter.co/v1/lead?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&api_key=" + api_key,
-      headers: {"Email-Hunter-Origin": "chrome_extension"},
-      type : 'POST',
-      dataType : 'json',
-      success : function(json){
-        callback(json);
-      },
-      error: function(xhr) {
-        if (xhr.status == 401) {
-          callback("please_sign_in");
-        }
-        else {
-          callback("error");
-        }
+    chrome.storage.sync.get('current_leads_list_id', function(value) {
+      if (typeof value["current_leads_list_id"] !== "undefined" && value["current_leads_list_id"] !== "") {
+        leads_list_id = value["current_leads_list_id"];
       }
+      else { leads_list_id = ""; }
+
+      $.ajax({
+        url : "https://api.emailhunter.co/v2/leads?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&leads_list_id=" + leads_list_id + "&api_key=" + api_key,
+        headers: {"Email-Hunter-Origin": "chrome_extension"},
+        type : 'POST',
+        dataType : 'json',
+        success : function(json){
+          callback(json);
+        },
+        error: function(xhr) {
+          if (xhr.status == 401) {
+            callback("please_sign_in");
+          }
+          else {
+            callback("error");
+          }
+        }
+      });
     });
+  });
+}
+
+// Get the lists of leads of the user
+//
+function getLeadsLists(callback) {
+  chrome.storage.sync.get('api_key', function(value){
+    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
+      url = "https://api.emailhunter.co/v2/leads_lists?api_key="+value["api_key"];
+      $.ajax({
+        url : url,
+        type : 'GET',
+        dataType : 'json',
+        success : function(json){
+          return callback(json);
+        }
+      });
+    }
+    else {
+      callback("none");
+    }
   });
 }

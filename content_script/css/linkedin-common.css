@@ -1,0 +1,27 @@
+.eh_list_select {
+  background: 0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  width: 200px;
+  -webkit-appearance: menulist-button;
+  text-indent: 0;
+  font-size: 12px;
+  height: 24px;
+  color: #888;
+  transition: all 0.2s;
+}
+
+.eh_list_select:hover {
+  border: 1px solid #d2d2d2;
+  cursor: pointer;
+  color: #333;
+}
+
+.eh_list_select:focus,
+.eh_list_select:active  {
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid #e86240;
+  color: #333;
+}

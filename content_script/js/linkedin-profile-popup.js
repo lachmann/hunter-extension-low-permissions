@@ -4,7 +4,12 @@ function launchPopup() {
   appendOverlay(function() {
     openPopup(function() {
       launchSearch();
+
+      // Add account information in the popup
       addAccountInformation();
+
+      // Display the lists of leads
+      appendListSelector();
 
       // Analytics
       eventTrack("Open LinkedIn popup");
@@ -62,10 +67,10 @@ function appendOverlay(callback) {
 function addAccountInformation() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("#eh_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
+      $("#eh_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>');
     }
     else {
-      $("#eh_popup_account").html(json.email+' • <a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+' requests</div>');
+      $("#eh_popup_requests").html(numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests");
     }
   })
 }
@@ -77,7 +82,7 @@ function openPopup(callback) {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
 
-  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.profile["first_name"] + ' ' + window.profile["last_name"] + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="orange-btn" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div><div id="eh_email_action_message"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_account">Loading...</div></div>');
+  $("body").append('<div id="eh_popup"><a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank"><i class="fa fa-question-circle eh_popup_question"></i></a><i class="fa fa-ellipsis-v eh_popup_drag"></i><div class="eh_popup_close">&times;</div><div class="eh_popup_name">' + window.profile["first_name"] + ' ' + window.profile["last_name"] + '</div><div id="eh_popup_error"></div><form id="eh_popup_ask_domain"><div id="eh_popup_ask_domain_message"></div><input placeholder="company.com" id="eh_popup_ask_domain_field" type="text" name="domain"><button class="orange-btn" type="submit">Find</button></form><div id="eh_popup_content_container"><div id="eh_popup_content"></div><div id="eh_email_action_message"></div></div><div class="eh_popup_confidence_score"></div><div id="eh_popup_results_link_container"></div><div id="eh_popup_results_show"><div class="eh_popup_found_email_addresses"></div><div class="eh_popup_parsed_email_addresses"></div></div><div id="eh_popup_account"><div class="pull-right" id="eh_popup_requests"></div><div class="eh_list_select_container"></div></div></div>');
 
   $("#eh_popup")
     .css({

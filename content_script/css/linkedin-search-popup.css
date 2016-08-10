@@ -56,6 +56,7 @@
   line-height: 16px;
   padding: 10px;
   color: #888;
+  transition: all 0.2s;
 }
 
 #eh_search_popup_close:hover {
@@ -147,6 +148,7 @@
   border-top: 1px solid #eee;
   padding-top: 12px;
   font-size: 12px;
+  line-height: 22px;
 }
 
 #eh_search_selection_popup_account a {

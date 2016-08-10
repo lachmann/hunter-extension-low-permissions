@@ -56,10 +56,13 @@ function updateSelectionView() {
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account">Loading...</div></div>');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account"><div class="pull-right" id="eh_search_popup_requests"></div><div class="eh_list_select_container"></div></div></div>');
 
       // Add account information in the search
       addAccountInformationSearch();
+
+      // Display the lists of leads
+      appendListSelector();
 
       // Launch the search
       launchSearchParsing();
@@ -109,12 +112,12 @@ function closeSearchPopup() {
 function addAccountInformationSearch() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("#eh_search_selection_popup_account").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
+      $("#eh_search_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
       $("#eh_search_selection_popup button").prop("disabled", true);
       $("#eh_search_selection_popup button").text("Please sign in to save leads");
     }
     else {
-      $("#eh_search_selection_popup_account").html('<a target="_blank" href="https://emailhunter.co/leads?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">My leads</a><div class="pull-right">'+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+'</div>');
+      $("#eh_search_popup_requests").html(numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available));
     }
   })
 }
