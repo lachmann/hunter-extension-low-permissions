@@ -37,6 +37,8 @@ function getFullName(html) {
     var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
   }
 
+  console.log(full_name)
+  console.log(cleanName(full_name))
   return cleanName(full_name);
 }
 
@@ -369,29 +371,25 @@ function getCompanyPage(profile, callback) {
 //
 
 function cleanName(full_name) {
-  String.prototype.allReplace = function(obj) {
-      var retStr = this;
-      for (var x in obj) {
-          retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
+  if (full_name.split(/\s+/).length > 2) {
+    return full_name.allReplace(
+      {
+        ',? Jr.?': '',
+        ',? Sr.?': '',
+        ',? MBA': '',
+        ',? CPA': '',
+        ',? PhD': '',
+        ',? MD': '',
+        ',? MHA': '',
+        ',? CGA': '',
+        ',? ACCA': '',
+        ',? PMP': '',
+        ',? MSc': ''
       }
-      return retStr;
-  };
-
-  return full_name.allReplace(
-    {
-      ',? Jr.?': '',
-      ',? Sr.?': '',
-      ',? MBA': '',
-      ',? CPA': '',
-      ',? PhD': '',
-      ',? MD': '',
-      ',? MHA': '',
-      ',? CGA': '',
-      ',? ACCA': '',
-      ',? PMP': '',
-      ',? MSc': ''
-    }
-  );
+    );
+  } else {
+    return full_name;
+  }
 }
 
 
