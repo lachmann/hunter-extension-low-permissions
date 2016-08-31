@@ -53,7 +53,7 @@ function cleanUrlEnd(str) {
 // Open in a new tab
 //
 
-function OpenInNewTab(url) {
+function openInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
