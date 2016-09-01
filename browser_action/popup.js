@@ -68,10 +68,10 @@ function launchSearch() {
 function loadResults(api_key) {
 
   if (typeof api_key == "undefined") {
-    url = 'https://api.emailhunter.co/trial/v1/search?domain=' + window.domain;
+    url = 'https://api.emailhunter.co/trial/v2/domain-search?domain=' + window.domain;
   }
   else {
-    url = 'https://api.emailhunter.co/v1/search?domain=' + window.domain + '&api_key=' + api_key;
+    url = 'https://api.emailhunter.co/v2/domain-search?domain=' + window.domain + '&api_key=' + api_key;
   }
 
   if (window.domain == "linkedin.com") {
@@ -92,7 +92,7 @@ function loadResults(api_key) {
       dataType : 'json',
       success : function(json){
         $(".results").slideDown(300);
-        resultsMessage(json.results);
+        resultsMessage(json.meta.results);
         $(".loader").hide();
 
         // We count call to measure use
@@ -102,12 +102,12 @@ function loadResults(api_key) {
         addAccountInformation();
 
         // We display the email pattern
-        if (json.pattern != null) {
-          $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.pattern) + "@" + domain + "</strong></span>");
+        if (json.data.pattern != null) {
+          $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.data.pattern) + "@" + domain + "</strong></span>");
         }
 
         // Each email
-        $.each(json.emails.slice(0,10), function(email_key, email_val) {
+        $.each(json.data.emails.slice(0,10), function(email_key, email_val) {
 
           if (email_val.confidence < 30) { confidence_score_class = "low-score"; }
           else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
@@ -126,13 +126,13 @@ function loadResults(api_key) {
           });
         });
 
-        if (json.emails.length > 10) {
-          remaining_results = json.results - 10;
+        if (json.meta.results > 10) {
+          remaining_results = json.meta.results - 10;
           $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
         }
 
         // Complete Search button
-        if (json.emails.length > 0) {
+        if (json.meta.results > 0) {
           $("#completeSearch").fadeIn();
         }
 
@@ -276,7 +276,7 @@ function addAccountInformation() {
       $(".account-information").html("Not logged in <div class='pull-right'><a target='_blank' href='https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a> or <a target='_blank' href='https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a></div>");
     }
     else {
-      $(".account-information").html(""+json.email+"<div class='pull-right'>"+numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
+      $(".account-information").html(""+json.data.email+"<div class='pull-right'>"+numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
     }
   })
 }
@@ -298,10 +298,10 @@ function verifyEmailAddress() {
       api_key = value["api_key"];
 
       if (typeof api_key == "undefined") {
-        url = 'https://api.emailhunter.co/trial/v1/verify?email=' + email;
+        url = 'https://api.emailhunter.co/trial/v2/email-verifier?email=' + email;
       }
       else {
-        url = 'https://api.emailhunter.co/v1/verify?email=' + email + '&api_key=' + api_key;
+        url = 'https://api.emailhunter.co/v2/email-verifier?email=' + email + '&api_key=' + api_key;
       }
 
       $.ajax({
@@ -309,15 +309,15 @@ function verifyEmailAddress() {
         headers: {"Email-Hunter-Origin": "chrome_extension"},
         type : 'GET',
         dataType : 'json',
-        success : function(data){
+        success : function(json){
 
           // Update the number of requests
           addAccountInformation();
 
-          if (data.result == "deliverable") {
+          if (json.data.result == "deliverable") {
             verification_result_tag.html("<span class='green'><i class='fa fa-check'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Deliverable</a></span>");
           }
-          else if (data.result == "risky") {
+          else if (json.data.result == "risky") {
             verification_result_tag.html("<span class='dark-orange'><i class='fa fa-exclamation-triangle'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Risky</a></span>");
             }
           else

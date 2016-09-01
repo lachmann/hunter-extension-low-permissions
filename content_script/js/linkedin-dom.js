@@ -37,8 +37,6 @@ function getFullName(html) {
     var full_name = $html.find("title").text().substring(0, $html.find("title").text().indexOf(" |"));
   }
 
-  console.log(full_name)
-  console.log(cleanName(full_name))
   return cleanName(full_name);
 }
 

@@ -6,7 +6,7 @@ function apiCall(api_key, endpoint, callback) {
     api_key_param = '&api_key=' + api_key;
   }
   else if (endpoint.indexOf("email-count") == -1) {
-    endpoint = endpoint.replace("https://api.emailhunter.co/v1/", "https://api.emailhunter.co/trial/v1/");
+    endpoint = endpoint.replace("https://api.emailhunter.co/v2/", "https://api.emailhunter.co/trial/v2/");
     api_key_param = '';
   } else {
     api_key_param = '';

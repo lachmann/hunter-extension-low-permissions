@@ -56,7 +56,7 @@ function updateSelectionView() {
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><span class="eh_search_popup_beta">BETA</span><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account"><div class="pull-right" id="eh_search_popup_requests"></div><div class="eh_list_select_container"></div></div></div>');
+      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account"><div class="pull-right" id="eh_search_popup_requests"></div><div class="eh_list_select_container"></div></div></div>');
 
       // Add account information in the search
       addAccountInformationSearch();
@@ -117,7 +117,7 @@ function addAccountInformationSearch() {
       $("#eh_search_selection_popup button").text("Please sign in to save leads");
     }
     else {
-      $("#eh_search_popup_requests").html(numberWithCommas(json.calls.used)+" / "+numberWithCommas(json.calls.available));
+      $("#eh_search_popup_requests").html(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available));
     }
   })
 }
@@ -197,17 +197,17 @@ function findEmailAndSave(index) {
     }
     else { api_key = ""; }
 
-    generate_email_endpoint = 'https://api.emailhunter.co/v1/generate?domain=' + encodeURIComponent(window.profile[index]["domain"]) + '&first_name=' + encodeURIComponent(window.profile[index]["first_name"]) + '&last_name=' + encodeURIComponent(window.profile[index]["last_name"]) + '&position=' + encodeURIComponent(window.profile[index]["position"]) + '&company=' + encodeURIComponent(window.profile[index]["last_company"]);
+    generate_email_endpoint = 'https://api.emailhunter.co/v2/email-finder?domain=' + encodeURIComponent(window.profile[index]["domain"]) + '&first_name=' + encodeURIComponent(window.profile[index]["first_name"]) + '&last_name=' + encodeURIComponent(window.profile[index]["last_name"]) + '&position=' + encodeURIComponent(window.profile[index]["position"]) + '&company=' + encodeURIComponent(window.profile[index]["last_company"]);
     apiCall(api_key, generate_email_endpoint, function(email_json) {
 
       // If there is no result, we try to remove a subdomain
-      if (email_json.email == null && withoutSubDomain(window.profile[index]["domain"])) {
+      if (email_json.data.email == null && withoutSubDomain(window.profile[index]["domain"])) {
         window.profile[index]["domain"] = withoutSubDomain(window.profile[index]["domain"]);
         findEmailAndSave(index);
       }
       else {
-        window.profile[index]["email"] = email_json.email;
-        window.profile[index]["confidence_score"] = email_json.score;
+        window.profile[index]["email"] = email_json.data.email;
+        window.profile[index]["confidence_score"] = email_json.data.score;
 
         saveOrNotAndUpdateStatus("Email not found", index);
       }

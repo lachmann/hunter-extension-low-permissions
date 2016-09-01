@@ -31,10 +31,10 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 //
 function updateIconColor() {
   $.ajax({
-    url : 'https://api.emailhunter.co/v1/email-count?domain=' + window.currentDomain,
+    url : 'https://api.emailhunter.co/v2/email-count?domain=' + window.currentDomain,
     type : 'GET',
-    success : function(response){
-      if (response.count > 0) { setColoredIcon(); }
+    success : function(json){
+      if (json.data.total > 0) { setColoredIcon(); }
       else { setGreyIcon(); }
     },
     error : function() {
