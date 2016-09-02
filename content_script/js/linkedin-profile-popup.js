@@ -190,8 +190,8 @@ function showFoundEmailAddress(email_json, count_json) {
   showConfidence(email_json.data.score);
   addSaveButton(email_json.data.email);
 
-  window.profile["email"] = email_json.email;
-  window.profile["confidence_score"] = email_json.score;
+  window.profile["email"] = email_json.data.email;
+  window.profile["confidence_score"] = email_json.data.score;
 
   if (count_json.count > 1) { es = 'es' }
   else { es = '' }
