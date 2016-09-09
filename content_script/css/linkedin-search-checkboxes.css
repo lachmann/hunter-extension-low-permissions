@@ -1,4 +1,5 @@
 .eh_checkbox_container {
+  display: inline-block !important;
   padding: 5px;
   margin: -15px 0 5px 0;
   border-radius: 3px;
@@ -13,6 +14,7 @@
 }
 
 .eh_checkbox_container:hover {
+  display: inline-block !important;
   border: 1px solid #d5d5d5;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
 }
@@ -30,6 +32,7 @@
 }
 
 .eh_selectall_checkbox_container {
+  display: inline-block !important;
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
   font-size: 13px;
   padding: 5px;
@@ -49,6 +52,7 @@
 }
 
 .eh_selectall_checkbox_container:hover {
+  display: inline-block !important;
   border: 1px solid #d5d5d5;
   color: #555;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
@@ -59,6 +63,10 @@
   color: #ddd;
   margin-right: 10px;
 }
+
+/*
+Fix the position of the number of results in the search
+*/
 
 #results_count {
   padding: 20px 0 !important;

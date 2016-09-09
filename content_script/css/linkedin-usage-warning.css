@@ -1,4 +1,5 @@
 #eh_bar_usage_warning {
+  display: block !important;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,7 +24,7 @@
 
 #eh_bar_usage_warning img {
   height: 20px;
-  display: inline-block;;
+  display: inline-block;
   margin-bottom: 20px;
 }
 
