@@ -74,111 +74,99 @@ function loadResults(api_key) {
     url = 'https://api.emailhunter.co/v2/domain-search?domain=' + window.domain + '&api_key=' + api_key;
   }
 
-  if (window.domain == "linkedin.com") {
-    $('#currentDomain').hide();
-    $('#completeSearch').hide();
-    $('.results').hide();
-    $(".loader").hide();
+  $.ajax({
+    url : url,
+    headers: {"Email-Hunter-Origin": "chrome_extension"},
+    type : 'GET',
+    dataType : 'json',
+    success : function(json){
+      $(".results").slideDown(300);
+      resultsMessage(json.meta.results);
+      $(".loader").hide();
 
-    // Activate or not features on LinkedIn
-    linkedinProfileFeature();
-    linkedinSearchFeature();
-  }
-  else {
-    $.ajax({
-      url : url,
-      headers: {"Email-Hunter-Origin": "chrome_extension"},
-      type : 'GET',
-      dataType : 'json',
-      success : function(json){
-        $(".results").slideDown(300);
-        resultsMessage(json.meta.results);
-        $(".loader").hide();
+      // We count call to measure use
+      countCall();
 
-        // We count call to measure use
-        countCall();
+      // Update the number of requests
+      addAccountInformation();
 
-        // Update the number of requests
-        addAccountInformation();
+      // We display the email pattern
+      if (json.data.pattern != null) {
+        $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.data.pattern) + "@" + domain + "</strong></span>");
+      }
 
-        // We display the email pattern
-        if (json.data.pattern != null) {
-          $("#domain-pattern").html("Most common pattern: <strong>" + addPatternTitle(json.data.pattern) + "@" + domain + "</strong></span>");
-        }
+      // Each email
+      $.each(json.data.emails.slice(0,10), function(email_key, email_val) {
 
-        // Each email
-        $.each(json.data.emails.slice(0,10), function(email_key, email_val) {
+        if (email_val.confidence < 30) { confidence_score_class = "low-score"; }
+        else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
+        else { confidence_score_class = "average-score"; }
 
-          if (email_val.confidence < 30) { confidence_score_class = "low-score"; }
-          else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
-          else { confidence_score_class = "average-score"; }
+        $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span></div><div class="sources-list"></div></div>');
+        $('[data-toggle="tooltip"]').tooltip();
 
-          $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span></div><div class="sources-list"></div></div>');
-          $('[data-toggle="tooltip"]').tooltip();
+        // Each source
+        $.each(email_val.sources, function(source_key, source_val) {
 
-          // Each source
-          $.each(email_val.sources, function(source_key, source_val) {
+          if (source_val.uri.length > 60) { show_link = source_val.uri.substring(0, 50) + "..."; }
+          else { show_link = source_val.uri; }
 
-            if (source_val.uri.length > 60) { show_link = source_val.uri.substring(0, 50) + "..."; }
-            else { show_link = source_val.uri; }
-
-            $(".sources-list").last().append('<div class="source"><a href="' + source_val.uri + '" target="_blank">' + show_link + '</a></div>');
-          });
+          $(".sources-list").last().append('<div class="source"><a href="' + source_val.uri + '" target="_blank">' + show_link + '</a></div>');
         });
+      });
 
-        if (json.meta.results > 10) {
-          remaining_results = json.meta.results - 10;
-          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
-        }
+      if (json.meta.results > 10) {
+        remaining_results = json.meta.results - 10;
+        $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
+      }
 
-        // Complete Search button
-        if (json.meta.results > 0) {
-          $("#completeSearch").fadeIn();
-        }
+      // Complete Search button
+      if (json.meta.results > 0) {
+        $("#completeSearch").fadeIn();
+      }
 
-        // Verify an email address
-        verifyEmailAddress();
+      // Verify an email address
+      verifyEmailAddress();
 
-        // Deploy sources
-        $(".sources-link").click(function () {
-          if ($(this).parent().find(".sources-list").is(":visible")) {
-            $(this).parent().find(".sources-list").slideUp(300);
-            $(this).find(".fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down")
-          }
-          else {
-            $(this).parent().find(".sources-list").slideDown(300);
-            $(this).find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up")
-          }
-        });
-      },
-      error: function(xhr) {
-        if (xhr.status == 400) {
-          $(".error-message").text("Sorry, something went wrong on the query.");
-          $(".error").slideDown(300);
-          $(".loader").hide();
-        }
-        else if (xhr.status == 401) {
-          $(".connect-again-container").slideDown(300);
-          $(".loader").hide();
-        }
-        else if (xhr.status == 429) {
-          if (typeof api_key == "undefined") {
-            $(".connect-container").slideDown(300);
-            $(".loader").hide();
-          }
-          else {
-            $(".upgrade-container").slideDown(300);
-            $(".loader").hide();
-          }
+      // Deploy sources
+      $(".sources-link").click(function () {
+        if ($(this).parent().find(".sources-list").is(":visible")) {
+          $(this).parent().find(".sources-list").slideUp(300);
+          $(this).find(".fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down")
         }
         else {
-          $(".error-message").text("Something went wrong, please try again later.");
-          $(".error").slideDown(300);
+          $(this).parent().find(".sources-list").slideDown(300);
+          $(this).find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up")
+        }
+      });
+    },
+    error: function(xhr) {
+      if (xhr.status == 400) {
+        $(".error-message").text("Sorry, something went wrong on the query.");
+        $(".error").slideDown(300);
+        $(".loader").hide();
+      }
+      else if (xhr.status == 401) {
+        $(".connect-again-container").slideDown(300);
+        $(".loader").hide();
+      }
+      else if (xhr.status == 429) {
+        if (typeof api_key == "undefined") {
+          $(".connect-container").slideDown(300);
+          $(".loader").hide();
+        }
+        else {
+          $(".upgrade-container").slideDown(300);
           $(".loader").hide();
         }
       }
-    });
-  }
+      else {
+        $(".error-message").text("Something went wrong, please try again later.");
+        $(".error").slideDown(300);
+        $(".loader").hide();
+      }
+    }
+  });
 }
 
 
@@ -339,36 +327,4 @@ function verifyEmailAddress() {
       });
     });
   })
-}
-
-
-// Activate or not EH on LinkedIn Profiles
-//
-function linkedinProfileFeature() {
-  chrome.storage.sync.get("linkedin_profiles_desactivated", function(value){
-    if (value["linkedin_profiles_desactivated"] == true) {
-      $("#linkedin_profiles_desactivated").prop("checked", true);
-    }
-  });
-
-  $("#linkedin_profiles_desactivated").change(function() {
-    feature_value = $(this).prop("checked");
-    chrome.storage.sync.set({"linkedin_profiles_desactivated": feature_value}, function() { });
-  });
-}
-
-
-// Activate or not EH on LinkedIn Search
-//
-function linkedinSearchFeature() {
-  chrome.storage.sync.get("linkedin_search_desactivated", function(value){
-    if (value["linkedin_search_desactivated"] == true) {
-      $("#linkedin_search_desactivated").prop("checked", true);
-    }
-  });
-
-  $("#linkedin_search_desactivated").change(function() {
-    feature_value = $(this).prop("checked");
-    chrome.storage.sync.set({"linkedin_search_desactivated": feature_value}, function() { });
-  });
 }

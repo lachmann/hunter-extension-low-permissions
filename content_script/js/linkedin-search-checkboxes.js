@@ -110,11 +110,7 @@ function selectProfiles() {
 // Start JS injection
 //
 chrome.extension.sendMessage({}, function(response) {
-  chrome.storage.sync.get("linkedin_search_desactivated", function(value){
-    if (value["linkedin_search_desactivated"] != true) {
-      injectCheckboxes();
-    }
-  });
+  injectCheckboxes();
 });
 
 
