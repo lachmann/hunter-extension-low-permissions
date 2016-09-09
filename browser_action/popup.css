@@ -74,6 +74,11 @@ h1 {
   display: inline-block;
 }
 
+.email span {
+  color: transparent;
+  text-shadow: 0 0 6px #888;
+}
+
 #domain-pattern {
   margin: 5px 0 20px 0;
   font-size: 13px;

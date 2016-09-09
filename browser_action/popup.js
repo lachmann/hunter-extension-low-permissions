@@ -102,7 +102,12 @@ function loadResults(api_key) {
         else if (email_val.confidence > 70) { confidence_score_class = "high-score"; }
         else { confidence_score_class = "average-score"; }
 
-        $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_val.value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div><span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span></div><div class="sources-list"></div></div>');
+        email_value = email_val.value.replace("**", "<span data-toggle='tooltip' data-placement='right' title='Please log in to see the entire email addresses.'>aa</span>")
+
+        if (typeof api_key == "undefined") { verify_check = "" }
+        else { verify_check = '<span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span>' }
+
+        $(".results").append('<div class="result"><p class="sources-link light-grey">' + sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div>' + verify_check + '</div><div class="sources-list"></div></div>');
         $('[data-toggle="tooltip"]').tooltip();
 
         // Each source
