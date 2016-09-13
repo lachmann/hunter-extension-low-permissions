@@ -3,7 +3,6 @@
 //
 function injectLinkedinButton() {
   var icon = chrome.extension.getURL('shared/img/icon48_white.png');
-
   if (isSalesNavigator()) {
     $(".profile-actions").prepend('<button disabled style="margin: 0 10px 0 0;" class="eh_linkedin_button"><img src="' + icon + '">Email Hunter</button>');
   } else if(isRecruiter()) {
@@ -19,14 +18,12 @@ function injectLinkedinButton() {
 // Start JS injection
 //
 chrome.extension.sendMessage({}, function(response) {
-  if (isProfilePage()) {
-    var readyStateCheckInterval = setInterval(function() {
-      if (isProfileLoaded()) {
-        clearInterval(readyStateCheckInterval);
-        launchEmailHunterOnProfile();
-      }
-    }, 50);
-  }
+  var readyStateCheckInterval = setInterval(function() {
+    if (isProfileLoaded() && isProfilePage()) {
+      clearInterval(readyStateCheckInterval);
+      launchEmailHunterOnProfile();
+    }
+  }, 200);
 });
 
 
@@ -87,6 +84,6 @@ function isProfilePage() {
 //
 
 function parsingDuration() {
-  if (isRecruiter()) { return 1000; }
+  if (isRecruiter()) { return 500; }
   else { return 0; }
 }
