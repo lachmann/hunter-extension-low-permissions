@@ -51,12 +51,12 @@ function updateSelectionView() {
   if (window.selected_profiles.length > 0) {
     if (window.selected_profiles.length == 1) { s = ""; } else { s = "s"; }
 
-    if ($("#eh_search_selection_popup").length > 0) {
-      $("#eh_profile_selected").html('<strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected');
+    if ($("#hio_search_selection_popup").length > 0) {
+      $("#hio_profile_selected").html('<strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected');
     }
     else {
       var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-      $("body").append('<div id="eh_search_selection_popup"><i class="fa fa-ellipsis-v eh_search_popup_drag"></i><div id="eh_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="eh_search_popup_content_container"><div id="eh_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="eh_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="eh_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="eh_search_popup_error"></div><div id="eh_search_selection_popup_account"><div class="pull-right" id="eh_search_popup_requests"></div><div class="eh_list_select_container"></div></div></div>');
+      $("body").append('<div id="hio_search_selection_popup"><i class="fa fa-ellipsis-v hio_search_popup_drag"></i><div id="hio_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="hio_search_popup_content_container"><div id="hio_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="hio_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="hio_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="hio_search_popup_error"></div><div id="hio_search_selection_popup_account"><div class="pull-right" id="hio_search_popup_requests"></div><div class="hio_list_select_container"></div></div></div>');
 
       // Add account information in the search
       addAccountInformationSearch();
@@ -71,10 +71,10 @@ function updateSelectionView() {
       saveWithoutEmailListener();
 
       // Drag popup
-      $("#eh_search_selection_popup").draggable({ handle: ".eh_search_popup_drag" });
+      $("#hio_search_selection_popup").draggable({ handle: ".hio_search_popup_drag" });
 
       // Close popup
-      $("#eh_search_popup_close").click(function() {
+      $("#hio_search_popup_close").click(function() {
         closeSearchPopup();
       });
       $(document).keyup(function(e) {
@@ -85,9 +85,9 @@ function updateSelectionView() {
     }
 
     // Display the list in the popup
-    $("#eh_search_status_list").html("");
+    $("#hio_search_status_list").html("");
     window.selected_profiles.forEach(function(search_profile, index) {
-      $("#eh_search_status_list").append("<li data-profile-id='" + search_profile["profile_id"] + "'><span></span>" + search_profile["profile_name"] + "</li>");
+      $("#hio_search_status_list").append("<li data-profile-id='" + search_profile["profile_id"] + "'><span></span>" + search_profile["profile_name"] + "</li>");
     });
   }
   else {
@@ -99,7 +99,7 @@ function updateSelectionView() {
 }
 
 function closeSearchPopup() {
-  $("#eh_search_selection_popup").remove();
+  $("#hio_search_selection_popup").remove();
 
   if (isSalesNavigator()) {
     $("#body, .nav-wrapper").css( { "margin-left": "auto" } );
@@ -112,12 +112,12 @@ function closeSearchPopup() {
 function addAccountInformationSearch() {
   getAccountInformation(function(json) {
     if (json == "none") {
-      $("#eh_search_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
-      $("#eh_search_selection_popup button").prop("disabled", true);
-      $("#eh_search_selection_popup button").text("Please sign in to save leads");
+      $("#hio_search_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
+      $("#hio_search_selection_popup button").prop("disabled", true);
+      $("#hio_search_selection_popup button").text("Please sign in to save leads");
     }
     else {
-      $("#eh_search_popup_requests").html(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available));
+      $("#hio_search_popup_requests").html(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available));
     }
   })
 }
@@ -142,10 +142,10 @@ function fetchProfileFromSearch(profile_path, callback) {
 //    (full profile & company website)
 //
 function launchSearchParsing() {
-  $("#eh_search_selection_popup button").click(function() {
+  $("#hio_search_selection_popup button").click(function() {
     window.number_processed = 0;
     desactivateSearchButton();
-    $("#eh_search_status_list li span").text("Loading...");
+    $("#hio_search_status_list li span").text("Loading...");
 
     window.profile = new Array;
     window.selected_profiles.forEach(function(search_profile, index) {
@@ -225,19 +225,19 @@ function saveOrNotAndUpdateStatus(fail_status, index) {
 
   if (window.profile[index]["email"] != "") {
     saveLead(window.profile[index], function() {
-      $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved<i class='fa fa-check'></i>");
+      $("#hio_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved<i class='fa fa-check'></i>");
       finishStatus();
     });
   }
   else {
     chrome.storage.sync.get('save_leads_without_emails', function(value){
       if (typeof value["save_leads_without_emails"] == "undefined" || value["save_leads_without_emails"] == false) {
-        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html(fail_status + "<i class='fa fa-times'></i>");
+        $("#hio_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html(fail_status + "<i class='fa fa-times'></i>");
         finishStatus();
       }
       else {
         saveLead(window.profile[index], function() {
-          $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved without email<i class='fa fa-check'></i>");
+          $("#hio_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved without email<i class='fa fa-check'></i>");
           finishStatus();
         });
       }
@@ -251,7 +251,7 @@ function saveOrNotAndUpdateStatus(fail_status, index) {
 function saveWithoutEmailListener() {
   checkOptionSaveWithoutEmail();
 
-  $("#eh_save_without_email_label").unbind().click(function() {
+  $("#hio_save_without_email_label").unbind().click(function() {
     checkbox = $(this).find(".fa").first();
     if (checkbox.hasClass("fa-square")) {
       checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
@@ -265,7 +265,7 @@ function saveWithoutEmailListener() {
 }
 
 function updateOptionSaveWithoutEmail() {
-  if ($("#eh_save_without_email_label .fa").hasClass("fa-check-square")) {
+  if ($("#hio_save_without_email_label .fa").hasClass("fa-check-square")) {
     chrome.storage.sync.set({'save_leads_without_emails': true}, function() {
       // Now leads can be saved ven if the email addresses are not found
     });
@@ -280,7 +280,7 @@ function updateOptionSaveWithoutEmail() {
 function checkOptionSaveWithoutEmail() {
   chrome.storage.sync.get('save_leads_without_emails', function(value){
     if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
-      $("#eh_save_without_email_label .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+      $("#hio_save_without_email_label .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
     }
   });
 }
@@ -302,14 +302,14 @@ function adaptSalesNavigatorBody() {
 //
 
 function desactivateSearchButton() {
-  $("#eh_search_selection_popup button").prop("disabled", true);
-  $("#eh_search_selection_popup button").text("Please wait...");
-  $("#eh_search_selection_popup button").prepend("<i class='fa fa-spinner fa-spin'></i>");
+  $("#hio_search_selection_popup button").prop("disabled", true);
+  $("#hio_search_selection_popup button").text("Please wait...");
+  $("#hio_search_selection_popup button").prepend("<i class='fa fa-spinner fa-spin'></i>");
 }
 
 function activateSearchButton() {
-  $("#eh_search_selection_popup button").prop("disabled", false);
-  $("#eh_search_selection_popup button").text("Find email addresses & save leads");
+  $("#hio_search_selection_popup button").prop("disabled", false);
+  $("#hio_search_selection_popup button").text("Find email addresses & save leads");
 }
 
 function finishStatus() {

@@ -397,10 +397,10 @@ function cleanName(full_name) {
 //
 
 function linkedinPageType() {
-  if ($("#eh_popup").length) {
+  if ($("#hio_popup").length) {
     return "profile";
   }
-  else if ($("#eh_search_selection_popup").length) {
+  else if ($("#hio_search_selection_popup").length) {
     return "search";
   }
   else {

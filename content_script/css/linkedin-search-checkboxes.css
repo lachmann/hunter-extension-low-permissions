@@ -1,4 +1,4 @@
-.eh_checkbox_container {
+.hio_checkbox_container {
   display: block !important;
   padding: 5px;
   margin: -15px 0 5px 0;
@@ -13,25 +13,25 @@
   transition: all .1s ease-in;
 }
 
-.eh_checkbox_container:hover {
+.hio_checkbox_container:hover {
   display: block !important;
   border: 1px solid #d5d5d5;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
 }
 
-.eh_checkbox_icon {
+.hio_checkbox_icon {
   height: 16px;
   margin: 0 7px 0 0;
   vertical-align: top;
 }
 
-.eh_checkbox_container .fa {
+.hio_checkbox_container .fa {
   font-size: 16px;
   color: #ddd;
   vertical-align: top;
 }
 
-.eh_selectall_checkbox_container {
+.hio_selectall_checkbox_container {
   display: inline-block !important;
   font-size: 13px;
   padding: 5px;
@@ -50,14 +50,14 @@
   transition: all .1s ease-in;
 }
 
-.eh_selectall_checkbox_container:hover {
+.hio_selectall_checkbox_container:hover {
   display: inline-block !important;
   border: 1px solid #d5d5d5;
   color: #555;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
 }
 
-.eh_selectall_checkbox_container .fa {
+.hio_selectall_checkbox_container .fa {
   font-size: 16px;
   color: #ddd;
   margin-right: 10px;

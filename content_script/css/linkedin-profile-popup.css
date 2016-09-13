@@ -3,7 +3,7 @@
  **/
 
 
-#eh_popup {
+#hio_popup {
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
   background-color: #fff;
   -webkit-border-radius: 5px;
@@ -18,7 +18,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
-.eh_popup_drag {
+.hio_popup_drag {
   position: absolute;
   top: 17px;
   right: 110px;
@@ -27,18 +27,18 @@
   color: #888;
 }
 
-.eh_popup_drag:hover {
+.hio_popup_drag:hover {
   cursor: grab;
   cursor: -webkit-grab;
 }
 
-.eh_popup_drag:active,
-.eh_popup_drag:focus {
+.hio_popup_drag:active,
+.hio_popup_drag:focus {
   cursor: grabbing;
   cursor: -webkit-grabbing;
 }
 
-.eh_popup_question {
+.hio_popup_question {
   position: absolute;
   top: 17px;
   right: 65px;
@@ -48,12 +48,12 @@
   transition: all 0.2s;
 }
 
-.eh_popup_question:hover {
+.hio_popup_question:hover {
   cursor: pointer;
   color: #555;
 }
 
-.eh_popup_close {
+.hio_popup_close {
   position: absolute;
   top: 17px;
   right: 23px;
@@ -64,24 +64,24 @@
   transition: all 0.2s;
 }
 
-.eh_popup_close:hover {
+.hio_popup_close:hover {
   cursor: pointer;
   color: #555;
 }
 
-.eh_popup_name {
+.hio_popup_name {
   margin-top: -6px;
   font-size: 24px;
   line-height: 33px;
   font-weight: 700;
 }
 
-.eh_popup_email_intro {
+.hio_popup_email_intro {
   margin-top: 10px;
   font-size: 16px;
 }
 
-#eh_popup_content_container {
+#hio_popup_content_container {
   height: 20px;
   color: #e86240;
   font-weight: 600;
@@ -97,25 +97,25 @@
   border-radius: 3px;
 }
 
-#eh_popup_content_container .loader {
+#hio_popup_content_container .loader {
   margin-right: 10px;
   color: #888;
 }
 
-#eh_popup_content_container:hover {
+#hio_popup_content_container:hover {
   border: 1px solid #e7e7e7;
 }
 
-#eh_popup_content {
+#hio_popup_content {
   float: left;
 }
 
-.eh_popup_results_message {
+.hio_popup_results_message {
   color: #999;
   margin-top: 25px;
 }
 
-.eh_popup_results_link {
+.hio_popup_results_link {
   color: #999;
   border-bottom: 1px dotted #999;
   display: inline-block;
@@ -124,20 +124,20 @@
   height: 23px;
 }
 
-.eh_popup_results_link:hover,
-.eh_popup_results_link:focus,
-.eh_popup_results_link:active
+.hio_popup_results_link:hover,
+.hio_popup_results_link:focus,
+.hio_popup_results_link:active
  {
   color: #999 !important;
   text-decoration: none;
 }
 
-.eh_popup_results_link .fa-external-link {
+.hio_popup_results_link .fa-external-link {
   font-size: 10px;
   margin-left: 5px;
 }
 
-#eh_popup_error {
+#hio_popup_error {
   font-size: 16px;
   line-height: 22px;
   margin: 20px 0 0 0;
@@ -166,36 +166,36 @@
   text-decoration: none;
 }
 
-#eh_popup_ask_domain {
+#hio_popup_ask_domain {
   display: none;
   padding-bottom: 10px;
 }
 
-#eh_popup_ask_domain_message {
+#hio_popup_ask_domain_message {
   font-size: 16px;
   line-height: 26px;
   display: inline-block;
   margin-bottom: 30px;
 }
 
-#eh_popup_ask_domain_message strong {
+#hio_popup_ask_domain_message strong {
   font-weight: 600;
 }
 
-#eh_popup_ask_domain_message a {
+#hio_popup_ask_domain_message a {
   color: #333;
   border-bottom: 1px dotted #333;
 }
 
-#eh_popup_ask_domain_message a:hover {
+#hio_popup_ask_domain_message a:hover {
  text-decoration: none;
 }
 
-#eh_popup_ask_domain input[type="text"] {
+#hio_popup_ask_domain input[type="text"] {
   font-size: 16px;
 }
 
-#eh_popup_ask_domain_field {
+#hio_popup_ask_domain_field {
   width: 250px;
   font-size: 16px;
   padding: 10px;
@@ -210,34 +210,34 @@
   transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
 }
 
-#eh_popup_ask_domain_field:focus, #eh_popup_ask_domain_field:active {
+#hio_popup_ask_domain_field:focus, #hio_popup_ask_domain_field:active {
   outline: none;
   border: 1px solid #e86240;
 }
 
-#eh_popup_ask_domain button {
+#hio_popup_ask_domain button {
   border: 0;
   margin-left: 5px;
 }
 
-#eh_popup_ask_domain button:focus, #eh_popup_ask_domain button:active {
+#hio_popup_ask_domain button:focus, #hio_popup_ask_domain button:active {
   border: 0;
   margin-left: 5px;
   outline: 0;
 }
 
-#eh_popup_ask_domain button:disabled {
+#hio_popup_ask_domain button:disabled {
   opacity: 0.8;
   background: #e86240;
 }
 
-#eh_popup_results_link_container,
-#eh_popup_results_show {
+#hio_popup_results_link_container,
+#hio_popup_results_show {
   display: none;
   line-height: 23px;
 }
 
-#eh_popup_results_show hr {
+#hio_popup_results_show hr {
   border: 0;
   height: 1px;
   background: #eee;
@@ -245,50 +245,50 @@
   margin: 25px 0 0 0;
 }
 
-#eh_popup_results_show p {
+#hio_popup_results_show p {
   font-size: 15px;
   margin: 25px 0 15px 0;
   color: #999;
 }
 
-#eh_popup_results_show p strong {
+#hio_popup_results_show p strong {
   font-weight: 600;
   color: #555;
 }
 
-.eh_popup_email_list .eh_popup_ask_domain,
-.eh_popup_email_list .eh_popup_results_link {
+.hio_popup_email_list .hio_popup_ask_domain,
+.hio_popup_email_list .hio_popup_results_link {
   display: inline-block;
   margin: 6px 0 0 0;
 }
 
-.eh_popup_email_list {
+.hio_popup_email_list {
   margin: 6px 0 0 0;
 }
 
-.eh_popup_ask_domain {
+.hio_popup_ask_domain {
   color: #999;
   border-bottom: 1px dotted #999;
   display: inline-block;
   height: 23px;
 }
 
-.eh_popup_ask_domain:hover {
+.hio_popup_ask_domain:hover {
   text-decoration: none;
   cursor: pointer;
 }
 
-.eh_popup_separator {
+.hio_popup_separator {
   margin: 0 5px;
   color: #aaa;
 }
 
-.eh_popup_confidence {
+.hio_popup_confidence {
   margin-top: 20px;
   color: #333;
 }
 
-.eh_popup_confidence_bar {
+.hio_popup_confidence_bar {
   width: 200px;
   height: 5px;
   background-color: #eee;
@@ -300,7 +300,7 @@
   margin-top: 8px;
 }
 
-.eh_popup_confidence_level {
+.hio_popup_confidence_level {
   background-color: #e86240;
   height: 5px;
   -webkit-border-radius: 5px;
@@ -310,40 +310,40 @@
   border-radius: 5px;
 }
 
-.eh_popup_signin_link {
+.hio_popup_signin_link {
   color: #888 !important;
   margin-left: 15px;
   border-bottom: 1px dotted #888;
   text-decoration: none;
 }
 
-.eh_popup_signin_link:hover {
+.hio_popup_signin_link:hover {
   color: #888 !important;
   text-decoration: none;
 }
 
-#eh_copy_email_button, #eh_save_email_button {
+#hio_copy_email_button, #hio_save_email_button {
   float: right;
   cursor: pointer;
   color: #888;
 }
 
-#eh_copy_email_button:hover,
-#eh_save_email_button:hover {
+#hio_copy_email_button:hover,
+#hio_save_email_button:hover {
   color: #555;
 }
 
-#eh_save_email_button {
+#hio_save_email_button {
   margin-right: 10px;
 }
 
-.eh_save_lead_loader {
+.hio_save_lead_loader {
   color: #aaa;
   float: right;
   margin-right: 10px;
 }
 
-#eh_email_action_message {
+#hio_email_action_message {
   font-weight: 500;
   font-size: 12px;
   color: #888;
@@ -351,7 +351,7 @@
   margin-right: 15px;
 }
 
-#eh_popup_account {
+#hio_popup_account {
   color: #aaa;
   border-top: 1px solid #eee;
   margin-top: 25px;
@@ -359,36 +359,36 @@
   font-size: 12px;
 }
 
-#eh_popup_account a {
+#hio_popup_account a {
   color: #aaa;
   border-bottom: 1px dotted #aaa;
 }
 
-#eh_popup_account a:hover {
+#hio_popup_account a:hover {
   text-decoration: none;
 }
 
-.eh_save_other_email {
+.hio_save_other_email {
   margin-left: 10px;
   color: #ddd;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.eh_popup_email_list:hover .eh_save_other_email {
+.hio_popup_email_list:hover .hio_save_other_email {
   color: #aaa;
 }
 
-.eh_save_other_email:hover {
+.hio_save_other_email:hover {
   color: #999 !important;
 }
 
-.eh_save_other_email_status,
-.eh_save_other_email_icon {
+.hio_save_other_email_status,
+.hio_save_other_email_icon {
   margin-left: 10px;
   color: #aaa;
 }
 
-#eh_popup_requests {
+#hio_popup_requests {
   line-height: 24px;
 }

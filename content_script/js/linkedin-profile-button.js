@@ -4,12 +4,12 @@
 function injectLinkedinButton() {
   var icon = chrome.extension.getURL('shared/img/icon48_white.png');
   if (isSalesNavigator()) {
-    $(".profile-actions").prepend('<button disabled style="margin: 0 10px 0 0;" class="eh_linkedin_button"><img src="' + icon + '">Email Hunter</button>');
+    $(".profile-actions").prepend('<button disabled style="margin: 0 10px 0 0;" class="hio_linkedin_button"><img src="' + icon + '">Email Hunter</button>');
   } else if(isRecruiter()) {
-    $(".profile-actions").prepend('<button disabled style="margin: 0 10px 0 0;" class="eh_linkedin_button eh_linkedin_button_small"><img src="' + icon + '">Email Hunter</button>');
+    $(".profile-actions").prepend('<button disabled style="margin: 0 10px 0 0;" class="hio_linkedin_button hio_linkedin_button_small"><img src="' + icon + '">Email Hunter</button>');
   }
   else {
-    $(".profile-aux .profile-actions").prepend('<button disabled style="margin: 5px 5px 5px 0;" class="eh_linkedin_button"><img src="' + icon + '">Email Hunter</button>');
+    $(".profile-aux .profile-actions").prepend('<button disabled style="margin: 5px 5px 5px 0;" class="hio_linkedin_button"><img src="' + icon + '">Email Hunter</button>');
   }
 }
 
@@ -38,10 +38,10 @@ function launchEmailHunterOnProfile() {
   setTimeout(function(){
     parseLinkedinProfile($("html").html(), function(profile) {
       window.profile = profile;
-      $(".eh_linkedin_button").prop("disabled", false);
+      $(".hio_linkedin_button").prop("disabled", false);
 
       // Open popup on Linkedin profile
-      $(".eh_linkedin_button").click(function() {
+      $(".hio_linkedin_button").click(function() {
         launchPopup();
       });
     });
