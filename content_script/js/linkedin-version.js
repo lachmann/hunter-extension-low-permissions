@@ -4,12 +4,14 @@
 // the button.
 //
 
-function isSalesNavigator() {
-  if ($(".logo").text().trim() == "Sales Navigator") { return true; }
-  else { return false; }
-}
+var LinkedinVersion = {
+  isSalesNavigator: function() {
+    if ($(".logo").text().trim() == "Sales Navigator") { return true; }
+    else { return false; }
+  },
 
-function isRecruiter() {
-  if ($(".product span").first().text().trim() == "Recruiter") { return true; }
-  else { return false; }
+  isRecruiter: function() {
+    if ($(".product span").first().text().trim() == "Recruiter") { return true; }
+    else { return false; }
+  }
 }

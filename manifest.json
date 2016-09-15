@@ -28,9 +28,9 @@
   ],
   "background": {
     "scripts": [
-      "shared/js/jquery.min.js",
+      "shared/js/lib/jquery.min.js",
       "background/install-check.js",
-      "background/current-tab.js"]
+      "background/icon-color.js"]
   },
   "content_scripts": [
     {
@@ -38,7 +38,8 @@
         "*://*.emailhunter.co/*"
       ],
       "js": [
-        "shared/js/jquery.min.js",
+        "shared/js/lib/jquery.min.js",
+        "shared/js/account.js",
         "content_script/js/authentication.js",
         "content_script/js/install-buttons.js"
       ]
@@ -59,16 +60,17 @@
         "content_script/css/linkedin-profile-popup.css"
       ],
       "js": [
-        "shared/js/jquery.min.js",
-        "shared/js/jquery-ui.min.js",
-        "shared/js/bootstrap-tooltip.min.js",
+        "shared/js/lib/jquery.min.js",
+        "shared/js/lib/jquery-ui.min.js",
+        "shared/js/lib/bootstrap-tooltip.min.js",
         "shared/js/use-counter.js",
         "shared/js/utilities.js",
         "shared/js/api.js",
         "shared/js/account.js",
         "shared/js/analytics.js",
         "content_script/js/linkedin-list-selection.js",
-        "content_script/js/linkedin-dom.js",
+        "content_script/js/linkedin-parse-profile.js",
+        "content_script/js/linkedin-parse-company.js",
         "content_script/js/linkedin-version.js",
         "content_script/js/linkedin-usage-warning.js",
         "content_script/js/linkedin-search-checkboxes.js",

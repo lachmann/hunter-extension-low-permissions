@@ -4,7 +4,7 @@
 function injectLinkedinCheckboxes() {
   var icon = chrome.extension.getURL('shared/img/icon48.png');
 
-  if (isSalesNavigator()) {
+  if (LinkedinVersion.isSalesNavigator()) {
     // Old version of Sales Navigator (still running on some account)
     $(".entity").not(".company-summary-entity").each(function(index) {
       result = $(this);
@@ -29,7 +29,7 @@ function injectLinkedinCheckboxes() {
       }
     });
 
-  } else if (isRecruiter()) {
+  } else if (LinkedinVersion.isRecruiter()) {
     // TO DO : compatibility with LinkedIn Recruiter
   }
   else {
@@ -56,13 +56,13 @@ function injectSelectAllCheckbox() {
   if ($(".hio_checkbox_container").length && $(".hio_selectall_checkbox_container").length == 0) {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
-    if (isSalesNavigator()) {
+    if (LinkedinVersion.isSalesNavigator()) {
       // Old Sales Navigator
       $(".spotlights-count-wrapper").prepend("<div class='hio_selectall_checkbox_container'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
 
       // New Sales Navigator
       $(".status-container").append("<div class='hio_selectall_checkbox_container' style='line-height: 17px; margin: 0 0 0 10px;'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
-    } else if (isRecruiter()) {
+    } else if (LinkedinVersion.isRecruiter()) {
       // TO DO : compatibility with LinkedIn Recruiter
     }
     else {

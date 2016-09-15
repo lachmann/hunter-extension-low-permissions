@@ -78,24 +78,3 @@ function saveLead(lead, callback) {
     });
   });
 }
-
-// Get the lists of leads of the user
-//
-function getLeadsLists(callback) {
-  chrome.storage.sync.get('api_key', function(value){
-    if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-      url = "https://api.emailhunter.co/v2/leads_lists?api_key="+value["api_key"];
-      $.ajax({
-        url : url,
-        type : 'GET',
-        dataType : 'json',
-        success : function(json){
-          return callback(json);
-        }
-      });
-    }
-    else {
-      callback("none");
-    }
-  });
-}

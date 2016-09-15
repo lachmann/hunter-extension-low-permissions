@@ -1,5 +1,5 @@
 //
-// --- linkedin-usage-monitoring.js ---
+// --- linkedin-usage-warning.js ---
 //
 // A too intensive usage of LinkedIn can block an account.
 // One metric taken into account by LinkedIn is the number of page viewed in a
@@ -22,21 +22,15 @@ function countOneProfileView() {
 }
 
 function updateProfileViewsDate() {
-  chrome.storage.sync.set({'linkedin_profile_views_last': dateTodayString()}, function() {
-    // Profiles views counted for today
-  });
+  chrome.storage.sync.set({'linkedin_profile_views_last': dateTodayString()});
 }
 
 function updateProfileViewsCount(count) {
-  chrome.storage.sync.set({'linkedin_profile_views': count}, function() {
-    // Profiles views updated
-  });
+  chrome.storage.sync.set({'linkedin_profile_views': count});
 }
 
 function updateUsageWarningViewed(value) {
-  chrome.storage.sync.set({'usage_warning_viewed': value}, function() {
-    // Profile seen status updated
-  });
+  chrome.storage.sync.set({'usage_warning_viewed': value});
 }
 
 function updateUsageWarningHide(value) {

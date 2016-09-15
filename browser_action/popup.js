@@ -10,13 +10,12 @@ chrome.tabs.getSelected(null, function(tab) {
 
   launchSearch();
   feedbackNotification();
-  linkedinNotification();
 
   // Get account information
   addAccountInformation();
 
   // Analytics
-  eventTrack("Open browser popup");
+  Analytics.trackEvent("Open browser popup");
 });
 
 
@@ -206,15 +205,6 @@ function sourcesText(sources) {
 }
 
 
-// Show a notification to explain how to use EH on Linkedin if user is on Linkedin
-//
-function linkedinNotification() {
-  if (window.domain == "linkedin.com") {
-    $('.linkedin-notification').slideDown(300);
-  }
-}
-
-
 // Add the tooltips to the pattern
 //
 function addPatternTitle(pattern) {
@@ -264,7 +254,7 @@ $(".feedback_link").click(function() {
 // Get account information
 //
 function addAccountInformation() {
-  getAccountInformation(function(json) {
+  Account.get(function(json) {
     if (json == "none") {
       $(".account-information").html("Not logged in <div class='pull-right'><a target='_blank' href='https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a> or <a target='_blank' href='https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a></div>");
     }

@@ -2,14 +2,18 @@
 // are the most successful
 //
 
-function eventTrack(eventName) {
-  url = "https://emailhunter.co/events?name="+eventName;
-  $.ajax({
-    url : url,
-    type : 'GET',
-    dataType : 'json',
-    success : function(json){
-      // Done!
-    }
-  });
+var Analytics = {
+  trackEvent: function(eventName) {
+    url = "https://emailhunter.co/events?name="+eventName;
+    $.ajax({
+      url : url,
+      type : 'GET',
+      dataType : 'json',
+      success : function(json){
+        // Done!
+      }
+    });
+  }
 }
+
+var analytics = Object.create(Analytics);

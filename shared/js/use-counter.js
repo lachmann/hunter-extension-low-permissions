@@ -11,8 +11,6 @@ function countCall() {
       value['calls_count']++;
     }
 
-    chrome.storage.sync.set({'calls_count': value['calls_count']}, function() {
-      // Call successfully counted
-    });
+    chrome.storage.sync.set({'calls_count': value['calls_count']});
   });
 }

@@ -85,3 +85,39 @@ String.prototype.hashCode = function() {
   }
   return hash;
 };
+
+
+//
+// Clean the name by removing some titles
+//
+
+function cleanName(full_name) {
+  if (full_name.split(/\s+/).length > 2) {
+    return full_name.allReplace(
+      {
+        ',? Jr.?': '',
+        ',? Sr.?': '',
+        ',? MBA': '',
+        ',? CPA': '',
+        ',? PhD': '',
+        ',? MD': '',
+        ',? MHA': '',
+        ',? CGA': '',
+        ',? ACCA': '',
+        ',? PMP': '',
+        ',? MSc': ''
+      }
+    );
+  } else {
+    return full_name;
+  }
+}
+
+
+//
+// Search the email addresses in a given string
+//
+
+function parseProfileEmailAddresses(string) {
+  return string.match(/([a-zA-Z][\w+\-.]+@[a-zA-Z\d\-]+(\.[a-zA-Z]+)*\.[a-zA-Z]+)/gi);
+}

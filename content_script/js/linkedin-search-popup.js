@@ -4,7 +4,7 @@
 function updateSelection() {
   var selected_profiles = new Array;
 
-  if (isSalesNavigator()) {
+  if (LinkedinVersion.isSalesNavigator()) {
     // Old version of Sales Navigator
     $(".entity").each(function(index) {
       if($(this).find(".fa-check-square").length) {
@@ -28,7 +28,7 @@ function updateSelection() {
                                  "profile_id": profile_id });
       }
     });
-  } else if (isRecruiter()) {
+  } else if (LinkedinVersion.isRecruiter()) {
     // TO DO : compatibility with LinkedIn Recruiter
   }
   else {
@@ -62,7 +62,7 @@ function updateSelectionView() {
       addAccountInformationSearch();
 
       // Display the lists of leads
-      appendListSelector();
+      ListSelection.appendSelector();
 
       // Launch the search
       launchSearchParsing();
@@ -101,7 +101,7 @@ function updateSelectionView() {
 function closeSearchPopup() {
   $("#hio_search_selection_popup").remove();
 
-  if (isSalesNavigator()) {
+  if (LinkedinVersion.isSalesNavigator()) {
     $("#body, .nav-wrapper").css( { "margin-left": "auto" } );
   }
 }
@@ -110,7 +110,7 @@ function closeSearchPopup() {
 // Show account information
 //
 function addAccountInformationSearch() {
-  getAccountInformation(function(json) {
+  Account.get(function(json) {
     if (json == "none") {
       $("#hio_search_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
       $("#hio_search_selection_popup button").prop("disabled", true);
@@ -161,7 +161,7 @@ function parseProfile(search_profile, index) {
 
   // Fetch and parse the profile
   fetchProfileFromSearch(search_profile["profile_path"], function(response) {
-    parseLinkedinProfile(response, function(parsed_profile) {
+    LinkedinProfile.parse(response, function(parsed_profile) {
       window.profile[index] = parsed_profile;
       window.profile[index]["profile_id"] = search_profile["profile_id"];
 
@@ -170,7 +170,7 @@ function parseProfile(search_profile, index) {
       }
       else {
         // Visit company page and get the website
-        getCompanyPage(window.profile[index], function(company_data) {
+        LinkedinCompany.get(window.profile[index], function(company_data) {
           if (company_data == "none") {
             saveOrNotAndUpdateStatus("Website not found", index);
           }
@@ -288,7 +288,7 @@ function checkOptionSaveWithoutEmail() {
 // Fix for Sales Navigator to avoid the popup to hide the body
 //
 function adaptSalesNavigatorBody() {
-  if (isSalesNavigator()) {
+  if (LinkedinVersion.isSalesNavigator()) {
     if (window.selected_profiles.length > 0) {
       $("#body, .nav-wrapper").animate({ "margin-left": "20px" }, 300);
     }
