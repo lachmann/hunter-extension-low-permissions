@@ -8,81 +8,91 @@
 // are triggered.
 //
 
-function countOneProfileView() {
-  chrome.storage.sync.get('linkedin_profile_views_last', function(value){
-    if (typeof value["linkedin_profile_views_last"] === "undefined" || value["linkedin_profile_views_last"] != dateTodayString()) {
-      updateProfileViewsDate();
-      updateProfileViewsCount(1);
-      updateUsageWarningViewed(false);
-    }
-    else {
-      incrementProfileViewsCount();
-    }
-  });
-}
+LinkedinUsageWarning = {
+  dailyLimit: 1,
 
-function updateProfileViewsDate() {
-  chrome.storage.sync.set({'linkedin_profile_views_last': dateTodayString()});
-}
+  countOneProfileView: function() {
+    this_usage = this
 
-function updateProfileViewsCount(count) {
-  chrome.storage.sync.set({'linkedin_profile_views': count});
-}
-
-function updateUsageWarningViewed(value) {
-  chrome.storage.sync.set({'usage_warning_viewed': value});
-}
-
-function updateUsageWarningHide(value) {
-  chrome.storage.sync.set({'usage_warning_hide': value}, function() {
-    // Never show the warning in the future
-  });
-}
-
-function incrementProfileViewsCount() {
-  chrome.storage.sync.get('linkedin_profile_views', function(value){
-    if (typeof value["linkedin_profile_views"] !== "undefined") {
-      views_count = value["linkedin_profile_views"] + 1;
-      updateProfileViewsCount(views_count);
-      prepareLimitationWarning(views_count);
-    }
-    else {
-      updateProfileViewsCount(1);
-    }
-  })
-}
-
-function prepareLimitationWarning(views_count) {
-  if (views_count >= 400) {
-    chrome.storage.sync.get('usage_warning_hide', function(hide){
-      if (typeof hide['usage_warning_hide'] === "undefined") {
-        chrome.storage.sync.get('usage_warning_viewed', function(value) {
-          if (typeof value["usage_warning_viewed"] === "undefined" || value["usage_warning_viewed"] == false) {
-            displayLimitationWarning();
-          }
-        });
+    chrome.storage.sync.get('linkedin_profile_views_last', function(value){
+      if (typeof value["linkedin_profile_views_last"] === "undefined" || value["linkedin_profile_views_last"] != this_usage.dateTodayString()) {
+        this_usage.updateProfileViewsDate();
+        this_usage.updateProfileViewsCount(1);
+        this_usage.updateWarningViewed(false);
+      }
+      else {
+        this_usage.incrementProfileViewsCount();
       }
     });
-  }
-}
+  },
 
-function displayLimitationWarning() {
-  var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-  $("body").append('<div id="hio_bar_usage_warning"><form id="hio_usage_warning_form"><img src="' + logo + '" alt="Email Hunter"><br/>Wow! It seems you have visited an important number of profiles on LinkedIn today. LinkedIn may block your access if you continue to visit pages today. Please note that each profile saved from LinkedIn\'s search with Email Hunter is also a page view.<br/><br/><label for="hio_usage_warning_dont_show"><input type="checkbox" id="hio_usage_warning_dont_show">Don\'t show me this in the future</label><button type="submit">OK, I understand the risks</button></form></div>');
+  updateProfileViewsDate: function() {
+    chrome.storage.sync.set({'linkedin_profile_views_last': this_usage.dateTodayString()});
+  },
 
-  $("#hio_usage_warning_form").on("submit", function(){
-    $("#hio_bar_usage_warning").fadeOut(200);
-    updateUsageWarningViewed(true);
+  updateProfileViewsCount: function(count) {
+    chrome.storage.sync.set({'linkedin_profile_views': count});
+  },
 
-    if ($("#hio_usage_warning_dont_show").prop("checked") == true) {
-      updateUsageWarningHide(true);
+  updateWarningViewed: function(value) {
+    chrome.storage.sync.set({'usage_warning_viewed': value});
+  },
+
+  updateWarningHide: function(value) {
+    chrome.storage.sync.set({'usage_warning_hide': value});
+  },
+
+  incrementProfileViewsCount: function() {
+    this_usage = this
+
+    chrome.storage.sync.get('linkedin_profile_views', function(value){
+      if (typeof value["linkedin_profile_views"] !== "undefined") {
+        views_count = value["linkedin_profile_views"] + 1;
+        this_usage.updateProfileViewsCount(views_count);
+        this_usage.prepareLimitationWarning(views_count);
+      }
+      else {
+        this_usage.updateProfileViewsCount(1);
+      }
+    })
+  },
+
+  prepareLimitationWarning: function(views_count) {
+    this_usage = this
+
+    if (views_count >= this_usage.dailyLimit) {
+      chrome.storage.sync.get('usage_warning_hide', function(hide){
+        if (typeof hide['usage_warning_hide'] === "undefined") {
+          chrome.storage.sync.get('usage_warning_viewed', function(value) {
+            if (typeof value["usage_warning_viewed"] === "undefined" || value["usage_warning_viewed"] == false) {
+              this_usage.displayLimitationWarning();
+            }
+          });
+        }
+      });
     }
+  },
 
-    return false;
-  });
-}
+  displayLimitationWarning: function() {
+    this_usage = this;
 
-function dateTodayString() {
-  date = new Date()
-  return date.toDateString()
+    var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
+    $("body").append('<div id="hio_bar_usage_warning"><form id="hio_usage_warning_form"><img src="' + logo + '" alt="Email Hunter"><br/>Wow! It seems you have visited an important number of profiles on LinkedIn today. LinkedIn may block your access if you continue to visit pages today. Please note that each profile saved from LinkedIn\'s search with Email Hunter is also a page view.<br/><br/><label for="hio_usage_warning_dont_show"><input type="checkbox" id="hio_usage_warning_dont_show">Don\'t show me this in the future</label><button type="submit">OK, I understand the risks</button></form></div>');
+
+    $("#hio_usage_warning_form").on("submit", function(){
+      $("#hio_bar_usage_warning").fadeOut(200);
+      this_usage.updateWarningViewed(true);
+
+      if ($("#hio_usage_warning_dont_show").prop("checked") == true) {
+        this_usage.updateWarningHide(true);
+      }
+
+      return false;
+    });
+  },
+
+  dateTodayString: function() {
+    date = new Date()
+    return date.toDateString()
+  }
 }

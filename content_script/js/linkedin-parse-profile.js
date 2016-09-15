@@ -208,7 +208,7 @@ var LinkedinProfile = {
     // Count the fact that a profile has been seen to display the warning at a
     // good moment and avoid to be blocked by LinkedIn
     if (parsed_profile['last_company'] != "") {
-      countOneProfileView();
+      LinkedinUsageWarning.countOneProfileView();
     }
 
     return callback(parsed_profile);
