@@ -105,7 +105,19 @@ var DomainSearchPopup = {
           if (typeof api_key == "undefined") { verify_check = "" }
           else { verify_check = '<span class="verify_email" data-toggle="tooltip" data-placement="top" title="" data-original-title="Verify"><i class="fa fa-check"></i></span><span class="verification_result"></span>' }
 
-          $(".results").append('<div class="result"><p class="sources-link light-grey">' + this_popup.sourcesText(email_val.sources.length) + '<i class="fa fa-caret-down"></i></p><div class="email-address"><div class="email">' + email_value + '</div><div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div>' + verify_check + '</div><div class="sources-list"></div></div>');
+          $(".results").append('\n\
+            <div class="result">\n\
+              <p class="sources-link light-grey">' + this_popup.sourcesText(email_val.sources.length) + '\n\
+                <i class="fa fa-caret-down"></i>\n\
+              </p>\n\
+              <div class="email-address">\n\
+                <div class="email">' + email_value + '</div>\n\
+                <div class="score ' + confidence_score_class + '" data-toggle="tooltip" data-placement="top" data-original-title="Confidence score: ' + email_val.confidence + '%"></div>\n\
+                ' + verify_check + '\n\
+              </div>\n\
+              <div class="sources-list"></div>\n\
+            </div>\n\
+          ');
           $('[data-toggle="tooltip"]').tooltip();
 
           // Each source
@@ -235,7 +247,13 @@ var DomainSearchPopup = {
   addAccountInformation: function() {
     Account.get(function(json) {
       if (json == "none") {
-        $(".account-information").html("Not logged in <div class='pull-right'><a target='_blank' href='https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a> or <a target='_blank' href='https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a></div>");
+        $(".account-information").html("\n\
+          Not logged in \n\
+          <div class='pull-right'>\n\
+            <a target='_blank' href='https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a>\n\
+            or <a target='_blank' href='https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a>\n\
+          </div>\n\
+        ");
       }
       else {
         $(".account-information").html(""+json.data.email+"<div class='pull-right'>"+numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");

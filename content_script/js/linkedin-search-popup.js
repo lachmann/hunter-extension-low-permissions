@@ -57,7 +57,31 @@ var LinkedinSearchPopup = {
       }
       else {
         var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-        $("body").append('<div id="hio_search_selection_popup"><i class="fa fa-ellipsis-v hio_search_popup_drag"></i><div id="hio_search_popup_close">&times;</div><img src="' + logo + '" alt="Email Hunter"><div id="hio_search_popup_content_container"><div id="hio_profile_selected"><strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected</div><ul id="hio_search_status_list"></ul><button class="orange-btn">Find email addresses & save leads</button><br/><br/><label id="hio_save_without_email_label"><i class="fa fa-square"></i>Save even if the email adress is not found.</label></div><div id="hio_search_popup_error"></div><div id="hio_search_selection_popup_account"><div class="pull-right" id="hio_search_popup_requests"></div><div class="hio_list_select_container"></div></div></div>');
+
+        $("body").append('\n\
+          <div id="hio_search_selection_popup">\n\
+            <i class="fa fa-ellipsis-v hio_search_popup_drag"></i>\n\
+            <div id="hio_search_popup_close">&times;</div>\n\
+            <img src="' + logo + '" alt="Email Hunter">\n\
+            <div id="hio_search_popup_content_container">\n\
+              <div id="hio_profile_selected">\n\
+                <strong>' + window.selected_profiles.length + ' profile' + s + '</strong> selected\n\
+              </div>\n\
+              <ul id="hio_search_status_list"></ul>\n\
+              <button class="orange-btn">Find email addresses & save leads</button>\n\
+              <br/><br/>\n\
+              <label id="hio_save_without_email_label">\n\
+                <i class="fa fa-square"></i>\n\
+                Save even if the email adress is not found.\n\
+              </label>\n\
+            </div>\n\
+            <div id="hio_search_popup_error"></div>\n\
+            <div id="hio_search_selection_popup_account">\n\
+              <div class="pull-right" id="hio_search_popup_requests"></div>\n\
+              <div class="hio_list_select_container"></div>\n\
+            </div>\n\
+          </div>\n\
+        ');
 
         // Add account information in the search
         this_popup.addAccountInformation();
@@ -110,7 +134,11 @@ var LinkedinSearchPopup = {
   addAccountInformation: function() {
     Account.get(function(json) {
       if (json == "none") {
-        $("#hio_search_popup_requests").html('Not logged in. <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a> or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>');
+        $("#hio_search_popup_requests").html('\n\
+          Not logged in. \n\
+          <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a>\n\
+          or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>\n\
+        ');
         $("#hio_search_selection_popup button").prop("disabled", true);
         $("#hio_search_selection_popup button").text("Please sign in to save leads");
       }
@@ -200,7 +228,7 @@ var LinkedinSearchPopup = {
         // If there is no result, we try to remove a subdomain
         if (email_json.data.email == null && withoutSubDomain(window.profile[index]["domain"])) {
           window.profile[index]["domain"] = withoutSubDomain(window.profile[index]["domain"]);
-          findEmailAndSave(index);
+          this_popup.findEmailAndSave(index);
         }
         else {
           window.profile[index]["email"] = email_json.data.email;

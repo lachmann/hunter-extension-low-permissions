@@ -19,7 +19,12 @@ LinkedinSearchCheckboxes = {
         // If it's a company or if the profile is out of network
         if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1 && result.find(".name a").attr("href").indexOf("/sales/accounts") == -1) {
           if (result.find(".actions .hio_checkbox_container").length == 0) {
-            result.find(".actions").append("<div class='hio_checkbox_container' style='margin-top: 7px;'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>")
+            result.find(".actions").append("\n\
+              <div class='hio_checkbox_container' style='margin-top: 7px;'>\n\
+                <img class='hio_checkbox_icon' src='" + icon + "'>\n\
+                <i class='fa fa-square'></i>\n\
+              </div>\n\
+            ")
           }
         }
       });
@@ -31,7 +36,12 @@ LinkedinSearchCheckboxes = {
         // We check if the profile if out of network
         if (result.find(".profile-link").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
           if (result.find(".actions .hio_checkbox_container").length == 0) {
-            result.find(".actions").append("<div class='hio_checkbox_container' style='margin: 35px 0 0 0; line-height: 17px;'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+            result.find(".actions").append("\n\
+              <div class='hio_checkbox_container' style='margin: 35px 0 0 0; line-height: 17px;'>\n\
+                <img class='hio_checkbox_icon' src='" + icon + "'>\n\
+                <i class='fa fa-square'></i>\n\
+              </div>\n\
+            ");
           }
         }
       });
@@ -46,7 +56,11 @@ LinkedinSearchCheckboxes = {
         // We check if the profile if out of network
         if (result.find(".result-image").attr("href").indexOf("OUT_OF_NETWORK") == -1 || (result.find(".degree-icon").length && result.find(".degree-icon").text() != "YOU")) {
           if (result.find(".srp-actions .hio_checkbox_container").length == 0) {
-            result.find(".srp-actions").prepend("<div class='hio_checkbox_container'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i></div>");
+            result.find(".srp-actions").prepend("\n\
+              <div class='hio_checkbox_container'>\n\
+                <img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>\n\
+              </div>\n\
+            ");
           }
         }
       });
@@ -62,15 +76,33 @@ LinkedinSearchCheckboxes = {
 
       if (LinkedinVersion.isSalesNavigator()) {
         // Old Sales Navigator
-        $(".spotlights-count-wrapper").prepend("<div class='hio_selectall_checkbox_container'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
+        $(".spotlights-count-wrapper").prepend("\n\
+          <div class='hio_selectall_checkbox_container'>\n\
+            <img class='hio_checkbox_icon' src='" + icon + "'>\n\
+            <i class='fa fa-square'></i>Select all\n\
+          </div>\n\
+        ");
 
         // New Sales Navigator
-        $(".status-container").append("<div class='hio_selectall_checkbox_container' style='line-height: 17px; margin: 0 0 0 10px;'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>");
+        $(".status-container").append("\n\
+          <div class='hio_selectall_checkbox_container' style='line-height: 17px; margin: 0 0 0 10px;'>\n\
+            <img class='hio_checkbox_icon' src='" + icon + "'>\n\
+            <i class='fa fa-square'></i>\n\
+            Select all\n\
+          </div>\n\
+        ");
+
       } else if (LinkedinVersion.isRecruiter()) {
-        // TO DO : compatibility with LinkedIn Recruiter
+        // The integration in search pages is not compatible with
       }
       else {
-        $("#results_count").prepend("<div class='hio_selectall_checkbox_container'><img class='hio_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>Select all</div>")
+        $("#results_count").prepend("\n\
+          <div class='hio_selectall_checkbox_container'>\n\
+            <img class='hio_checkbox_icon' src='" + icon + "'>\n\
+            <i class='fa fa-square'></i>\n\
+            Select all\n\
+          </div>\n\
+        ")
       }
 
       $(".hio_selectall_checkbox_container").click(function() {
