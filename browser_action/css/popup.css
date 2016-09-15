@@ -79,6 +79,10 @@ h1 {
   text-shadow: 0 0 6px #888;
 }
 
+.email span:hover {
+  cursor: help;
+}
+
 #domain-pattern {
   margin: 5px 0 20px 0;
   font-size: 13px;
