@@ -2,10 +2,27 @@
 //
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(request);
+
+    // Return if it's a profile or not
     if (request.subject == "is_linkedin_profile") {
-      if ($(".profile-actions").length) { sendResponse({response: true}); }
-      else                              { sendResponse({response: false}); }
+      if ($(".profile-actions").length) { sendResponse({is_linkedin_profile: true}); }
+      else                              { sendResponse({is_linkedin_profile: false}); }
+    }
+
+    // Return the parsed current profile
+    if (request.subject == "get_linkedin_profile") {
+      console.log(Object.assign({}, window.profile));
+      sendResponse(Object.assign({}, window.profile));
+    }
+
+    // Return the parsed company o the last experience
+    if (request.subject == "get_company_page") {
+      LinkedinCompany.get(request.profile, function(company) {
+        console.log(company);
+        sendResponse(company);
+      });
+
+      return true;
     }
   }
 );

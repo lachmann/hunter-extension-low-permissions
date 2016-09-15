@@ -8,18 +8,20 @@ chrome.tabs.getSelected(null, function(tab) {
   window.domain = new URL(tab.url).hostname.replace("www.", "");
 
   if (window.domain == "linkedin.com") {
-    // We ask the content script if it's a profile or not
-    // chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-    //   console.log(response);
-    // });
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
       chrome.tabs.sendMessage(tabs[0].id, {subject: "is_linkedin_profile"}, function(response) {
-        console.log(response);
+        if (response.is_linkedin_profile == true) {
+          LinkedinProfile.launch();
+        }
+        else {
+          $("#domain-search").show();
+          DomainSearch.launch();
+        }
       });
     });
   }
   else {
     $("#domain-search").show();
-    DomainSearchPopup.launch();
+    DomainSearch.launch();
   }
 });

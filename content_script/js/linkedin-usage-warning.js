@@ -9,7 +9,7 @@
 //
 
 LinkedinUsageWarning = {
-  dailyLimit: 1,
+  dailyLimit: 400,
 
   countOneProfileView: function() {
     this_usage = this

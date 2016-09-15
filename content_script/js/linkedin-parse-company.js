@@ -107,7 +107,6 @@ var LinkedinCompany = {
 }
 
 
-
 //
 // Link to search by location have this form:
 // /vsearch/p?countryCode=gb&trk=prof-0-ovw-location

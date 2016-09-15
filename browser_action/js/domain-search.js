@@ -1,4 +1,4 @@
-var DomainSearchPopup = {
+var DomainSearch = {
   launch: function() {
     $("#currentDomain").text(window.domain);
     $("#completeSearch").attr("href", "https://emailhunter.co/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
