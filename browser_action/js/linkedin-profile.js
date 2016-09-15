@@ -97,7 +97,7 @@ var LinkedinProfile = {
                     // Maybe try to remove a subdomain if there is one
                     if (withoutSubDomain(window.profile["domain"])) {
                       window.profile["domain"] = withoutSubDomain(window.profile["domain"]);
-                      this_popup.launch();
+                      this_popup.launchSearch();
                     }
                     else {
                       this_popup.mainMessage("No result.");
@@ -392,7 +392,6 @@ var LinkedinProfile = {
       });
     });
   },
-
 
   executeCopy: function(text) {
     var input = document.createElement('textarea');
