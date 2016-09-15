@@ -11,14 +11,12 @@ chrome.extension.onMessage.addListener(
 
     // Return the parsed current profile
     if (request.subject == "get_linkedin_profile") {
-      console.log(Object.assign({}, window.profile));
       sendResponse(Object.assign({}, window.profile));
     }
 
-    // Return the parsed company o the last experience
+    // Return the parsed company of the last experience
     if (request.subject == "get_company_page") {
       LinkedinCompany.get(request.profile, function(company) {
-        console.log(company);
         sendResponse(company);
       });
 

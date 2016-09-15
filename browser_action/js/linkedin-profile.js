@@ -6,24 +6,30 @@ var LinkedinProfile = {
   launch: function() {
     this_popup = this;
 
-    chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id, {subject: "get_linkedin_profile"}, function(response) {
-        window.profile = response
+    var readyStateCheckInterval = setInterval(function() {
+      chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
+        chrome.tabs.sendMessage(tabs[0].id, {subject: "get_linkedin_profile"}, function(response) {
+          if (typeof response.first_name != "undefined") {
+            clearInterval(readyStateCheckInterval);
 
-        this_popup.open(function() {
-          this_popup.launchSearch();
+            window.profile = response
 
-          // Add account information in the popup
-          this_popup.addAccountInformation();
+            this_popup.open(function() {
+              this_popup.launchSearch();
 
-          // Display the lists of leads
-          ListSelection.appendSelector();
+              // Add account information in the popup
+              this_popup.addAccountInformation();
 
-          // Analytics
-          Analytics.trackEvent("Open LinkedIn popup");
+              // Display the lists of leads
+              ListSelection.appendSelector();
+
+              // Analytics
+              Analytics.trackEvent("Open LinkedIn popup");
+            });
+          }
         });
       });
-    });
+    }, 200);
   },
 
 

@@ -10,7 +10,7 @@ chrome.tabs.getSelected(null, function(tab) {
   if (window.domain == "linkedin.com") {
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
       chrome.tabs.sendMessage(tabs[0].id, {subject: "is_linkedin_profile"}, function(response) {
-        if (response.is_linkedin_profile == true) {
+        if (typeof response != "undefined" && response.is_linkedin_profile == true) {
           LinkedinProfile.launch();
         }
         else {
