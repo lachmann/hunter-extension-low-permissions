@@ -11,68 +11,71 @@
   </head>
 
   <body>
-    <div class="header">
-      <a href="https://emailhunter.co/search?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank">
-        <img class="logo" src="../shared/img/white_transparent_logo.png" alt="Email Hunter" />
-      </a>
-      <a id="completeSearch" target="_blank" href="">
-        Complete search
-      </a>
+    <div id="domain-search">
+      <div class="header">
+        <a href="https://emailhunter.co/search?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank">
+          <img class="logo" src="../shared/img/white_transparent_logo.png" alt="Email Hunter" />
+        </a>
+        <a id="completeSearch" target="_blank" href="">
+          Complete search
+        </a>
+      </div>
+      <div class="body">
+
+        <div class="linkedin-notification">
+          <i class="fa fa-linkedin"></i>
+          <p><strong>Email Hunter can be used on LinkedIn.</strong></p>
+          <p class="grey">On LinkedIn profiles, click on Email Hunter's orange button to find the email address of your target. In search pages, select the profiles you want to save in your leads.</p>
+        </div>
+
+        <div class="feedback-notification">
+          <p>Hey! Are you satisfied by Email Hunter's Chrome extension?</p>
+          <a class="orange-btn feedback_link" href="#" id="open-rate-notification">Yes</a>
+          <a class="orange-btn feedback_link" href="#" id="open-contact-notification">No</a>
+        </div>
+
+        <div class="rate-notification">
+          <p>Glad to hear this! Please help us rating it in Chrome Web Store!</p>
+          <a class="orange-btn" href="https://chrome.google.com/webstore/detail/email-hunter/hgmhmanijnjhaffoampdlllchpolkdnj/reviews" target="_blank">Add a rating</a>
+        </div>
+
+        <div class="contact-notification">
+          <p>Sorry to hear this :'(</p>
+          <p>Please drop us a line at <strong>contact@emailhunter.co</strong> if you want to give us a feedback or ask any question. We would be happy to help.</p>
+        </div>
+
+        <i class="fa fa-spinner fa-spin loader"></i>
+        <h1 id="currentDomain"></h1>
+
+        <div class="error">
+          <div class="error-message light-grey"></div>
+        </div>
+
+        <div class="connect-container light-grey">
+          <div class="connect-message">You've reached your daily limit! Please connect to your Email Hunter account to use the extension. It's free and takes 30 seconds.</div>
+          <a href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Create a free account</a>
+          <a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="signin_link">Sign in</a>
+        </div>
+
+        <div class="connect-again-container light-grey">
+          <div class="connect-message">Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.</div>
+          <a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Sign in</a>
+        </div>
+
+        <div class="upgrade-container light-grey">
+          <div class="upgrade-message">You've reached your monthly quota. Please upgrade your account to continue using Email Hunter.</div>
+          <a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Upgrade</a>
+        </div>
+
+        <div class="results">
+          <div id="results-number" class="grey"></div>
+          <div id="domain-pattern" class="grey"></div>
+        </div>
+
+        <div class="account-information light-grey">Loading...</div>
+      </div>
     </div>
-    <div class="body">
 
-      <div class="linkedin-notification">
-        <i class="fa fa-linkedin"></i>
-        <p><strong>Email Hunter can be used on LinkedIn.</strong></p>
-        <p class="grey">On LinkedIn profiles, click on Email Hunter's orange button to find the email address of your target. In search pages, select the profiles you want to save in your leads.</p>
-      </div>
-
-      <div class="feedback-notification">
-        <p>Hey! Are you satisfied by Email Hunter's Chrome extension?</p>
-        <a class="orange-btn feedback_link" href="#" id="open-rate-notification">Yes</a>
-        <a class="orange-btn feedback_link" href="#" id="open-contact-notification">No</a>
-      </div>
-
-      <div class="rate-notification">
-        <p>Glad to hear this! Please help us rating it in Chrome Web Store!</p>
-        <a class="orange-btn" href="https://chrome.google.com/webstore/detail/email-hunter/hgmhmanijnjhaffoampdlllchpolkdnj/reviews" target="_blank">Add a rating</a>
-      </div>
-
-      <div class="contact-notification">
-        <p>Sorry to hear this :'(</p>
-        <p>Please drop us a line at <strong>contact@emailhunter.co</strong> if you want to give us a feedback or ask any question. We would be happy to help.</p>
-      </div>
-
-      <i class="fa fa-spinner fa-spin loader"></i>
-      <h1 id="currentDomain"></h1>
-
-      <div class="error">
-        <div class="error-message light-grey"></div>
-      </div>
-
-      <div class="connect-container light-grey">
-        <div class="connect-message">You've reached your daily limit! Please connect to your Email Hunter account to use the extension. It's free and takes 30 seconds.</div>
-        <a href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Create a free account</a>
-        <a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="signin_link">Sign in</a>
-      </div>
-
-      <div class="connect-again-container light-grey">
-        <div class="connect-message">Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.</div>
-        <a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Sign in</a>
-      </div>
-
-      <div class="upgrade-container light-grey">
-        <div class="upgrade-message">You've reached your monthly quota. Please upgrade your account to continue using Email Hunter.</div>
-        <a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup" target="_blank" class="orange-btn">Upgrade</a>
-      </div>
-
-      <div class="results">
-        <div id="results-number" class="grey"></div>
-        <div id="domain-pattern" class="grey"></div>
-      </div>
-
-      <div class="account-information light-grey">Loading...</div>
-    </div>
     <script type="text/javascript" src="../shared/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="../shared/js/lib/bootstrap-tooltip.min.js"></script>
     <script type="text/javascript" src="../shared/js/use-counter.js"></script>

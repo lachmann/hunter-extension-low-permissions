@@ -68,6 +68,7 @@
         "shared/js/api.js",
         "shared/js/account.js",
         "shared/js/analytics.js",
+        "content_script/js/messaging.js",
         "content_script/js/linkedin-list-selection.js",
         "content_script/js/linkedin-parse-profile.js",
         "content_script/js/linkedin-parse-company.js",

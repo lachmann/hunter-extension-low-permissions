@@ -9,8 +9,17 @@ chrome.tabs.getSelected(null, function(tab) {
 
   if (window.domain == "linkedin.com") {
     // We ask the content script if it's a profile or not
+    // chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+    //   console.log(response);
+    // });
+    chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
+      chrome.tabs.sendMessage(tabs[0].id, {subject: "is_linkedin_profile"}, function(response) {
+        console.log(response);
+      });
+    });
   }
   else {
+    $("#domain-search").show();
     DomainSearchPopup.launch();
   }
 });

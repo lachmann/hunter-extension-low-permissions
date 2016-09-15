@@ -5,6 +5,10 @@ body {
   font-size: 14px;
 }
 
+#domain-search {
+  display: none;
+}
+
 a:focus, a:active {
   outline: none;
 }
