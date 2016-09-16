@@ -1,4 +1,4 @@
-#hio_search_selection_popup {
+#eh_search_selection_popup {
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
   background-color: #fff;
   -webkit-border-radius: 5px;
@@ -19,29 +19,29 @@
 }
 
 
-#hio_search_selection_popup img {
+#eh_search_selection_popup img {
   height: 18px;
 }
 
-#hio_search_selection_popup button {
+#eh_search_selection_popup button {
   margin-top: 10px;
   border: 0;
   width: 100%;
   outline: none;
 }
 
-#hio_search_selection_popup button .fa {
+#eh_search_selection_popup button .fa {
   margin-right: 10px;
   width: 10px;
   display: inline-block;
 }
 
-#hio_search_selection_popup button:disabled {
+#eh_search_selection_popup button:disabled {
   opacity: 0.8;
   background-color: #e86240;
 }
 
-#hio_search_popup_close {
+#eh_search_popup_close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -52,12 +52,12 @@
   transition: all 0.2s;
 }
 
-#hio_search_popup_close:hover {
+#eh_search_popup_close:hover {
   cursor: pointer;
   color: #555;
 }
 
-.hio_search_popup_drag {
+.eh_search_popup_drag {
   position: absolute;
   top: 11px;
   right: 45px;
@@ -66,18 +66,18 @@
   color: #888;
 }
 
-.hio_search_popup_drag:hover {
+.eh_search_popup_drag:hover {
   cursor: grab;
   cursor: -webkit-grab;
 }
 
-.hio_search_popup_drag:active,
-.hio_search_popup_drag:focus {
+.eh_search_popup_drag:active,
+.eh_search_popup_drag:focus {
   cursor: grabbing;
   cursor: -webkit-grabbing;
 }
 
-#hio_profile_selected {
+#eh_profile_selected {
   margin-top: 15px;
   margin-bottom: 15px;
   padding-bottom: 10px;
@@ -85,43 +85,43 @@
   border-bottom: 1px solid #eee;
 }
 
-#hio_search_status_list {
+#eh_search_status_list {
   overflow-y: scroll;
   max-height: 250px;
   padding-right: 10px;
 }
 
-#hio_search_status_list::-webkit-scrollbar {
+#eh_search_status_list::-webkit-scrollbar {
   width: 8px;
 }
 
-#hio_search_status_list::-webkit-scrollbar-track {
+#eh_search_status_list::-webkit-scrollbar-track {
   border-radius: 3px;
   background-color: #f3f3f3;
 }
 
-#hio_search_status_list::-webkit-scrollbar-thumb {
+#eh_search_status_list::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background-color: #aaa;
 }
 
-#hio_search_status_list li {
+#eh_search_status_list li {
   margin: 12px 0;
   font-size: 13px;
   line-height: 13px;
   color: #555;
 }
 
-#hio_search_status_list li span {
+#eh_search_status_list li span {
   float: right;
   color: #aaa;
 }
 
-#hio_search_status_list li span .fa {
+#eh_search_status_list li span .fa {
   margin-left: 10px;
 }
 
-#hio_save_without_email_label {
+#eh_save_without_email_label {
   color: #aaa;
   font-size: 12px;
   margin-left: 5px;
@@ -130,13 +130,13 @@
   margin: 0;
 }
 
-#hio_save_without_email_label .fa {
+#eh_save_without_email_label .fa {
   margin-right: 7px;
   color: #ddd;
   font-size: 13px;
 }
 
-#hio_search_selection_popup_account {
+#eh_search_selection_popup_account {
   color: #aaa;
   border-top: 1px solid #eee;
   padding-top: 12px;
@@ -144,18 +144,18 @@
   line-height: 22px;
 }
 
-#hio_search_selection_popup_account a {
+#eh_search_selection_popup_account a {
   color: #aaa;
   border-bottom: 1px dotted #aaa;
   font-weight: normal;
 }
 
-#hio_search_selection_popup_account a:hover,
-#hio_search_selection_popup_account a:active,
-#hio_search_selection_popup_account a:focus  {
+#eh_search_selection_popup_account a:hover,
+#eh_search_selection_popup_account a:active,
+#eh_search_selection_popup_account a:focus  {
   text-decoration: none;
 }
 
-#hio_search_popup_error {
+#eh_search_popup_error {
   padding-top: 15px;
 }

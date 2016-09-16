@@ -36,7 +36,7 @@ var DomainSearch = {
 
     $("#currentDomain").text(window.domain);
     $("#completeSearch").attr("href", "https://emailhunter.co/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
-    $(".loader").show();
+    $(".domain-loader").show();
     $("#resultsNumber").text("");
 
     $(".result").remove();
@@ -80,7 +80,7 @@ var DomainSearch = {
       success : function(json){
         $(".results").slideDown(300);
         this_popup.resultsMessage(json.meta.results);
-        $(".loader").hide();
+        $(".domain-loader").hide();
 
         // We count call to measure use
         countCall();
@@ -159,26 +159,26 @@ var DomainSearch = {
         if (xhr.status == 400) {
           $(".error-message").text("Sorry, something went wrong on the query.");
           $(".error").slideDown(300);
-          $(".loader").hide();
+          $(".domain-loader").hide();
         }
         else if (xhr.status == 401) {
           $(".connect-again-container").slideDown(300);
-          $(".loader").hide();
+          $(".domain-loader").hide();
         }
         else if (xhr.status == 429) {
           if (typeof api_key == "undefined") {
             $(".connect-container").slideDown(300);
-            $(".loader").hide();
+            $(".domain-loader").hide();
           }
           else {
             $(".upgrade-container").slideDown(300);
-            $(".loader").hide();
+            $(".domain-loader").hide();
           }
         }
         else {
           $(".error-message").text("Something went wrong, please try again later.");
           $(".error").slideDown(300);
-          $(".loader").hide();
+          $(".domain-loader").hide();
         }
       }
     });

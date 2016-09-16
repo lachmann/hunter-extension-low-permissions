@@ -5,19 +5,19 @@ var LinkedinProfileButton = {
     var icon = chrome.extension.getURL('shared/img/icon48_white.png');
     if (LinkedinVersion.isSalesNavigator()) {
       $(".profile-actions").prepend('\n\
-        <button disabled style="margin: 0 10px 0 0;" class="hio_linkedin_button">\n\
+        <button disabled style="margin: 0 10px 0 0;" class="eh_linkedin_button">\n\
           <img src="' + icon + '">Email Hunter\n\
         </button>\n\
       ');
     } else if(LinkedinVersion.isRecruiter()) {
       $(".profile-actions").prepend('\n\
-        <button disabled style="margin: 0 10px 0 0;" class="hio_linkedin_button hio_linkedin_button_small">\n\
+        <button disabled style="margin: 0 10px 0 0;" class="eh_linkedin_button eh_linkedin_button_small">\n\
           <img src="' + icon + '">Email Hunter\n\
         </button>');
     }
     else {
       $(".profile-aux .profile-actions").prepend('\n\
-        <button disabled style="margin: 5px 5px 5px 0;" class="hio_linkedin_button">\n\
+        <button disabled style="margin: 5px 5px 5px 0;" class="eh_linkedin_button">\n\
           <img src="' + icon + '">Email Hunter\n\
         </button>');
     }
@@ -35,10 +35,10 @@ var LinkedinProfileButton = {
     setTimeout(function(){
       LinkedinProfile.parse($("html").html(), function(profile) {
         window.profile = profile;
-        $(".hio_linkedin_button").prop("disabled", false);
+        $(".eh_linkedin_button").prop("disabled", false);
 
         // Open popup on Linkedin profile
-        $(".hio_linkedin_button").click(function() {
+        $(".eh_linkedin_button").click(function() {
           LinkedinProfilePopup.launch();
         });
       });

@@ -139,10 +139,10 @@ function extractCountryCodeFromSearchPath(path) {
 //
 
 function linkedinPageType() {
-  if ($("#hio_popup").length) {
+  if ($("#eh_popup").length) {
     return "profile";
   }
-  else if ($("#hio_search_selection_popup").length) {
+  else if ($("#eh_search_selection_popup").length) {
     return "search";
   }
   else {
@@ -156,11 +156,11 @@ function linkedinPageType() {
 //
 function showError(error) {
   if (linkedinPageType() == "profile") {
-    $("#hio_popup_content_container").slideUp(300);
-    $("#hio_popup_error").html(error).slideDown(300);
+    $("#eh_popup_content_container").slideUp(300);
+    $("#eh_popup_error").html(error).slideDown(300);
   }
   else if (linkedinPageType() == "search") {
-    $("#hio_search_popup_content_container").slideUp(300);
-    $("#hio_search_popup_error").html(error).slideDown(300);
+    $("#eh_search_popup_content_container").slideUp(300);
+    $("#eh_search_popup_error").html(error).slideDown(300);
   }
 }
