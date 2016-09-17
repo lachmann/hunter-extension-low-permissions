@@ -121,3 +121,13 @@ function cleanName(full_name) {
 function parseProfileEmailAddresses(string) {
   return string.match(/([a-zA-Z][\w+\-.]+@[a-zA-Z\d\-]+(\.[a-zA-Z]+)*\.[a-zA-Z]+)/gi);
 }
+
+
+//
+// Date today in string
+//
+
+function dateTodayString() {
+  date = new Date()
+  return date.toDateString()
+}

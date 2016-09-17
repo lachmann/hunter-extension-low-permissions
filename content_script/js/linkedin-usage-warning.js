@@ -15,7 +15,7 @@ LinkedinUsageWarning = {
     this_usage = this
 
     chrome.storage.sync.get('linkedin_profile_views_last', function(value){
-      if (typeof value["linkedin_profile_views_last"] === "undefined" || value["linkedin_profile_views_last"] != this_usage.dateTodayString()) {
+      if (typeof value["linkedin_profile_views_last"] === "undefined" || value["linkedin_profile_views_last"] != dateTodayString()) {
         this_usage.updateProfileViewsDate();
         this_usage.updateProfileViewsCount(1);
         this_usage.updateWarningViewed(false);
@@ -27,7 +27,7 @@ LinkedinUsageWarning = {
   },
 
   updateProfileViewsDate: function() {
-    chrome.storage.sync.set({'linkedin_profile_views_last': this_usage.dateTodayString()});
+    chrome.storage.sync.set({'linkedin_profile_views_last': dateTodayString()});
   },
 
   updateProfileViewsCount: function(count) {
@@ -90,9 +90,4 @@ LinkedinUsageWarning = {
       return false;
     });
   },
-
-  dateTodayString: function() {
-    date = new Date()
-    return date.toDateString()
-  }
 }

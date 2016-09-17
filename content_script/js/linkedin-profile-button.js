@@ -26,7 +26,20 @@ var LinkedinProfileButton = {
   // Start the parsing and injection
   // The button is active only when the profile is parsed
   launch: function() {
-    this.inject();
+    this_button = this;
+
+    // If there is an issue with integrating the button, we don't try for now
+    Debug.hasMessageBeenDisplayed("linkedin_button_blocked_date", function(response) {
+      if (response == false) {
+        this_button.inject();
+
+        // Check if for some reason the button disappeared and notify the user
+        // if this is the case.
+        setTimeout(function() {
+          Debug.handleDisappearedButton();
+        }, 5000);
+      }
+    });
 
     if (LinkedinVersion.isRecruiter()) { parsing_duration = 500; }
     else { parsing_duration = 0; }
