@@ -2,10 +2,27 @@ LinkedinSearchCheckboxes = {
   launch: function() {
     this_checkboxes = this;
 
+    var counter = 0;
     var readyStateCheckInterval = setInterval(function() {
-      this_checkboxes.inject();
-      this_checkboxes.injectSelectAll();
-    }, 800);
+      Debug.hasMessageBeenDisplayed("linkedin_checkboxes_blocked_date", function(response) {
+        if (response == false) {
+          this_checkboxes.inject();
+          this_checkboxes.injectSelectAll();
+
+          counter++;
+          if(counter === 1) {
+            // Check if for some reason the button disappeared and notify the
+            // user if this is the case.
+            //
+            if ($(".eh_checkbox_container").length) {
+              setTimeout(function() {
+                Debug.handleDisappearedCheckboxes();
+              }, 500);
+            }
+          }
+        }
+      });
+    }, 1000);
   },
 
   inject: function() {
@@ -145,18 +162,3 @@ LinkedinSearchCheckboxes = {
 chrome.extension.sendMessage({}, function(response) {
   LinkedinSearchCheckboxes.launch();
 });
-
-
-(function($){
-  $.event.special.destroyed = {
-    remove: function(o) {
-      if (o.handler) {
-        o.handler()
-      }
-    }
-  }
-})(jQuery)
-
-$('.eh_checkbox_container').bind('destroyed', function() {
-  console.log("ok");
-})
