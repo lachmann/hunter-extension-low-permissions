@@ -257,6 +257,9 @@ var LinkedinProfilePopup = {
         else if (response == "please_sign_in") {
           this_popup.displayActionMessage("Please sign in!");
         }
+        else if (response == "duplicated_entry") {
+          this_popup.displayActionMessage("Lead already saved!");
+        }
         else {
           this_popup.displayActionMessage("Error. Please try again later.");
         }
@@ -337,6 +340,9 @@ var LinkedinProfilePopup = {
         }
         else if (response == "please_sign_in") {
           container.append("<span class='eh_save_other_email_status'>Please sign in!</span>");
+        }
+        else if (response == "duplicated_entry") {
+          container.append("<span class='eh_save_other_email_status'>Lead already saved!</span>");
         }
         else {
           container.append("<span class='eh_save_other_email_status'>Error. Please try again later.</span>");

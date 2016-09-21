@@ -251,8 +251,8 @@ var LinkedinSearchPopup = {
     if (window.profile[index]["confidence_score"] == null || typeof window.profile[index]["confidence_score"] == "undefined") { window.profile[index]["confidence_score"] = ""; }
 
     if (window.profile[index]["email"] != "") {
-      saveLead(window.profile[index], function() {
-        $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved<i class='fa fa-check'></i>");
+      saveLead(window.profile[index], function(response) {
+        this_popup.handleSaveStatus(response, window.profile[index]["profile_id"]);
         this_popup.finishStatus();
       });
     }
@@ -263,8 +263,8 @@ var LinkedinSearchPopup = {
           this_popup.finishStatus();
         }
         else {
-          saveLead(window.profile[index], function() {
-            $("#eh_search_status_list li[data-profile-id='" + window.profile[index]["profile_id"] + "'] span").html("Saved without email<i class='fa fa-check'></i>");
+          saveLead(window.profile[index], function(response) {
+            this_popup.handleSaveStatus(response, window.profile[index]["profile_id"]);
             this_popup.finishStatus();
           });
         }
@@ -331,6 +331,21 @@ var LinkedinSearchPopup = {
   activateButton: function() {
     $("#eh_search_selection_popup button").prop("disabled", false);
     $("#eh_search_selection_popup button").text("Find email addresses & save leads");
+  },
+
+  handleSaveStatus: function(response, profile_id) {
+    if (typeof response.status != "undefined" && response.status == "success") {
+      $("#eh_search_status_list li[data-profile-id='" + profile_id + "'] span").html("Saved<i class='fa fa-check'></i>");
+    }
+    else if (response == "please_sign_in") {
+      $("#eh_search_status_list li[data-profile-id='" + profile_id + "'] span").html("Please sign in<i class='fa fa-times'></i>");
+    }
+    else if (response == "duplicated_entry") {
+      $("#eh_search_status_list li[data-profile-id='" + profile_id + "'] span").html("Already saved<i class='fa fa-times'></i>");
+    }
+    else {
+      $("#eh_search_status_list li[data-profile-id='" + profile_id + "'] span").html("Error<i class='fa fa-times'></i>");
+    }
   },
 
   finishStatus: function() {

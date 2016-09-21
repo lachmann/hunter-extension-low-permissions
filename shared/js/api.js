@@ -70,6 +70,9 @@ function saveLead(lead, callback) {
           if (xhr.status == 401) {
             callback("please_sign_in");
           }
+          else if (xhr.status == 422 && xhr.responseJSON.errors[0].id == "duplicated_entry") {
+            callback("duplicated_entry");
+          }
           else {
             callback("error");
           }
