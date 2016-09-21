@@ -7,7 +7,7 @@
   position: fixed;
   top: 125px;
   right: 20px;
-  padding: 20px 20px 15px 20px;
+  padding: 20px 15px 15px 15px;
   z-index: 11001;
   width: 300px;
 }
@@ -112,7 +112,7 @@
 }
 
 #eh_search_status_list li span .fa {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 #eh_save_without_email_label {

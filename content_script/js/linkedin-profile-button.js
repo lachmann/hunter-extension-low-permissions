@@ -41,8 +41,8 @@ var LinkedinProfileButton = {
       }
     });
 
-    if (LinkedinVersion.isRecruiter()) { parsing_duration = 500; }
-    else { parsing_duration = 0; }
+    if (LinkedinVersion.isRecruiter()) { parsing_duration = 600; }
+    else { parsing_duration = 200; }
 
     // Parse the page
     setTimeout(function(){
