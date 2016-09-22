@@ -131,3 +131,16 @@ function dateTodayString() {
   date = new Date()
   return date.toDateString()
 }
+
+
+//
+// Limit length of a string
+//
+
+function limitLength(string, length) {
+  if(string.length > length) {
+    string = string.substring(0, length - 1) + "...";
+  }
+
+  return string;
+}

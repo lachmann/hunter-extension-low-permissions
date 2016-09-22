@@ -1,11 +1,10 @@
 /**
- * Linkedin popup
+ * Linkedin profile in popup
  **/
 
 
 #eh_popup {
-  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
-  background-color: #fff;
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
   font-size: 14px;
   padding: 30px 30px 15px 30px;;
 }
@@ -69,7 +68,7 @@
 .eh_popup_results_link:focus,
 .eh_popup_results_link:active
  {
-  color: #999 !important;
+  color: #999;
   text-decoration: none;
 }
 
@@ -88,7 +87,7 @@
   text-decoration: none;
   display: inline-block;
   padding: 12px 25px;
-  color: #fff !important;
+  color: #fff;
   background: #e86240;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
@@ -252,14 +251,14 @@
 }
 
 .eh_popup_signin_link {
-  color: #888 !important;
+  color: #888;
   margin-left: 15px;
   border-bottom: 1px dotted #888;
   text-decoration: none;
 }
 
 .eh_popup_signin_link:hover {
-  color: #888 !important;
+  color: #888;
   text-decoration: none;
 }
 
@@ -322,7 +321,7 @@
 }
 
 .eh_save_other_email:hover {
-  color: #999 !important;
+  color: #999;
 }
 
 .eh_save_other_email_status,
