@@ -29,24 +29,7 @@ LinkedinSearchCheckboxes = {
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     if (LinkedinVersion.isSalesNavigator()) {
-      // Old version of Sales Navigator (still running on some account)
-      $(".entity").not(".company-summary-entity").each(function(index) {
-        result = $(this);
-
-        // If it's a company or if the profile is out of network
-        if (result.find(".name a").attr("href").indexOf("OUT_OF_NETWORK") == -1 && result.find(".name a").attr("href").indexOf("/sales/accounts") == -1) {
-          if (result.find(".actions .eh_checkbox_container").length == 0) {
-            result.find(".actions").append("\n\
-              <div class='eh_checkbox_container' style='margin-top: 7px;'>\n\
-                <img class='eh_checkbox_icon' src='" + icon + "'>\n\
-                <i class='fa fa-square'></i>\n\
-              </div>\n\
-            ")
-          }
-        }
-      });
-
-      // New version of Sales Navigator
+      // Sales Navigator
       $("#results-list .result").each(function(index) {
         result = $(this);
 
@@ -67,6 +50,7 @@ LinkedinSearchCheckboxes = {
       // TO DO : compatibility with LinkedIn Recruiter
     }
     else {
+      // Standard version
       $(".result.people").each(function(index) {
         result = $(this);
 

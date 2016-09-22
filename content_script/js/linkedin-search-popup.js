@@ -4,19 +4,7 @@ var LinkedinSearchPopup = {
     var selected_profiles = new Array;
 
     if (LinkedinVersion.isSalesNavigator()) {
-      // Old version of Sales Navigator
-      $(".entity").each(function(index) {
-        if($(this).find(".fa-check-square").length) {
-          profile_path = $(this).find(".name a").attr("href");
-          profile_name = $(this).find(".name a").text();
-          profile_id = profile_name.hashCode();
-          selected_profiles.push({ "profile_path":  profile_path,
-                                   "profile_name": profile_name,
-                                   "profile_id": profile_id });
-        }
-      });
-
-      // New version of Sales Navigator
+      // Sales Navigator
       $("#results-list .result").each(function(index) {
         if($(this).find(".fa-check-square").length) {
           profile_path = $(this).find(".profile-link").attr("href");
@@ -31,6 +19,7 @@ var LinkedinSearchPopup = {
       // TO DO : compatibility with LinkedIn Recruiter
     }
     else {
+      // Standard LinkedIn
       $(".result.people").each(function(index) {
         if($(this).find(".fa-check-square").length) {
           profile_path = $(this).find(".title").attr("href");

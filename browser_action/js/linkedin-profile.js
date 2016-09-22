@@ -12,7 +12,7 @@ var LinkedinProfile = {
           if (typeof response.first_name != "undefined") {
             clearInterval(readyStateCheckInterval);
 
-            window.profile = response
+            window.profile = response;
 
             this_popup.open(function() {
               this_popup.launchSearch();

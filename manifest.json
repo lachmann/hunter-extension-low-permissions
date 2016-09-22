@@ -73,6 +73,7 @@
         "content_script/js/linkedin-debug.js",
         "content_script/js/linkedin-parse-profile.js",
         "content_script/js/linkedin-parse-company.js",
+        "content_script/js/linkedin-parse-search-results.js",
         "content_script/js/linkedin-version.js",
         "content_script/js/linkedin-usage-warning.js",
         "content_script/js/linkedin-search-checkboxes.js",
