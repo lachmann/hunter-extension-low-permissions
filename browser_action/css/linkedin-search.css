@@ -72,5 +72,6 @@
 
 #linkedin-search-submit {
   float: right;
-  margin-top: -13px;
+  margin-top: -10px;
+  padding: 10px 20px;
 }

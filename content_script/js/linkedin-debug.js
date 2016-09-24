@@ -8,7 +8,7 @@ Debug = {
   },
 
   isLinkedinButtonBlocked: function() {
-    if ($(".eh_linkedin_button").length && $(".eh_linkedin_button").is(":visible")) {
+    if ($(".ehunter_linkedin_button").length && $(".ehunter_linkedin_button").is(":visible")) {
       return false;
     }
     return true;
@@ -22,7 +22,7 @@ Debug = {
   },
 
   isLinkedinSearchBlocked: function() {
-    if ($(".eh_checkbox_container").length && $(".eh_checkbox_container").is(":visible")) {
+    if ($(".ehunter_checkbox_container").length && $(".ehunter_checkbox_container").is(":visible")) {
       return false;
     }
     return true;

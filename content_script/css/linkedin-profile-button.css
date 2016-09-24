@@ -3,7 +3,7 @@
  **/
 
 
-.eh_linkedin_button {
+.ehunter_linkedin_button {
   display: inline-block !important;
   vertical-align: middle;
   color: #fff;
@@ -27,14 +27,14 @@
   margin: 0 0 0 5px;
 }
 
-.eh_linkedin_button_small {
+.ehunter_linkedin_button_small {
   display: inline-block !important;
   height: 26px;
   padding: 0 10px;
   line-height: 24px;
 }
 
-.eh_linkedin_button:hover {
+.ehunter_linkedin_button:hover {
   display: inline-block !important;
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
   -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
@@ -46,17 +46,17 @@
   background-image: linear-gradient(top, #e86240 0%,#B84123 100%);
 }
 
-.eh_linkedin_button:focus, .eh_linkedin_button:active {
+.ehunter_linkedin_button:focus, .ehunter_linkedin_button:active {
   display: inline-block !important;
   outline: none;
 }
 
-.eh_linkedin_button:disabled {
+.ehunter_linkedin_button:disabled {
   display: inline-block !important;
   opacity: 0.5;
 }
 
-.eh_linkedin_button img {
+.ehunter_linkedin_button img {
   width: 12px;
   display: inline-block;
   margin: 0 5px 0 0;

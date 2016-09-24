@@ -40,5 +40,23 @@ chrome.extension.onMessage.addListener(
 
       return true;
     }
+
+    // Return the profiles available in the search
+    if (request.subject == "get_linkedin_search_results") {
+      LinkedInSearchResults.parse($("html").html(), function(response){
+        sendResponse(response);
+      });
+
+      return true;
+    }
+
+    // Fetch the profiles selected in the search
+    if (request.subject == "get_selected_linkedin_profile") {
+      LinkedinSearchSave.launch(request.profile, function(is_saved, status, id) {
+        sendResponse({ "is_saved": is_saved, "status": status, "id": id });
+      });
+
+      return true;
+    }
   }
 );
