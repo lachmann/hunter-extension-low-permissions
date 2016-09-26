@@ -17,7 +17,7 @@ Debug = {
   handleDisappearedCheckboxes: function() {
     if (this.isLinkedinSearchBlocked()) {
       this.displayDebugMessage("It seems Email Hunter's checkboxes failed to appear on the search. No worries! You still can save the leads from this page by clicking on the icon in your browser.");
-      //chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': dateTodayString()});
+      chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': dateTodayString()});
     }
   },
 
