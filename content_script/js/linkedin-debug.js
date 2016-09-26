@@ -8,7 +8,21 @@ Debug = {
   },
 
   isLinkedinButtonBlocked: function() {
-    if ($(".eh_linkedin_button").length && $(".eh_linkedin_button").is(":visible")) {
+    if ($(".ehunter_linkedin_button").length && $(".ehunter_linkedin_button").is(":visible")) {
+      return false;
+    }
+    return true;
+  },
+
+  handleDisappearedCheckboxes: function() {
+    if (this.isLinkedinSearchBlocked()) {
+      this.displayDebugMessage("It seems Email Hunter's checkboxes failed to appear on the search. No worries! You still can save the leads from this page by clicking on the icon in your browser.");
+      //chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': dateTodayString()});
+    }
+  },
+
+  isLinkedinSearchBlocked: function() {
+    if ($(".ehunter_checkbox_container").length && $(".ehunter_checkbox_container").is(":visible")) {
       return false;
     }
     return true;
@@ -23,10 +37,6 @@ Debug = {
     });
   },
 
-  isLinkedinSearchBlocked: function() {
-
-  },
-
   displayDebugMessage: function(message) {
     var html = $("<div>" + message + "</div>");
     $("body").prepend(html);
@@ -37,8 +47,8 @@ Debug = {
       "border-left": "7px solid #e86240",
       "border-radius": "5px",
       "position": "fixed",
-      "top": "87px",
-      "right": "15px",
+      "top": "123px",
+      "right": "20px",
       "width": "200px",
       "color": "#333",
       "padding": "20px",

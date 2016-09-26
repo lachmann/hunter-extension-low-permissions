@@ -1,0 +1,123 @@
+/**
+ * Linkedin search in popup
+ **/
+
+#linkedin-search {
+  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  font-size: 14px;
+  display: none;
+}
+
+.linkedin-search-logo {
+  height: 20px;
+}
+
+.linkedin-search-profile {
+  padding: 2px 20px 7px;
+}
+
+.linkedin-search-profile:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.linkedin-profile-description {
+  display: inline-block;
+  margin-left: 6px;
+  position: relative;
+  top: 9px;
+}
+
+.linkedin-search-profile img {
+  border-radius: 50px;
+  height: 44px;
+}
+
+.linkedin-search-profile .fa {
+  margin-right: 8px;
+  color: #ddd;
+  font-size: 20px;
+}
+
+.linkedin-profile-name {
+  font-weight: 600;
+}
+
+.linkedin-profile-title {
+  color: #aaa;
+}
+
+.select-all-profiles {
+  font-size: 15px;
+  color: #333;
+  font-weight: 600;
+  padding: 15px 20px;
+}
+
+.select-all-profiles .fa {
+  color: #ddd;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.select-all-profiles:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.linkedin-search-top {
+  padding: 24px 0;
+  margin: 0 20px;
+}
+
+.linkedin-profiles-selected {
+  padding: 0 0 14px;
+  margin: 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
+#linkedin-search-submit {
+  float: right;
+  margin-top: -10px;
+  padding: 10px 20px;
+  width: 280px;
+}
+
+.linkedin-profile-status {
+  float: right;
+  margin-top: 18px;
+  color: #aaa;
+}
+
+.linkedin-profile-status .fa {
+  margin-left: 5px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+#linkedin-profiles-account {
+  margin: 12px 20px 0 20px;
+  padding: 14px 0;
+  color: #aaa;
+  font-size: 13px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.linkedin-search-save-without-email {
+  color: #aaa;
+  font-size: 12px;
+  margin: 20px 20px 5px 20px;
+  cursor: pointer;
+  line-height: 12px;
+}
+
+.linkedin-search-save-without-email .fa {
+  margin-right: 5px;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.linkedin-profiles-account-requests {
+  margin-top: 3px;
+}
