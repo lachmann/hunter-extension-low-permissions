@@ -50,7 +50,7 @@ chrome.extension.onMessage.addListener(
       return true;
     }
 
-    // Fetch the profiles selected in the search
+    // Fetch the profiles selected in the search and saved it
     if (request.subject == "get_selected_linkedin_profile") {
       LinkedinSearchSave.launch(request.profile, function(is_saved, status, id) {
         sendResponse({ "is_saved": is_saved, "status": status, "id": id });

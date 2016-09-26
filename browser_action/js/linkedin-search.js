@@ -18,11 +18,14 @@ LinkedinSearch = {
   open: function(profiles) {
     window.profiles = profiles;
 
+    var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
+
     $("#linkedin-search").prepend("\n\
       <div class='linkedin-search-top'>\n\
         <button id='linkedin-search-submit' class='orange-btn'>Find email addresses & save leads</button>\n\
-        <div class='linkedin-profiles-selected'>0 profiles selected</div>\n\
+        <img class='linkedin-search-logo' src='" + logo + "' alt='Email Hunter'>\n\
       </div>\n\
+      <div class='linkedin-profiles-selected'><strong>0 profiles</strong> selected</div>\n\
       <div class='select-all-profiles'>\n\
         <i class='fa fa-square'></i>\n\
         Select all\n\
@@ -32,18 +35,22 @@ LinkedinSearch = {
     $.each(profiles, function(key, value) {
       $(".linkedin-search-profiles").append("\n\
         <div class='linkedin-search-profile' data-profile-id='" + value.profile_id + "'>\n\
+          <span class='linkedin-profile-status'></span>\n\
           <i class='fa fa-square'></i>\n\
           <img src='" + value.profile_pic + "'>\n\
           <div class='linkedin-profile-description'>\n\
             <span class='linkedin-profile-name'>" + limitLength(value.profile_name, 30) + "</span>\n\
             <br/>\n\
-            <span class='linkedin-profile-title'>" + limitLength(value.profile_title, 50) + "</span>\n\
+            <span class='linkedin-profile-title'>" + limitLength(value.profile_title, 45) + "</span>\n\
           </div>\n\
         </div>\n\
       ");
     });
 
     this.selectProfiles();
+    this.addAccountInformation();
+    this_popup.saveWithoutEmailListener();
+    ListSelection.appendSelector();
   },
 
   selectProfiles: function() {
@@ -87,23 +94,102 @@ LinkedinSearch = {
     })
 
     window.selected_profiles = selected_profiles;
+
+    // Update the number of porfiles selected in the view
+    if (window.selected_profiles.length == 1) { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profile"); }
+    else { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profiles"); }
+
     this.launchParsing();
   },
 
   launchParsing: function() {
     this_popup = this;
+
     $("#linkedin-search-submit").click(function() {
+      this_popup.desactivateButton();
+
       window.selected_profiles.forEach(function(search_profile, index) {
+        $("div[data-profile-id='" + search_profile.profile_id + "'] .linkedin-profile-status").text("Loading...");
         this_popup.parseProfile(search_profile, index);
       });
     });
   },
 
+  addAccountInformation: function() {
+    Account.get(function(json) {
+      if (json == "none") {
+        $(".linkedin-profiles-account-requests").prepend('\n\
+          Not logged in. \n\
+          <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a>\n\
+          or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>\n\
+        ');
+        $("#linkedin-search-submit").prop("disabled", true);
+        $("#linkedin-search-submit").text("Please sign in to save leads");
+      }
+      else {
+        $(".linkedin-profiles-account-requests").prepend(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests");
+      }
+    })
+  },
+
   parseProfile: function(profile) {
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
       chrome.tabs.sendMessage(tabs[0].id, {subject: "get_selected_linkedin_profile", profile: profile }, function(response) {
-        console.log(response);
+        this_popup.activateButton();
+        
+        if (response.is_saved) {
+          $("div[data-profile-id='" + response.id + "'] .linkedin-profile-status").html(response.status + "<i class='fa fa-check'></i>");
+        }
+        else {
+          $("div[data-profile-id='" + response.id + "'] .linkedin-profile-status").html(response.status + "<i class='fa fa-times'></i>");
+        }
       });
     });
+  },
+
+  saveWithoutEmailListener: function() {
+    this_popup = this
+    this_popup.checkOptionSaveWithoutEmail();
+
+    $(".linkedin-search-save-without-email").unbind().click(function() {
+      checkbox = $(this).find(".fa").first();
+      if (checkbox.hasClass("fa-square")) {
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+      }
+      else {
+        checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+      }
+
+      this_popup.updateOptionSaveWithoutEmail();
+    });
+  },
+
+  updateOptionSaveWithoutEmail: function() {
+    if ($("#ehunter_save_without_email_label .fa").hasClass("fa-check-square")) {
+      chrome.storage.sync.set({'save_leads_without_emails': true});
+    }
+    else {
+      chrome.storage.sync.set({'save_leads_without_emails': false});
+    }
+  },
+
+  checkOptionSaveWithoutEmail: function() {
+    chrome.storage.sync.get('save_leads_without_emails', function(value){
+      if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
+        $(".linkedin-search-save-without-email .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+      }
+    });
+  },
+
+  desactivateButton: function() {
+    $("#linkedin-search-submit").prop("disabled", true);
+    $("#linkedin-search-submit").text("Please wait...");
+    $("#linkedin-search-submit").prepend("<i class='fa fa-spinner fa-spin'></i>");
+  },
+
+
+  activateButton: function() {
+    $("#linkedin-search-submit").prop("disabled", false);
+    $("#linkedin-search-submit").text("Find email addresses & save leads");
   }
 }

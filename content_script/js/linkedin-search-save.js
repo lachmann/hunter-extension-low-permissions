@@ -60,6 +60,8 @@ var LinkedinSearchSave = {
       });
     }
     else {
+      profile["email"] = "";
+      profile["confidence_score"] = "";
       chrome.storage.sync.get('save_leads_without_emails', function(value){
         if (typeof value["save_leads_without_emails"] == "undefined" || value["save_leads_without_emails"] == false) {
           fn(false, "Email not found", profile["profile_id"]);
@@ -67,7 +69,7 @@ var LinkedinSearchSave = {
         // If the user wants to save leads even without email address found
         else {
           saveLead(profile, function(response) {
-            if (response.status == success) { fn(true, "Saved without email", profile["profile_id"]); }
+            if (response.status == "success") { fn(true, "Saved without email", profile["profile_id"]); }
             else if (response == "please_sign_in") { fn(false, "Please sign in", profile["profile_id"]); }
             else if (response == "duplicated_entry") { fn(false, "Already saved", profile["profile_id"]); }
             else { fn(false, "Error", profile["profile_id"]); }
