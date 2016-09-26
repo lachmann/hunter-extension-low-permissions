@@ -5,6 +5,7 @@
 #linkedin-search {
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
   font-size: 14px;
+  display: none;
 }
 
 .linkedin-search-logo {
@@ -84,7 +85,7 @@
 
 .linkedin-profile-status {
   float: right;
-  margin-top: 14px;
+  margin-top: 18px;
   color: #aaa;
 }
 
@@ -100,6 +101,7 @@
   color: #aaa;
   font-size: 13px;
   border-top: 1px solid #eee;
+  text-align: right;
 }
 
 .linkedin-search-save-without-email {

@@ -2,6 +2,8 @@ LinkedinSearch = {
   launch: function() {
     this_popup = this;
 
+    $("#linkedin-search").show()
+
     var readyStateCheckInterval = setInterval(function() {
       chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {subject: "get_linkedin_search_results"}, function(response) {
@@ -41,7 +43,7 @@ LinkedinSearch = {
           <div class='linkedin-profile-description'>\n\
             <span class='linkedin-profile-name'>" + limitLength(value.profile_name, 30) + "</span>\n\
             <br/>\n\
-            <span class='linkedin-profile-title'>" + limitLength(value.profile_title, 45) + "</span>\n\
+            <span class='linkedin-profile-title'>" + limitLength(value.profile_title, 40) + "</span>\n\
           </div>\n\
         </div>\n\
       ");
@@ -107,6 +109,7 @@ LinkedinSearch = {
 
     $("#linkedin-search-submit").click(function() {
       this_popup.desactivateButton();
+      window.number_processed = 0;
 
       window.selected_profiles.forEach(function(search_profile, index) {
         $("div[data-profile-id='" + search_profile.profile_id + "'] .linkedin-profile-status").text("Loading...");
@@ -118,7 +121,7 @@ LinkedinSearch = {
   addAccountInformation: function() {
     Account.get(function(json) {
       if (json == "none") {
-        $(".linkedin-profiles-account-requests").prepend('\n\
+        $(".linkedin-profiles-account-requests").html('\n\
           Not logged in. \n\
           <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a>\n\
           or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>\n\
@@ -127,7 +130,7 @@ LinkedinSearch = {
         $("#linkedin-search-submit").text("Please sign in to save leads");
       }
       else {
-        $(".linkedin-profiles-account-requests").prepend(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests");
+        $(".linkedin-profiles-account-requests").html(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests");
       }
     })
   },
@@ -135,14 +138,14 @@ LinkedinSearch = {
   parseProfile: function(profile) {
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
       chrome.tabs.sendMessage(tabs[0].id, {subject: "get_selected_linkedin_profile", profile: profile }, function(response) {
-        this_popup.activateButton();
-        
         if (response.is_saved) {
           $("div[data-profile-id='" + response.id + "'] .linkedin-profile-status").html(response.status + "<i class='fa fa-check'></i>");
         }
         else {
           $("div[data-profile-id='" + response.id + "'] .linkedin-profile-status").html(response.status + "<i class='fa fa-times'></i>");
         }
+
+        this_popup.finishStatus();
       });
     });
   },
@@ -165,7 +168,7 @@ LinkedinSearch = {
   },
 
   updateOptionSaveWithoutEmail: function() {
-    if ($("#ehunter_save_without_email_label .fa").hasClass("fa-check-square")) {
+    if ($(".linkedin-search-save-without-email .fa").hasClass("fa-check-square")) {
       chrome.storage.sync.set({'save_leads_without_emails': true});
     }
     else {
@@ -191,5 +194,14 @@ LinkedinSearch = {
   activateButton: function() {
     $("#linkedin-search-submit").prop("disabled", false);
     $("#linkedin-search-submit").text("Find email addresses & save leads");
+  },
+
+  finishStatus: function() {
+    window.number_processed ++;
+
+    if (window.number_processed >= window.selected_profiles.length) {
+      this.activateButton();
+      this.addAccountInformation();
+    }
   }
 }
