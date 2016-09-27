@@ -17,14 +17,14 @@ function sendTabUrl() {
 // When an URL changes
 //
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    sendTabUrl();
+  sendTabUrl();
 });
 
 
 // When active tab changes
 //
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
-   sendTabUrl();
+  sendTabUrl();
 });
 
 

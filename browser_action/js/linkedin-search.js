@@ -51,15 +51,16 @@ LinkedinSearch = {
 
     this.selectProfiles();
     this.addAccountInformation();
-    this_popup.saveWithoutEmailListener();
+    this.saveWithoutEmailListener();
     ListSelection.appendSelector();
+    this.launchParsing();
   },
 
   selectProfiles: function() {
     this_popup = this;
 
     $(".linkedin-search-profile").on("click", function() {
-      checkbox = $(this).find(".fa").first();
+      checkbox = $(this).find(".fa-square, .fa-check-square").first();
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
       }
@@ -71,14 +72,14 @@ LinkedinSearch = {
     });
 
     $(".select-all-profiles").click(function() {
-      checkbox = $(this).find(".fa");
+      checkbox = $(this).find(".fa-square, .fa-check-square");
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
-        $(".linkedin-search-profiles .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        $(".linkedin-search-profiles .fa-square").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
-        $(".linkedin-search-profiles .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+        $(".linkedin-search-profiles .fa-check-square").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
       }
 
       this_popup.updateSelection();
@@ -93,15 +94,13 @@ LinkedinSearch = {
         var profile = window.profiles.filter(function(p) { return p.profile_id == profile_id; });
         selected_profiles.push(profile[0]);
       }
-    })
+    });
 
     window.selected_profiles = selected_profiles;
 
     // Update the number of porfiles selected in the view
     if (window.selected_profiles.length == 1) { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profile"); }
     else { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profiles"); }
-
-    this.launchParsing();
   },
 
   launchParsing: function() {

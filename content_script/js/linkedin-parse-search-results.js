@@ -8,9 +8,14 @@ LinkedInSearchResults = {
         if ($(this).find(".profile-link").attr("href").indexOf("OUT_OF_NETWORK") == -1 || ($(this).find(".degree-icon").length && $(this).find(".degree-icon").text() != "YOU")) {
           profile_path = $(this).find(".profile-link").attr("href");
           profile_name = $(this).find(".name a").text();
+          profile_title = $(this).find(".company-name").text();
+          if (typeof $(this).find(".entity-image").attr("data-li-src") == "undefined") { profile_pic = "https://www.gravatar.com/avatar/5e77b3f1a14972adadd3f32f5a0b217e?s=100&d=mm"; }
+          else { profile_pic = "https://www.linkedin.com/"+$(this).find(".entity-image").attr("data-li-src"); }
           profile_id = profile_name.hashCode();
           profiles.push({ "profile_path":  profile_path,
                           "profile_name": profile_name,
+                          "profile_title": profile_title,
+                          "profile_pic": profile_pic,
                           "profile_id": profile_id });
         }
       });
