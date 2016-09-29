@@ -122,11 +122,6 @@ h1 {
   text-decoration: underline;
 }
 
-.error {
-  display: none;
-  margin: 50px 0 30px 0;
-}
-
 .connect-container,
 .connect-again-container,
 .upgrade-container {

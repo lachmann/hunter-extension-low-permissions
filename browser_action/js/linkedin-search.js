@@ -2,15 +2,20 @@ LinkedinSearch = {
   launch: function() {
     this_popup = this;
 
-    $("#linkedin-search").show()
+    $("#linkedin-search").show();
 
     var readyStateCheckInterval = setInterval(function() {
       chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {subject: "get_linkedin_search_results"}, function(response) {
-          if (typeof response[0].profile_name != "undefined") {
+          if (typeof response[0] != "undefined") {
             clearInterval(readyStateCheckInterval);
 
             this_popup.open(response);
+          }
+          else {
+            $("#linkedin-search").hide();
+            $(".error-message").text("No lead to save on this search page. The profiles must be in your network in LinkedIn to be saved.");
+            $(".error").slideDown(300);
           }
         });
       });
@@ -19,6 +24,13 @@ LinkedinSearch = {
 
   open: function(profiles) {
     window.profiles = profiles;
+
+    // console.log(profiles.length);
+    // if (profiles.length == 0) {
+    //   $("#linkedin-search").hide();
+    //   $(".error-message").text("No lead to save on this search page. The profiles must be in your network in LinkedIn to be saved.");
+    //   $(".error").slideDown(300);
+    // }
 
     var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
 

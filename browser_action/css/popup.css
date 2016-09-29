@@ -12,3 +12,8 @@ body {
 a:focus, a:active {
   outline: none;
 }
+
+.error {
+  display: none;
+  margin: 50px 20px;
+}
