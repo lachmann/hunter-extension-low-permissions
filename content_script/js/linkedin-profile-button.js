@@ -3,6 +3,7 @@ var LinkedinProfileButton = {
   // Inject the button on the profile
   inject() {
     var icon = chrome.extension.getURL('shared/img/icon48_white.png');
+
     if (LinkedinVersion.isSalesNavigator()) {
       $(".profile-actions").prepend('\n\
         <button disabled style="margin: 0 10px 0 0;" class="ehunter_linkedin_button">\n\

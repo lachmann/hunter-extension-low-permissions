@@ -210,18 +210,18 @@ var LinkedinProfile = {
       $("<div class='fa fa-spinner fa-spin ehunter_save_lead_loader'></div>").insertBefore("#ehunter_email_action_message");
 
       saveLead(window.profile, function(response) {
-        if (typeof response.status != "undefined" && response.status == "success") {
-          this_popup.displayActionMessage("Saved!");
-          console.log("Saved in leads!");
-        }
-        else if (response == "please_sign_in") {
+        if (response == "please_sign_in") {
           this_popup.displayActionMessage("Please sign in!");
         }
         else if (response == "duplicated_entry") {
           this_popup.displayActionMessage("Lead already saved!");
         }
-        else {
+        else if (response == "error") {
           this_popup.displayActionMessage("Error. Please try again later.");
+        }
+        else {
+          this_popup.displayActionMessage("Saved!");
+          console.log("Saved in leads!");
         }
         $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
       });
@@ -294,18 +294,18 @@ var LinkedinProfile = {
         container.find(".fa-spinner").remove();
         container.append("<i class='ehunter_save_other_email_icon fa fa-floppy-o'></i>");
 
-        if (typeof response.status != "undefined" && response.status == "success") {
-          container.append("<span class='ehunter_save_other_email_status'>Saved!</span>");
-          console.log("Saved in leads!");
-        }
-        else if (response == "please_sign_in") {
+        if (response == "please_sign_in") {
           container.append("<span class='ehunter_save_other_email_status'>Please sign in!</span>");
         }
         else if (response == "duplicated_entry") {
           container.append("<span class='ehunter_save_other_email_status'>Lead already saved!</span>");
         }
-        else {
+        else if (response == "error") {
           container.append("<span class='ehunter_save_other_email_status'>Error. Please try again later.</span>");
+        }
+        else {
+          container.append("<span class='ehunter_save_other_email_status'>Saved!</span>");
+          console.log("Saved in leads!");
         }
 
         $(".ehunter_save_other_email_status").delay(3000).queue(function() {
@@ -415,14 +415,3 @@ var LinkedinProfile = {
     input.remove();
   }
 }
-
-
-
-// Launch popup
-//
-
-
-
-
-// Copy in email in LinkedIn popup
-//

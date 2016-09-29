@@ -53,10 +53,10 @@ var LinkedinSearchSave = {
   saveAndReturnStatus: function(error_id, profile, fn) {
     if (typeof profile["email"] != "undefined" && profile["email"] != null) {
       saveLead(profile, function(response) {
-        if (response.status == "success") { fn(true, "Saved", profile["profile_id"]); }
-        else if (response == "please_sign_in") { fn(false, "Please sign in", profile["profile_id"]); }
+        if (response == "please_sign_in") { fn(false, "Please sign in", profile["profile_id"]); }
         else if (response == "duplicated_entry") { fn(false, "Already saved", profile["profile_id"]); }
-        else { fn(false, "Error", profile["profile_id"]); }
+        else if (response == "error") { fn(false, "Error", profile["profile_id"]); }
+        else { fn(true, "Saved", profile["profile_id"]); }
       });
     }
     else {
@@ -69,10 +69,10 @@ var LinkedinSearchSave = {
         // If the user wants to save leads even without email address found
         else {
           saveLead(profile, function(response) {
-            if (response.status == "success") { fn(true, "Saved without email", profile["profile_id"]); }
-            else if (response == "please_sign_in") { fn(false, "Please sign in", profile["profile_id"]); }
+            if (response == "please_sign_in") { fn(false, "Please sign in", profile["profile_id"]); }
             else if (response == "duplicated_entry") { fn(false, "Already saved", profile["profile_id"]); }
-            else { fn(false, "Error", profile["profile_id"]); }
+            else if (response == "error") { fn(false, "Error", profile["profile_id"]); }
+            else { fn(true, "Saved", profile["profile_id"]); }
           });
         }
       });
