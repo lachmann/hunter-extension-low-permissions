@@ -3,7 +3,7 @@ Debug = {
   handleDisappearedButton: function() {
     if (this.isLinkedinButtonBlocked()) {
       this.displayDebugMessage("It seems Email Hunter's button failed to appear on the profile. No worries! You still can find the email address by clicking on the icon in your browser.");
-      chrome.storage.sync.set({'linkedin_button_blocked_date': dateTodayString()});
+      chrome.storage.sync.set({'linkedin_button_blocked_date': weekTodayString()});
     }
   },
 
@@ -17,7 +17,7 @@ Debug = {
   handleDisappearedCheckboxes: function() {
     if (this.isLinkedinSearchBlocked()) {
       this.displayDebugMessage("It seems Email Hunter's checkboxes failed to appear on the search. No worries! You still can save the leads from this page by clicking on the icon in your browser.");
-      chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': dateTodayString()});
+      chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': weekTodayString()});
     }
   },
 
@@ -30,7 +30,7 @@ Debug = {
 
   hasMessageBeenDisplayed: function(message_name, response) {
     chrome.storage.sync.get(message_name, function(value){
-      if (value[message_name] == dateTodayString()) {
+      if (value[message_name] == weekTodayString()) {
         return response(true);
       }
       return response(false);
