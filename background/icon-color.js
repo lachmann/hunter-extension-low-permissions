@@ -1,7 +1,7 @@
 // Check if email addresses are available for the current domain and update the
 // color of the browser icon
 //
-function sendTabUrl() {
+function LaunchColorChange() {
   chrome.tabs.query(
     {currentWindow: true, active : true},
     function(tabArray){
@@ -17,18 +17,19 @@ function sendTabUrl() {
 // When an URL changes
 //
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  sendTabUrl();
+  LaunchColorChange();
 });
 
 
 // When active tab changes
 //
 chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
-  sendTabUrl();
+  LaunchColorChange();
 });
 
 
 // API call to check if there is at least one email address
+// Documentation: https://emailhunter.co/api/v2/docs#email-count
 //
 function updateIconColor() {
   $.ajax({

@@ -30,7 +30,8 @@
     "scripts": [
       "shared/js/lib/jquery.min.js",
       "background/install-check.js",
-      "background/icon-color.js"]
+      "background/icon-color.js",
+      "background/webstats.js"]
   },
   "content_scripts": [
     {

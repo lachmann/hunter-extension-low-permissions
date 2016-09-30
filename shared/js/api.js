@@ -1,5 +1,9 @@
-// Ajax API call
-// Use the API key if it is defined. If there is a limitation issue, show the right limitation message
+// Does an API call on Email Hunter's API. This function is used to do the 3
+// main requests possible on Email Hunter:
+//
+// Domain Search    https://emailhunter.co/api/v2/docs#domain-search
+// Email Finder     https://emailhunter.co/api/v2/docs#email-finder
+// Email Verifier   https://emailhunter.co/api/v2/docs#email-verifier
 //
 function apiCall(api_key, endpoint, callback) {
   if (api_key != '') {
@@ -43,7 +47,9 @@ function apiCall(api_key, endpoint, callback) {
 }
 
 
-// Save lead in Ajax
+// Save a lead in Email Hunter
+//
+// Documentation: https://emailhunter.co/api/v2/docs#create-lead
 //
 function saveLead(lead, callback) {
   chrome.storage.sync.get('api_key', function(value) {
