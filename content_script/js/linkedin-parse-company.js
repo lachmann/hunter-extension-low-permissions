@@ -15,10 +15,13 @@ var LinkedinCompany = {
       if (typeof $(html).find(".website a").text() != "undefined" && $(html).find(".website a").text() != "") {
         return $(html).find(".website a").text();
       }
-      else {
+      else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
         return JSON.parse(json)["website"];
+      }
+      else {
+        return "";
       }
     }
   },
@@ -37,10 +40,13 @@ var LinkedinCompany = {
       if (typeof $(html).find(".company-size p").text() != "undefined" && $(html).find(".company-size p").text() != "") {
         return $(html).find(".company-size p").text();
       }
-      else {
+      else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
         return JSON.parse(json)["size"];
+      }
+      else {
+        return "";
       }
     }
   },
@@ -59,10 +65,13 @@ var LinkedinCompany = {
       if (typeof $(html).find(".industry p").text() != "undefined" && $(html).find(".industry p").text() != "") {
         return $(html).find(".industry p").text();
       }
-      else {
+      else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
         return JSON.parse(json)["industry"];
+      }
+      else {
+        return "";
       }
     }
   },
@@ -85,7 +94,22 @@ var LinkedinCompany = {
             company_size = this_company.getEmployees(response);
             company_industry = this_company.getIndustry(response);
             if (typeof website == "undefined" || website == "http://" || website == "http://N/A" || website == false) {
-              callback("none");
+              $.ajax({
+                url : "https://autocomplete.clearbit.com/v1/companies/suggest?query="+profile.last_company,
+                type : 'GET',
+                success : function(response){
+                  if (typeof response[0].domain != "undefined") {
+                    website = "http://" + response[0].domain;
+                    callback({website: website, company_size: company_size, company_industry: company_industry});
+                  }
+                  else {
+                    callback("none");
+                  }
+                },
+                error : function() {
+                  callback("none");
+                }
+              });
             }
             else {
               callback({website: website, company_size: company_size, company_industry: company_industry});
