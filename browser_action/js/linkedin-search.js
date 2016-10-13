@@ -36,7 +36,7 @@ LinkedinSearch = {
 
     $("#linkedin-search").prepend("\n\
       <div class='linkedin-search-top'>\n\
-        <button id='linkedin-search-submit' class='orange-btn'>Find email addresses & save leads</button>\n\
+        <button id='linkedin-search-submit' class='orange-btn' disabled='disabled'>Find email addresses & save leads</button>\n\
         <img class='linkedin-search-logo' src='" + logo + "' alt='Email Hunter'>\n\
       </div>\n\
       <div class='linkedin-profiles-selected'><strong>0 profiles</strong> selected</div>\n\
@@ -113,6 +113,9 @@ LinkedinSearch = {
     // Update the number of porfiles selected in the view
     if (window.selected_profiles.length == 1) { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profile"); }
     else { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profiles"); }
+
+    if (window.selected_profiles.length > 0) { $("#linkedin-search-submit").prop("disabled", false); }
+    else { $("#linkedin-search-submit").prop("disabled", true); }
   },
 
   launchParsing: function() {
