@@ -83,7 +83,7 @@
 
 #ehunter_popup_content_container {
   height: 20px;
-  color: #e86240;
+  color: #ff5722;
   font-weight: 600;
   font-size: 16px;
   margin: 15px 0 0 0;
@@ -148,7 +148,7 @@
   display: inline-block;
   padding: 12px 25px;
   color: #fff !important;
-  background: #e86240;
+  background: #ff5722;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
   -o-transition: background-color 200ms ease-in-out;
@@ -212,7 +212,7 @@
 
 #ehunter_popup_ask_domain_field:focus, #ehunter_popup_ask_domain_field:active {
   outline: none;
-  border: 1px solid #e86240;
+  border: 1px solid #ff5722;
 }
 
 #ehunter_popup_ask_domain button {
@@ -228,7 +228,7 @@
 
 #ehunter_popup_ask_domain button:disabled {
   opacity: 0.8;
-  background: #e86240;
+  background: #ff5722;
 }
 
 #ehunter_popup_results_link_container,
@@ -301,7 +301,7 @@
 }
 
 .ehunter_popup_confidence_level {
-  background-color: #e86240;
+  background-color: #ff5722;
   height: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

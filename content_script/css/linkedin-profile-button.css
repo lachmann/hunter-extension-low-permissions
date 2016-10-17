@@ -39,11 +39,11 @@
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
   -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
   box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  background-color: #e86240;
-  background-image: -webkit-linear-gradient(top, #e86240 0%,#B84123 100%);
-  background-image: -moz-linear-gradient(top, #e86240 0%,#B84123 100%);
-  background-image: -o-linear-gradient(top, #e86240 0%,#B84123 100%);
-  background-image: linear-gradient(top, #e86240 0%,#B84123 100%);
+  background-color: #ff5722;
+  background-image: -webkit-linear-gradient(top, #ff5722 0%,#B84123 100%);
+  background-image: -moz-linear-gradient(top, #ff5722 0%,#B84123 100%);
+  background-image: -o-linear-gradient(top, #ff5722 0%,#B84123 100%);
+  background-image: linear-gradient(top, #ff5722 0%,#B84123 100%);
 }
 
 .ehunter_linkedin_button:focus, .ehunter_linkedin_button:active {

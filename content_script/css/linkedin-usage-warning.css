@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   padding: 35px 30px 30px 30px;
-  border-top: 5px solid #e86240;
+  border-top: 5px solid #ff5722;
   background: #fff;
   z-index: 11001;
   font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
@@ -17,7 +17,7 @@
 }
 
 #ehunter_bar_usage_warning .fa {
-  color: #e86240;
+  color: #ff5722;
   margin-right: 5px;
 }
 

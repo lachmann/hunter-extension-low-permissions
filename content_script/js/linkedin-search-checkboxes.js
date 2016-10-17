@@ -109,8 +109,8 @@ LinkedinSearchCheckboxes = {
       $(".ehunter_selectall_checkbox_container").click(function() {
         checkbox = $(this).find(".fa").first();
         if (checkbox.hasClass("fa-square")) {
-          checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
-          $(".ehunter_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+          checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
+          $(".ehunter_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
         }
         else {
           checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
@@ -127,7 +127,7 @@ LinkedinSearchCheckboxes = {
     $(".ehunter_checkbox_container").unbind().click(function() {
       checkbox = $(this).find(".fa").first();
       if (checkbox.hasClass("fa-square")) {
-        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });

@@ -74,7 +74,7 @@ LinkedinSearch = {
     $(".linkedin-search-profile").on("click", function() {
       checkbox = $(this).find(".fa-square, .fa-check-square").first();
       if (checkbox.hasClass("fa-square")) {
-        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
@@ -86,8 +86,8 @@ LinkedinSearch = {
     $(".select-all-profiles").click(function() {
       checkbox = $(this).find(".fa-square, .fa-check-square");
       if (checkbox.hasClass("fa-square")) {
-        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
-        $(".linkedin-search-profiles .fa-square").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
+        $(".linkedin-search-profiles .fa-square").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
@@ -171,7 +171,7 @@ LinkedinSearch = {
     $(".linkedin-search-save-without-email").unbind().click(function() {
       checkbox = $(this).find(".fa").first();
       if (checkbox.hasClass("fa-square")) {
-        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
@@ -193,7 +193,7 @@ LinkedinSearch = {
   checkOptionSaveWithoutEmail: function() {
     chrome.storage.sync.get('save_leads_without_emails', function(value){
       if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
-        $(".linkedin-search-save-without-email .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        $(".linkedin-search-save-without-email .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
     });
   },

@@ -183,7 +183,7 @@ var LinkedinSearchPopup = {
     $("#ehunter_save_without_email_label").unbind().click(function() {
       checkbox = $(this).find(".fa").first();
       if (checkbox.hasClass("fa-square")) {
-        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
@@ -207,7 +207,7 @@ var LinkedinSearchPopup = {
   checkOptionSaveWithoutEmail: function() {
     chrome.storage.sync.get('save_leads_without_emails', function(value){
       if (typeof value["save_leads_without_emails"] !== "undefined" && value["save_leads_without_emails"] == true) {
-        $("#ehunter_save_without_email_label .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#e86240' });
+        $("#ehunter_save_without_email_label .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
     });
   },

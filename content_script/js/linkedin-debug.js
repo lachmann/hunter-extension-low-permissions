@@ -44,7 +44,7 @@ Debug = {
       "font-family": "'Open Sans', Helvetica, Ubuntu, Arial, sans-serif",
       "font-size": "14px",
       "line-height": "21px",
-      "border-left": "7px solid #e86240",
+      "border-left": "7px solid #ff5722",
       "border-radius": "5px",
       "position": "fixed",
       "top": "123px",

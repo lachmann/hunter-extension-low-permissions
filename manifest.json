@@ -1,9 +1,9 @@
 {
-  "name": "Hunter",
-  "short_name": "Hunter",
-  "version": "1.7.7",
+  "name": "Email Hunter",
+  "short_name": "Email Hunter",
+  "version": "1.7.8",
   "manifest_version": 2,
-  "description": "Hunter is the easiest way to find email addresses from anywhere on the web, with just one click.",
+  "description": "Email Hunter is the easiest way to find email addresses from anywhere on the web, with just one click.",
   "homepage_url": "https://hunter.io",
   "icons": {
     "16": "shared/img/icon16.png",
@@ -23,8 +23,7 @@
     "tabs",
     "storage",
     "clipboardWrite",
-    "*://*.hunter.io/*",
-    "*://*.linkedin.com/*"
+    "activeTab"
   ],
   "background": {
     "scripts": [
