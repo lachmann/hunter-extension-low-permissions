@@ -1,4 +1,4 @@
-// Send anonymously the domains visited to help Email Hunter identify the most
+// Send anonymously the domains visited to help Hunter identify the most
 // popular websites and improve the relevance of its data.
 //
 function sendTabDomain() {

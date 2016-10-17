@@ -77,7 +77,7 @@ LinkedinUsageWarning = {
     this_usage = this;
 
     var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
-    $("body").append('<div id="ehunter_bar_usage_warning"><form id="ehunter_usage_warning_form"><img src="' + logo + '" alt="Email Hunter"><br/>Wow! It seems you have visited an important number of profiles on LinkedIn today. LinkedIn may block your access if you continue to visit pages today. Please note that each profile saved from LinkedIn\'s search with Email Hunter is also a page view.<br/><br/><label for="ehunter_usage_warning_dont_show"><input type="checkbox" id="ehunter_usage_warning_dont_show">Don\'t show me this in the future</label><button type="submit">OK, I understand the risks</button></form></div>');
+    $("body").append('<div id="ehunter_bar_usage_warning"><form id="ehunter_usage_warning_form"><img src="' + logo + '" alt="Hunter"><br/>Wow! It seems you have visited an important number of profiles on LinkedIn today. LinkedIn may block your access if you continue to visit pages today. Please note that each profile saved from LinkedIn\'s search with Hunter is also a page view.<br/><br/><label for="ehunter_usage_warning_dont_show"><input type="checkbox" id="ehunter_usage_warning_dont_show">Don\'t show me this in the future</label><button type="submit">OK, I understand the risks</button></form></div>');
 
     $("#ehunter_usage_warning_form").on("submit", function(){
       $("#ehunter_bar_usage_warning").fadeOut(200);

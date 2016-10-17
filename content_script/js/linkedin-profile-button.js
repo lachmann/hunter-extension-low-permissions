@@ -7,19 +7,19 @@ var LinkedinProfileButton = {
     if (LinkedinVersion.isSalesNavigator()) {
       $(".profile-actions").prepend('\n\
         <button disabled style="margin: 0 10px 0 0;" class="ehunter_linkedin_button">\n\
-          <img src="' + icon + '">Email Hunter\n\
+          <img src="' + icon + '">Hunter\n\
         </button>\n\
       ');
     } else if(LinkedinVersion.isRecruiter()) {
       $(".profile-actions").prepend('\n\
         <button disabled style="margin: 0 10px 0 0;" class="ehunter_linkedin_button ehunter_linkedin_button_small">\n\
-          <img src="' + icon + '">Email Hunter\n\
+          <img src="' + icon + '">Hunter\n\
         </button>');
     }
     else {
       $(".profile-aux .profile-actions").prepend('\n\
         <button disabled style="margin: 5px 5px 5px 0;" class="ehunter_linkedin_button">\n\
-          <img src="' + icon + '">Email Hunter\n\
+          <img src="' + icon + '">Hunter\n\
         </button>');
     }
   },

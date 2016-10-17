@@ -37,7 +37,7 @@ LinkedinSearch = {
     $("#linkedin-search").prepend("\n\
       <div class='linkedin-search-top'>\n\
         <button id='linkedin-search-submit' class='orange-btn' disabled='disabled'>Find email addresses & save leads</button>\n\
-        <img class='linkedin-search-logo' src='" + logo + "' alt='Email Hunter'>\n\
+        <img class='linkedin-search-logo' src='" + logo + "' alt='Hunter'>\n\
       </div>\n\
       <div class='linkedin-profiles-selected'><strong>0 profiles</strong> selected</div>\n\
       <div class='select-all-profiles'>\n\

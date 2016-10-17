@@ -1,4 +1,4 @@
-// Send a message to Email Hunter website if the extension is installed
+// Send a message to Hunter website if the extension is installed
 //
 chrome.runtime.onMessageExternal.addListener(
 function(request, sender, sendResponse) {

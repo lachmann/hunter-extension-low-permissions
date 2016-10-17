@@ -20,7 +20,7 @@ var Account = {
 
   setApiKey: function(api_key) {
     chrome.storage.sync.set({'api_key': api_key}, function() {
-      console.log("Email Hunter extension successfully installed.");
+      console.log("Hunter extension successfully installed.");
     });
   },
 

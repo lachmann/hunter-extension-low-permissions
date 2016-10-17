@@ -1,4 +1,4 @@
-// Email Hunter extension can be used without authentification but with low
+// Hunter extension can be used without authentification but with low
 // limitation. When the quota is reached, user is invited to connect to its EH
 // account. The extention will read the API key on EH website and store it in
 // Chrome local storage.
