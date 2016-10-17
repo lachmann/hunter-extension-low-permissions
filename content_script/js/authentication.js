@@ -4,9 +4,9 @@
 // Chrome local storage.
 //
 
-if (location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/chrome/welcome" ||
-    location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/search" ||
-    location.protocol + '//' + location.host + location.pathname == "https://emailhunter.co/dashboard") {
+if (location.protocol + '//' + location.host + location.pathname == "https://hunter.io/chrome/welcome" ||
+    location.protocol + '//' + location.host + location.pathname == "https://hunter.io/search" ||
+    location.protocol + '//' + location.host + location.pathname == "https://hunter.io/dashboard") {
   api_key = document.getElementById("api_key").innerHTML;
   Account.setApiKey(api_key);
 }

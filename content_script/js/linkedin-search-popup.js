@@ -125,8 +125,8 @@ var LinkedinSearchPopup = {
       if (json == "none") {
         $("#ehunter_search_popup_requests").html('\n\
           Not logged in. \n\
-          <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a>\n\
-          or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>\n\
+          <a target="_blank" href="https://hunter.io/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Sign in</a>\n\
+          or <a target="_blank" href="https://hunter.io/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_search_popup">Create a free account</a>\n\
         ');
         $("#ehunter_search_selection_popup button").prop("disabled", true);
         $("#ehunter_search_selection_popup button").text("Please sign in to save leads");

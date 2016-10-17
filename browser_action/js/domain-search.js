@@ -1,7 +1,7 @@
 var DomainSearch = {
   launch: function() {
     $("#currentDomain").text(window.domain);
-    $("#completeSearch").attr("href", "https://emailhunter.co/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
+    $("#completeSearch").attr("href", "https://hunter.io/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
 
     // Alternative search
     this.withoutSudomainLink();
@@ -35,7 +35,7 @@ var DomainSearch = {
     window.domain = domain;
 
     $("#currentDomain").text(window.domain);
-    $("#completeSearch").attr("href", "https://emailhunter.co/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
+    $("#completeSearch").attr("href", "https://hunter.io/search/" + window.domain + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup");
     $(".domain-loader").show();
     $("#resultsNumber").text("");
 
@@ -66,10 +66,10 @@ var DomainSearch = {
     this_popup = this;
 
     if (typeof api_key == "undefined") {
-      url = 'https://api.emailhunter.co/trial/v2/domain-search?domain=' + window.domain;
+      url = 'https://api.hunter.io/trial/v2/domain-search?domain=' + window.domain;
     }
     else {
-      url = 'https://api.emailhunter.co/v2/domain-search?domain=' + window.domain + '&api_key=' + api_key;
+      url = 'https://api.hunter.io/v2/domain-search?domain=' + window.domain + '&api_key=' + api_key;
     }
 
     $.ajax({
@@ -132,7 +132,7 @@ var DomainSearch = {
 
         if (json.meta.results > 10) {
           remaining_results = json.meta.results - 10;
-          $(".results").append('<a class="see_more" target="_blank" href="https://emailhunter.co/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
+          $(".results").append('<a class="see_more" target="_blank" href="https://hunter.io/search/' + window.domain + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">See all the email addresses (' + numberWithCommas(remaining_results) + ' more)</a>');
         }
 
         // Complete Search button
@@ -250,13 +250,13 @@ var DomainSearch = {
         $(".account-information").html("\n\
           Not logged in \n\
           <div class='pull-right'>\n\
-            <a target='_blank' href='https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a>\n\
-            or <a target='_blank' href='https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a>\n\
+            <a target='_blank' href='https://hunter.io/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Sign in</a>\n\
+            or <a target='_blank' href='https://hunter.io/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Create a free account</a>\n\
           </div>\n\
         ");
       }
       else {
-        $(".account-information").html(""+json.data.email+"<div class='pull-right'>"+numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests this month • <a target='_blank' href='https://emailhunter.co/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
+        $(".account-information").html(""+json.data.email+"<div class='pull-right'>"+numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests this month • <a target='_blank' href='https://hunter.io/subscriptions?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup'>Upgrade</a></div>");
       }
     })
   },
@@ -280,10 +280,10 @@ var DomainSearch = {
         api_key = value["api_key"];
 
         if (typeof api_key == "undefined") {
-          url = 'https://api.emailhunter.co/trial/v2/email-verifier?email=' + email;
+          url = 'https://api.hunter.io/trial/v2/email-verifier?email=' + email;
         }
         else {
-          url = 'https://api.emailhunter.co/v2/email-verifier?email=' + email + '&api_key=' + api_key;
+          url = 'https://api.hunter.io/v2/email-verifier?email=' + email + '&api_key=' + api_key;
         }
 
         $.ajax({
@@ -297,13 +297,13 @@ var DomainSearch = {
             this_popup.addAccountInformation();
 
             if (json.data.result == "deliverable") {
-              verification_result_tag.html("<span class='green'><i class='fa fa-check'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Deliverable</a></span>");
+              verification_result_tag.html("<span class='green'><i class='fa fa-check'></i><a href='https://hunter.io/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Deliverable</a></span>");
             }
             else if (json.data.result == "risky") {
-              verification_result_tag.html("<span class='dark-orange'><i class='fa fa-exclamation-triangle'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Risky</a></span>");
+              verification_result_tag.html("<span class='dark-orange'><i class='fa fa-exclamation-triangle'></i><a href='https://hunter.io/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Risky</a></span>");
               }
             else
-              verification_result_tag.html("<span class='red'><i class='fa fa-times'></i><a href='https://emailhunter.co/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Undeliverable</a></span>");
+              verification_result_tag.html("<span class='red'><i class='fa fa-times'></i><a href='https://hunter.io/verify/" + email + "?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup' target='_blank' title='Click to see the complete check result'>Undeliverable</a></span>");
           },
           error: function(xhr) {
             if (xhr.status == 429) {

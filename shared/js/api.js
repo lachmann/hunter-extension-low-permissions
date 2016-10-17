@@ -1,16 +1,16 @@
 // Does an API call on Email Hunter's API. This function is used to do the 3
 // main requests possible on Email Hunter:
 //
-// Domain Search    https://emailhunter.co/api/v2/docs#domain-search
-// Email Finder     https://emailhunter.co/api/v2/docs#email-finder
-// Email Verifier   https://emailhunter.co/api/v2/docs#email-verifier
+// Domain Search    https://hunter.io/api/v2/docs#domain-search
+// Email Finder     https://hunter.io/api/v2/docs#email-finder
+// Email Verifier   https://hunter.io/api/v2/docs#email-verifier
 //
 function apiCall(api_key, endpoint, callback) {
   if (api_key != '') {
     api_key_param = '&api_key=' + api_key;
   }
   else if (endpoint.indexOf("email-count") == -1) {
-    endpoint = endpoint.replace("https://api.emailhunter.co/v2/", "https://api.emailhunter.co/trial/v2/");
+    endpoint = endpoint.replace("https://api.hunter.io/v2/", "https://api.hunter.io/trial/v2/");
     api_key_param = '';
   } else {
     api_key_param = '';
@@ -29,14 +29,14 @@ function apiCall(api_key, endpoint, callback) {
         showError('Sorry, something went wrong on the query.');
       }
       else if (xhr.status == 401) {
-        showError('Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.<br/><br/><a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Sign in</a>');
+        showError('Email Hunter Chrome extension seems not to be associated to your account. Please sign in to continue.<br/><br/><a href="https://hunter.io/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Sign in</a>');
       }
       else if (xhr.status == 429) {
         if (api_key != '') {
-          showError('You\'ve reached your monthly quota. Please upgrade your account to continue using Email Hunter.<br/><br/><a href="https://emailhunter.co/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Upgrade my account</a>');
+          showError('You\'ve reached your monthly quota. Please upgrade your account to continue using Email Hunter.<br/><br/><a href="https://hunter.io/subscription?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Upgrade my account</a>');
         }
         else {
-          showError('You\'ve reached your daily limit, please connect to your Email Hunter account to continue. It\'s free and takes 30 seconds.<br/><br/><a href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Create a free account</a><a href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="ehunter_popup_signin_link" target="_blank">Sign in</a>');
+          showError('You\'ve reached your daily limit, please connect to your Email Hunter account to continue. It\'s free and takes 30 seconds.<br/><br/><a href="https://hunter.io/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="orange-btn" target="_blank">Create a free account</a><a href="https://hunter.io/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" class="ehunter_popup_signin_link" target="_blank">Sign in</a>');
         }
       }
       else {
@@ -49,7 +49,7 @@ function apiCall(api_key, endpoint, callback) {
 
 // Save a lead in Email Hunter
 //
-// Documentation: https://emailhunter.co/api/v2/docs#create-lead
+// Documentation: https://hunter.io/api/v2/docs#create-lead
 //
 function saveLead(lead, callback) {
   chrome.storage.sync.get('api_key', function(value) {
@@ -65,7 +65,7 @@ function saveLead(lead, callback) {
       else { leads_list_id = ""; }
 
       $.ajax({
-        url : "https://api.emailhunter.co/v2/leads?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&leads_list_id=" + leads_list_id + "&api_key=" + api_key,
+        url : "https://api.hunter.io/v2/leads?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Email Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&leads_list_id=" + leads_list_id + "&api_key=" + api_key,
         headers: {"Email-Hunter-Origin": "chrome_extension"},
         type : 'POST',
         dataType : 'json',

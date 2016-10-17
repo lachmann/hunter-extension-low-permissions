@@ -27,7 +27,7 @@ var LinkedinProfilePopup = {
 
     $("body").append('\n\
       <div id="ehunter_popup">\n\
-        <a href="https://emailhunter.co/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank">\n\
+        <a href="https://hunter.io/chrome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup#faq" target="_blank">\n\
           <i class="fa fa-question-circle ehunter_popup_question"></i>\n\
         </a>\n\
         <i class="fa fa-ellipsis-v ehunter_popup_drag"></i>\n\
@@ -128,14 +128,14 @@ var LinkedinProfilePopup = {
           Account.getApiKey(function(api_key) {
 
             // Generate the email
-            generate_email_endpoint = 'https://api.emailhunter.co/v2/email-finder?domain=' + encodeURIComponent(window.profile["domain"]) + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
+            generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(window.profile["domain"]) + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
             apiCall(api_key, generate_email_endpoint, function(email_json) {
 
               // We count call to measure use
               countCall();
 
               // Count how much email addresses there is on the domain
-              count_endpoint = 'https://api.emailhunter.co/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
+              count_endpoint = 'https://api.hunter.io/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
               apiCall(api_key, count_endpoint, function(count_json) {
 
                 // If email addresses has NOT been found
@@ -201,7 +201,7 @@ var LinkedinProfilePopup = {
 
     if (count_json.count > 1) { es = 'es' }
     else { es = '' }
-    $('#ehunter_popup_results_link_container').html('<a class="ehunter_popup_results_link" href="https://emailhunter.co/search/' + window.profile["domain"] + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">' + count_json.data.total + ' email address' + es + ' for ' + window.profile["domain"] + '<i class="fa fa-external-link"></i></a> <span class="ehunter_popup_separator">•</span> <span class="ehunter_popup_ask_domain">Try with an other domain name</span>');
+    $('#ehunter_popup_results_link_container').html('<a class="ehunter_popup_results_link" href="https://hunter.io/search/' + window.profile["domain"] + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">' + count_json.data.total + ' email address' + es + ' for ' + window.profile["domain"] + '<i class="fa fa-external-link"></i></a> <span class="ehunter_popup_separator">•</span> <span class="ehunter_popup_ask_domain">Try with an other domain name</span>');
 
     $('#ehunter_popup_results_link_container').slideDown(300);
   },
@@ -227,8 +227,8 @@ var LinkedinProfilePopup = {
       if (json == "none") {
         $("#ehunter_popup_requests").html('\n\
           Not logged in.\n\
-          <a target="_blank" href="https://emailhunter.co/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a>\n\
-          or <a target="_blank" href="https://emailhunter.co/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>\n\
+          <a target="_blank" href="https://hunter.io/chrome/welcome?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup">Sign in</a>\n\
+          or <a target="_blank" href="https://hunter.io/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=browser_popup">Create a free account</a>\n\
         ');
       }
       else {
@@ -360,14 +360,14 @@ var LinkedinProfilePopup = {
   showEmailList: function() {
     this_popup = this;
 
-    domain_search_endpoint = 'https://api.emailhunter.co/v2/domain-search?domain=' + window.profile["domain"];
+    domain_search_endpoint = 'https://api.hunter.io/v2/domain-search?domain=' + window.profile["domain"];
     apiCall(api_key, domain_search_endpoint, function(domain_json) {
       $.each(domain_json.data.emails.slice(0,5), function(email_key, email_val) {
         $(".ehunter_popup_found_email_addresses").append('<div class="ehunter_popup_email_list">' + email_val.value + '<i class="fa fa-floppy-o ehunter_save_other_email" data-toggle="tooltip" data-placement="top" data-email="' + email_val.value + '" title="Save the lead with this email address"></i></div>');
       });
       this_popup.saveOtherEmailAddress();
 
-      $(".ehunter_popup_found_email_addresses").append('<div class="ehunter_popup_email_list"><a class="ehunter_popup_results_link" href="https://emailhunter.co/search/' + window.profile["domain"] + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">See results for ' + window.profile["domain"] + '<i class="fa fa-external-link"></i></a> <span class="ehunter_popup_separator">•</span> <span class="ehunter_popup_ask_domain">Try with another domain name</span></div>');
+      $(".ehunter_popup_found_email_addresses").append('<div class="ehunter_popup_email_list"><a class="ehunter_popup_results_link" href="https://hunter.io/search/' + window.profile["domain"] + '?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=linkedin_popup" target="_blank">See results for ' + window.profile["domain"] + '<i class="fa fa-external-link"></i></a> <span class="ehunter_popup_separator">•</span> <span class="ehunter_popup_ask_domain">Try with another domain name</span></div>');
       this_popup.askNewDomainListener();
     });
 

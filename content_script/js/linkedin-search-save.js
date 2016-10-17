@@ -85,7 +85,7 @@ var LinkedinSearchSave = {
     // First we have to find email addresses
     Account.getApiKey(function(api_key) {
 
-      generate_email_endpoint = 'https://api.emailhunter.co/v2/email-finder?domain=' + encodeURIComponent(parsed_profile["domain"]) + '&first_name=' + encodeURIComponent(parsed_profile["first_name"]) + '&last_name=' + encodeURIComponent(parsed_profile["last_name"]) + '&position=' + encodeURIComponent(parsed_profile["position"]) + '&company=' + encodeURIComponent(parsed_profile["last_company"]);
+      generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(parsed_profile["domain"]) + '&first_name=' + encodeURIComponent(parsed_profile["first_name"]) + '&last_name=' + encodeURIComponent(parsed_profile["last_name"]) + '&position=' + encodeURIComponent(parsed_profile["position"]) + '&company=' + encodeURIComponent(parsed_profile["last_company"]);
       apiCall(api_key, generate_email_endpoint, function(email_json) {
 
         // If there is no result, we try to remove a subdomain

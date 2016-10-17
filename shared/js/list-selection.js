@@ -24,7 +24,7 @@ var ListSelection = {
   updateCurrent: function() {
     $(".ehunter_list_select").on("change", function(){
       if ($(this).val() == "new_list") {
-        openInNewTab("https://emailhunter.co/leads_lists/new?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension")
+        openInNewTab("https://hunter.io/leads_lists/new?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension")
       }
       else {
         chrome.storage.sync.set({'current_leads_list_id': $(this).val()});
@@ -35,7 +35,7 @@ var ListSelection = {
   getLeadsLists: function(callback) {
     chrome.storage.sync.get('api_key', function(value){
       if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-        url = "https://api.emailhunter.co/v2/leads_lists?api_key="+value["api_key"];
+        url = "https://api.hunter.io/v2/leads_lists?api_key="+value["api_key"];
         $.ajax({
           url : url,
           type : 'GET',

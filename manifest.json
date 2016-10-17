@@ -4,7 +4,7 @@
   "version": "1.7.6",
   "manifest_version": 2,
   "description": "Email Hunter is the easiest way to find email addresses from anywhere on the web, with just one click.",
-  "homepage_url": "https://emailhunter.co",
+  "homepage_url": "https://hunter.io",
   "icons": {
     "16": "shared/img/icon16.png",
     "48": "shared/img/icon48.png",
@@ -23,7 +23,7 @@
     "tabs",
     "storage",
     "clipboardWrite",
-    "*://*.emailhunter.co/*",
+    "*://*.hunter.io/*",
     "*://*.linkedin.com/*"
   ],
   "background": {
@@ -36,7 +36,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.emailhunter.co/*"
+        "*://*.hunter.io/*"
       ],
       "js": [
         "shared/js/lib/jquery.min.js",
@@ -90,6 +90,6 @@
     "shared/fonts/*"
   ],
   "externally_connectable": {
-    "matches": ["*://*.emailhunter.co/*"]
+    "matches": ["*://*.hunter.io/*"]
   }
 }

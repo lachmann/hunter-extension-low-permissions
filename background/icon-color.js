@@ -29,11 +29,11 @@ chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
 
 
 // API call to check if there is at least one email address
-// Documentation: https://emailhunter.co/api/v2/docs#email-count
+// Documentation: https://hunter.io/api/v2/docs#email-count
 //
 function updateIconColor() {
   $.ajax({
-    url : 'https://api.emailhunter.co/v2/email-count?domain=' + window.currentDomain,
+    url : 'https://api.hunter.io/v2/email-count?domain=' + window.currentDomain,
     type : 'GET',
     success : function(json){
       if (json.data.total > 0) { setColoredIcon(); }

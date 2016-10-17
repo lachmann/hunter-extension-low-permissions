@@ -4,7 +4,7 @@
 
 var Analytics = {
   trackEvent: function(eventName) {
-    url = "https://emailhunter.co/events?name="+eventName;
+    url = "https://hunter.io/events?name="+eventName;
     $.ajax({
       url : url,
       type : 'GET',
