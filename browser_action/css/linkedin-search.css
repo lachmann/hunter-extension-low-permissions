@@ -3,7 +3,8 @@
  **/
 
 #linkedin-search {
-  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
   font-size: 14px;
   display: none;
 }

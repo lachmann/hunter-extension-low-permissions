@@ -4,7 +4,8 @@
 
 
 #ehunter_popup {
-  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
   font-size: 14px;
   padding: 30px 30px 15px 30px;;
 }
