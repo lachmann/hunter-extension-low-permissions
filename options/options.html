@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>My Test Extension Options</title>
+  <style>
+    body { padding: 5px; }
+    #status { float: right; margin-top: 4px; color: #60ad1d; }
+    input[type="checkbox"] { margin-right: 5px; }
+    .hint { color: #999; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+  <label>
+    <input type="checkbox" id="trackDomain">
+    Allow Hunter to track anonymously the visited domain names
+  </label>
+  <div class="hint">This helps us to identify the most popular domain names and improve our service.</div>
+  <br/>
+
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <script src="options.js"></script>
+</body>
+</html>

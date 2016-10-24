@@ -1,10 +1,14 @@
 {
   "name": "Hunter",
   "short_name": "Hunter",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "manifest_version": 2,
   "description": "Hunter is the easiest way to find email addresses from anywhere on the web, with just one click.",
   "homepage_url": "https://hunter.io",
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
   "icons": {
     "16": "shared/img/icon16.png",
     "48": "shared/img/icon48.png",
