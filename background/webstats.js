@@ -51,7 +51,7 @@ function pingDomain(domain, guid) {
     url : 'https://webstats.hunter.io/webstats/visit?domain='+domain+'&guid='+guid,
     type : 'GET',
     success : function(){
-      console.log(domain);
+
     },
     error : function() {
 
