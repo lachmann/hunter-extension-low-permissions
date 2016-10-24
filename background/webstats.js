@@ -3,10 +3,8 @@
 //
 function sendTabDomain() {
   // First, we check if we're authorized by the user to collect this data.
-  chrome.storage.sync.get({
-    trackDomain: true
-  }, function(item) {
-    if (item.trackDomain == true) {
+  chrome.storage.sync.get({ trackDomain: true }, function(value) {
+    if (value.trackDomain == true) {
       chrome.tabs.query(
         {currentWindow: true, active : true},
         function(tabArray){
@@ -24,8 +22,8 @@ function sendTabDomain() {
 // differenciate recurring visits from new visits.
 //
 function getGuid(fn) {
-  chrome.storage.sync.get("guid", function(value){
-    if (typeof value["guid"] != "undefined") {
+  chrome.storage.sync.get({ "guid": false }, function(value){
+    if (value.guid) {
       fn(value["guid"]);
     }
     else {
@@ -49,13 +47,7 @@ function randomString() {
 function pingDomain(domain, guid) {
   $.ajax({
     url : 'https://webstats.hunter.io/webstats/visit?domain='+domain+'&guid='+guid,
-    type : 'GET',
-    success : function(){
-
-    },
-    error : function() {
-
-    }
+    type : 'GET'
   });
 }
 

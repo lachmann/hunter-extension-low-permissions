@@ -289,7 +289,7 @@ var LinkedinProfile = {
       $(this).remove();
 
       window.profile["email"] = $(this).attr("data-email");
-      window.profile["confidence_score"] = "";      
+      window.profile["confidence_score"] = "";
 
       saveLead(window.profile, function(response) {
         container.find(".fa-spinner").remove();

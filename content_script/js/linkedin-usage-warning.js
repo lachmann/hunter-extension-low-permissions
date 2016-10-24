@@ -9,21 +9,26 @@
 //
 
 LinkedinUsageWarning = {
+
+  // The daily limit of profiles viewed appears to be around 500-600 for free
+  // accounts. We set the limit at a lower level to avoid any issue.
+  //
   dailyLimit: 400,
 
   countOneProfileView: function() {
     this_usage = this
 
-    chrome.storage.sync.get('linkedin_profile_views_last', function(value){
-      if (typeof value["linkedin_profile_views_last"] === "undefined" || value["linkedin_profile_views_last"] != weekTodayString()) {
-        this_usage.updateProfileViewsDate();
-        this_usage.updateProfileViewsCount(1);
-        this_usage.updateWarningViewed(false);
+    chrome.storage.sync.get({'linkedin_profile_views_last' : false }, function(value) {
+        if (value.linkedin_profile_views_last != weekTodayString()) {
+          this_usage.updateProfileViewsDate();
+          this_usage.updateProfileViewsCount(1);
+          this_usage.updateWarningViewed(false);
+        }
+        else {
+          this_usage.incrementProfileViewsCount();
+        }
       }
-      else {
-        this_usage.incrementProfileViewsCount();
-      }
-    });
+    );
   },
 
   updateProfileViewsDate: function() {
@@ -43,17 +48,12 @@ LinkedinUsageWarning = {
   },
 
   incrementProfileViewsCount: function() {
-    this_usage = this
+    this_usage = this;
 
-    chrome.storage.sync.get('linkedin_profile_views', function(value){
-      if (typeof value["linkedin_profile_views"] !== "undefined") {
-        views_count = value["linkedin_profile_views"] + 1;
-        this_usage.updateProfileViewsCount(views_count);
-        this_usage.prepareLimitationWarning(views_count);
-      }
-      else {
-        this_usage.updateProfileViewsCount(1);
-      }
+    chrome.storage.sync.get({ 'linkedin_profile_views' : 0 }, function(value){
+      views_count = value.linkedin_profile_views + 1;
+      this_usage.updateProfileViewsCount(views_count);
+      this_usage.prepareLimitationWarning(views_count);
     })
   },
 
@@ -61,13 +61,12 @@ LinkedinUsageWarning = {
     this_usage = this
 
     if (views_count >= this_usage.dailyLimit) {
-      chrome.storage.sync.get('usage_warning_hide', function(hide){
-        if (typeof hide['usage_warning_hide'] === "undefined") {
-          chrome.storage.sync.get('usage_warning_viewed', function(value) {
-            if (typeof value["usage_warning_viewed"] === "undefined" || value["usage_warning_viewed"] == false) {
-              this_usage.displayLimitationWarning();
-            }
-          });
+      chrome.storage.sync.get({
+        usage_warning_hide: false,
+        usage_warning_viewed: false
+      }, function(values) {
+        if (values.usage_warning_hide == false && values.usage_warning_viewed == false) {
+          this_usage.displayLimitationWarning();
         }
       });
     }
