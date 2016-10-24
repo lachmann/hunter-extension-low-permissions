@@ -1,8 +1,8 @@
 var Account = {
   get: function getAccountInformation(callback) {
-    chrome.storage.sync.get('api_key', function(value){
-      if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-        url = "https://api.hunter.io/v2/account?api_key="+value["api_key"];
+    this.getApiKey(function(api_key) {
+      if (api_key !== "") {
+        url = "https://api.hunter.io/v2/account?api_key=" + api_key;
         $.ajax({
           url : url,
           type : 'GET',
@@ -24,12 +24,12 @@ var Account = {
     });
   },
 
-  getApiKey: function(callback) {
-    chrome.storage.sync.get('api_key', function(value){
-      if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") { api_key = value["api_key"]; }
+  getApiKey: function(fn) {
+    chrome.storage.sync.get({ 'api_key' : false }, function(value){
+      if (value.api_key) { api_key = value.api_key; }
       else { api_key = ''; }
 
-      callback(api_key)
+      fn(api_key)
     });
   }
 }

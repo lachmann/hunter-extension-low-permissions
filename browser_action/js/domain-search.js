@@ -50,9 +50,9 @@ var DomainSearch = {
   launchSearch: function() {
     this_popup = this;
 
-    chrome.storage.sync.get('api_key', function(value){
-      if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-        this_popup.loadResults(value["api_key"]);
+    Account.getApiKey(function(api_key) {
+      if (api_key != '') {
+        this_popup.loadResults(api_key);
       }
       else {
         this_popup.loadResults();
@@ -276,10 +276,8 @@ var DomainSearch = {
 
       email = verification_result_tag.parent().find(".email").text();
 
-      chrome.storage.sync.get('api_key', function(value){
-        api_key = value["api_key"];
-
-        if (typeof api_key == "undefined") {
+      Account.getApiKey(function(api_key) {
+        if (api_key == '') {
           url = 'https://api.hunter.io/trial/v2/email-verifier?email=' + email;
         }
         else {

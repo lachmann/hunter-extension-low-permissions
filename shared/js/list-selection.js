@@ -8,7 +8,7 @@ var ListSelection = {
 
         chrome.storage.sync.get('current_leads_list_id', function(value) {
           jQuery.each(json.data.leads_lists, function(i, val) {
-            if (value['current_leads_list_id'] == val.id) { selected = 'selected="selected"' }
+            if (value.current_leads_list_id == val.id) { selected = 'selected="selected"' }
             else { selected = '' }
             $(".ehunter_list_select").append("<option " + selected +" value='" + val.id + "'>" + val.name + "</option>")
           });
@@ -33,9 +33,9 @@ var ListSelection = {
   },
 
   getLeadsLists: function(callback) {
-    chrome.storage.sync.get('api_key', function(value){
-      if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
-        url = "https://api.hunter.io/v2/leads_lists?api_key="+value["api_key"];
+    Account.getApiKey(function(api_key) {
+      if (api_key != '') {
+        url = "https://api.hunter.io/v2/leads_lists?api_key=" + api_key;
         $.ajax({
           url : url,
           type : 'GET',
