@@ -41,15 +41,6 @@ chrome.extension.onMessage.addListener(
       return true;
     }
 
-    // Return the profiles available in the search
-    if (request.subject == "get_linkedin_search_results") {
-      LinkedInSearchResults.parse($("html").html(), function(response){
-        sendResponse(response);
-      });
-
-      return true;
-    }
-
     // Fetch the profiles selected in the search and saved it
     if (request.subject == "get_selected_linkedin_profile") {
       LinkedinSearchSave.launch(request.profile, function(is_saved, status, id) {

@@ -386,7 +386,7 @@ var LinkedinProfilePopup = {
   },
 
 
-  mainMessage: function(message, loader = false) {
+  mainMessage: function(message, loader) {
     console.log(message);
     loader = loader || false;
 

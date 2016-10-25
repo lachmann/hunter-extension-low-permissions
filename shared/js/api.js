@@ -5,7 +5,7 @@
 // Email Finder     https://hunter.io/api/v2/docs#email-finder
 // Email Verifier   https://hunter.io/api/v2/docs#email-verifier
 //
-function apiCall(api_key, endpoint, callback) {
+function apiCall(api_key, endpoint, fn) {
   if (api_key != '') {
     api_key_param = '&api_key=' + api_key;
   }
@@ -22,7 +22,7 @@ function apiCall(api_key, endpoint, callback) {
     type : 'GET',
     dataType : 'json',
     success : function(json){
-      callback(json);
+      fn(json);
     },
     error: function(xhr) {
       if (xhr.status == 400) {
@@ -51,7 +51,7 @@ function apiCall(api_key, endpoint, callback) {
 //
 // Documentation: https://hunter.io/api/v2/docs#create-lead
 //
-function saveLead(lead, callback) {
+function saveLead(lead, fn) {
   chrome.storage.sync.get('api_key', function(value) {
     if (typeof value["api_key"] !== "undefined" && value["api_key"] !== "") {
       api_key = value["api_key"];
@@ -70,17 +70,17 @@ function saveLead(lead, callback) {
         type : 'POST',
         dataType : 'json',
         success : function(json){
-          callback(json);
+          fn(json);
         },
         error: function(xhr) {
           if (xhr.status == 401) {
-            callback("please_sign_in");
+            fn("please_sign_in");
           }
           else if (xhr.status == 422 && xhr.responseJSON.errors[0].id == "duplicated_entry") {
-            callback("duplicated_entry");
+            fn("duplicated_entry");
           }
           else {
-            callback("error");
+            fn("error");
           }
         }
       });
