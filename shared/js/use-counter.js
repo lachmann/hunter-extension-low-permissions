@@ -3,14 +3,9 @@
 //
 
 function countCall() {
-  chrome.storage.sync.get('calls_count', function(value){
-    if (Object.keys(value).length === 0) {
-      value['calls_count'] = 1;
-    }
-    else {
-      value['calls_count']++;
-    }
-
-    chrome.storage.sync.set({'calls_count': value['calls_count']});
+  chrome.storage.sync.get({ 'calls_count': 1 }, function(value){
+    value.calls_count++;
+    console.log(value.calls_count);
+    chrome.storage.sync.set({ 'calls_count': value.calls_count });
   });
 }
