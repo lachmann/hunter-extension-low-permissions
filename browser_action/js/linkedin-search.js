@@ -80,7 +80,7 @@ LinkedinSearch = {
   selectProfiles: function() {
     this_popup = this;
 
-    $(".linkedin-search-profile:not(.disabled)").on("click", function() {
+    $('body').on('click', '.linkedin-search-profile:not(.disabled)', function () {
       checkbox = $(this).find(".fa-square, .fa-check-square").first();
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
