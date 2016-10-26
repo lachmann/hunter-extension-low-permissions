@@ -6,7 +6,7 @@ var LinkedinSearchPopup = {
     if (LinkedinVersion.isSalesNavigator()) {
       // Sales Navigator
       $("#results-list .result").each(function(index) {
-        if($(this).find(".fa-check-square").length) {
+        if($(this).find(".ehunter_checkbox_container:not(.disabled) .fa-check-square").length) {
           profile_path = $(this).find(".profile-link").attr("href");
           profile_name = $(this).find(".name a").text();
           profile_id = profile_name.hashCode();
@@ -21,7 +21,7 @@ var LinkedinSearchPopup = {
     else {
       // Standard LinkedIn
       $(".result.people").each(function(index) {
-        if($(this).find(".fa-check-square").length) {
+        if($(this).find(".ehunter_checkbox_container:not(.disabled) .fa-check-square").length) {
           profile_path = $(this).find(".title").attr("href");
           profile_name = $(this).find(".main-headline").text();
           profile_id = profile_name.hashCode();

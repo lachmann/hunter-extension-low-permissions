@@ -25,13 +25,6 @@ LinkedinSearch = {
   open: function(profiles) {
     window.profiles = profiles;
 
-    // console.log(profiles.length);
-    // if (profiles.length == 0) {
-    //   $("#linkedin-search").hide();
-    //   $(".error-message").text("No lead to save on this search page. The profiles must be in your network in LinkedIn to be saved.");
-    //   $(".error").slideDown(300);
-    // }
-
     var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
 
     $("#linkedin-search").prepend("\n\
@@ -46,19 +39,34 @@ LinkedinSearch = {
       </div>\n\
     ")
 
-    $.each(profiles, function(key, value) {
-      $(".linkedin-search-profiles").append("\n\
-        <div class='linkedin-search-profile' data-profile-id='" + value.profile_id + "'>\n\
-          <span class='linkedin-profile-status'></span>\n\
-          <i class='fa fa-square'></i>\n\
-          <img src='" + value.profile_pic + "'>\n\
-          <div class='linkedin-profile-description'>\n\
-            <span class='linkedin-profile-name'>" + limitLength(value.profile_name, 30) + "</span>\n\
-            <br/>\n\
-            <span class='linkedin-profile-title'>" + limitLength(value.profile_title, 40) + "</span>\n\
+    $.each(profiles, function(index, profile) {
+
+      // Check if the profiles have already been saved or not
+      LeadExistence.check(profile.profile_name, function(already_saved) {
+        if (already_saved) {
+          disabled = "disabled";
+          checkbox = "<i class='fa fa-check-square' disabled='disabled'></i>";
+          status = "Already saved";
+        }
+        else {
+          disabled = "";
+          checkbox = "<i class='fa fa-square'></i>";
+          status = "";
+        }
+
+        $(".linkedin-search-profiles").append("\n\
+          <div class='linkedin-search-profile " + disabled + "' data-profile-id='" + profile.profile_id + "'>\n\
+            <span class='linkedin-profile-status'>" + status + "</span>\n\
+            " + checkbox + "\n\
+            <img src='" + profile.profile_pic + "'>\n\
+            <div class='linkedin-profile-description'>\n\
+              <span class='linkedin-profile-name'>" + limitLength(profile.profile_name, 30) + "</span>\n\
+              <br/>\n\
+              <span class='linkedin-profile-title'>" + limitLength(profile.profile_title, 40) + "</span>\n\
+            </div>\n\
           </div>\n\
-        </div>\n\
-      ");
+        ");
+      })
     });
 
     this.selectProfiles();
@@ -71,7 +79,7 @@ LinkedinSearch = {
   selectProfiles: function() {
     this_popup = this;
 
-    $(".linkedin-search-profile").on("click", function() {
+    $('body').on('click', '.linkedin-search-profile:not(.disabled)', function () {
       checkbox = $(this).find(".fa-square, .fa-check-square").first();
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
@@ -83,15 +91,15 @@ LinkedinSearch = {
       this_popup.updateSelection();
     });
 
-    $(".select-all-profiles").click(function() {
+    $('body').on('click', '.select-all-profiles', function () {
       checkbox = $(this).find(".fa-square, .fa-check-square");
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
-        $(".linkedin-search-profiles .fa-square").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
+        $(".linkedin-search-profile:not(.disabled) .fa-square").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
       }
       else {
         checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
-        $(".linkedin-search-profiles .fa-check-square").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+        $(".linkedin-search-profile:not(.disabled) .fa-check-square").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
       }
 
       this_popup.updateSelection();
@@ -100,7 +108,7 @@ LinkedinSearch = {
 
   updateSelection: function() {
     selected_profiles = new Array;
-    $(".linkedin-search-profile").each(function(key, value) {
+    $(".linkedin-search-profile:not(.disabled)").each(function(key, value) {
       if ($(this).find(".fa-check-square").length) {
         profile_id = $(this).attr("data-profile-id");
         var profile = window.profiles.filter(function(p) { return p.profile_id == profile_id; });

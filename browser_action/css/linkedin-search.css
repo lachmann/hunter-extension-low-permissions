@@ -17,9 +17,14 @@
   padding: 2px 20px 7px;
 }
 
-.linkedin-search-profile:hover {
+.linkedin-search-profile:not(.disabled):hover {
   cursor: pointer;
   background-color: #f5f5f5;
+}
+
+.linkedin-search-profile.disabled .fa-check-square {
+  color: #ff5722;
+  opacity: 0.5;
 }
 
 .linkedin-profile-description {
