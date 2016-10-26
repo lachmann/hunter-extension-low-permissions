@@ -138,7 +138,8 @@ LinkedinSearchCheckboxes = {
   },
 
   selectProfiles: function() {
-    $(".ehunter_checkbox_container:not(.disabled)").unbind().click(function() {
+    // $('body').on('click', '.ehunter_checkbox_container:not(.disabled)', function () {
+    $(".ehunter_checkbox_container").unbind().not(".disabled").click(function() {
       checkbox = $(this).find(".fa").first();
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
