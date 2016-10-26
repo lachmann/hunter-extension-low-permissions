@@ -22,7 +22,7 @@ LinkedinSearchCheckboxes = {
           }
         }
       });
-    }, 1000);
+    }, 500);
   },
 
   inject: function() {

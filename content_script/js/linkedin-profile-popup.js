@@ -266,8 +266,19 @@ var LinkedinProfilePopup = {
         $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
       });
     })
+
+    this_popup.checkAlreadySaved();
   },
 
+  checkAlreadySaved: function() {
+    LeadExistence.check(window.profile["first_name"] + ' ' + window.profile["last_name"], function(already_saved) {
+      if (already_saved) {
+        $("#ehunter_save_email_button").remove();
+        $("<div class='fa fa-floppy-o ehunter_save_lead_loader' data-toggle='tooltip' data-placement='top' title='Already saved!'></div>").insertBefore("#ehunter_email_action_message");
+        $(".ehunter_save_lead_loader").tooltip();
+      }
+    });
+  },
 
   displayActionMessage: function(message) {
     $("#ehunter_email_action_message").text(message);
@@ -457,14 +468,3 @@ var LinkedinProfilePopup = {
     input.remove();
   }
 }
-
-
-
-// Launch popup
-//
-
-
-
-
-// Copy in email in LinkedIn popup
-//

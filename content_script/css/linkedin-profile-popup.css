@@ -322,6 +322,11 @@
   text-decoration: none;
 }
 
+#ehunter_popup .tooltip-inner {
+  padding: 8px 12px;
+  font-size: 1.2em;
+}
+
 #ehunter_copy_email_button, #ehunter_save_email_button {
   float: right;
   cursor: pointer;
@@ -345,7 +350,7 @@
 
 #ehunter_email_action_message {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
   float: right;
   margin-right: 10px;
@@ -391,4 +396,8 @@
 
 #ehunter_popup_requests {
   line-height: 24px;
+}
+
+#ehunter_popup .ehunter_list_select {
+  width: 300px;
 }
