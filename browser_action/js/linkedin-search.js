@@ -41,10 +41,9 @@ LinkedinSearch = {
 
     $.each(profiles, function(index, profile) {
 
-      // Now have all the profiles available in the search page. Let's check
-      // if they have already been saved or not.
+      // Check if the profiles have already been saved or not
       LeadExistence.check(profile.profile_name, function(already_saved) {
-        if (already_saved == true) {
+        if (already_saved) {
           disabled = "disabled";
           checkbox = "<i class='fa fa-check-square' disabled='disabled'></i>";
           status = "Already saved";
@@ -92,7 +91,7 @@ LinkedinSearch = {
       this_popup.updateSelection();
     });
 
-    $(".select-all-profiles").click(function() {
+    $('body').on('click', '.select-all-profiles', function () {
       checkbox = $(this).find(".fa-square, .fa-check-square");
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });

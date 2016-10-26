@@ -75,6 +75,7 @@
         "shared/js/account.js",
         "shared/js/analytics.js",
         "shared/js/list-selection.js",
+        "shared/js/lead-existence.js",
         "content_script/js/messaging.js",
         "content_script/js/linkedin-debug.js",
         "content_script/js/linkedin-parse-profile.js",

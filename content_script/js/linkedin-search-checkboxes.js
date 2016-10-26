@@ -26,6 +26,7 @@ LinkedinSearchCheckboxes = {
   },
 
   inject: function() {
+    this_checkboxes = this;
     var icon = chrome.extension.getURL('shared/img/icon48.png');
 
     if (LinkedinVersion.isSalesNavigator()) {
@@ -42,6 +43,8 @@ LinkedinSearchCheckboxes = {
                 <i class='fa fa-square'></i>\n\
               </div>\n\
             ");
+
+            this_checkboxes.disableAlreadySaved(result);
           }
         }
       });
@@ -62,6 +65,8 @@ LinkedinSearchCheckboxes = {
                 <img class='ehunter_checkbox_icon' src='" + icon + "'><i class='fa fa-square'></i>\n\
               </div>\n\
             ");
+
+            this_checkboxes.disableAlreadySaved(result);
           }
         }
       });
@@ -110,11 +115,11 @@ LinkedinSearchCheckboxes = {
         checkbox = $(this).find(".fa").first();
         if (checkbox.hasClass("fa-square")) {
           checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
-          $(".ehunter_checkbox_container .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
+          $(".ehunter_checkbox_container:not(.disabled) .fa").removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
         }
         else {
           checkbox.removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
-          $(".ehunter_checkbox_container .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
+          $(".ehunter_checkbox_container:not(.disabled) .fa").removeClass("fa-check-square").addClass("fa-square").css({ 'color': '#ddd' });
         }
 
         LinkedinSearchPopup.updateSelection();
@@ -123,8 +128,17 @@ LinkedinSearchCheckboxes = {
     }
   },
 
+  disableAlreadySaved: function(result) {
+    LeadExistence.check(result.find(".main-headline").text(), function(already_saved) {
+      if (already_saved) {
+        result.find(".ehunter_checkbox_container").addClass("disabled").attr("title", "You've already saved this lead!");
+        result.find(".fa").addClass("fa-check-square").css({ 'color': '#ff5722' });
+      }
+    });
+  },
+
   selectProfiles: function() {
-    $(".ehunter_checkbox_container").unbind().click(function() {
+    $(".ehunter_checkbox_container:not(.disabled)").unbind().click(function() {
       checkbox = $(this).find(".fa").first();
       if (checkbox.hasClass("fa-square")) {
         checkbox.removeClass("fa-square").addClass("fa-check-square").css({ 'color': '#ff5722' });
