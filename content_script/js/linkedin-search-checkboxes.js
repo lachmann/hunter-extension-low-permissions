@@ -129,7 +129,10 @@ LinkedinSearchCheckboxes = {
   },
 
   disableAlreadySaved: function(result) {
-    LeadExistence.check(result.find(".main-headline").text(), function(already_saved) {
+    if (LinkedinVersion.isSalesNavigator()) { full_name = result.find(".name a").text(); }
+    else { full_name = result.find(".main-headline").text(); }
+
+    LeadExistence.check(full_name, function(already_saved) {
       if (already_saved) {
         result.find(".ehunter_checkbox_container").addClass("disabled").attr("title", "You've already saved this lead!");
         result.find(".fa").addClass("fa-check-square").css({ 'color': '#ff5722' });
