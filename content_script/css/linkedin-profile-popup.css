@@ -4,7 +4,7 @@
 
 
 #ehunter_popup {
-  font-family: "Open Sans", Helvetica, Ubuntu, Arial, sans-serif !important;
+  font-family: "Lato", Helvetica, Ubuntu, Arial, sans-serif !important;
   background-color: #fff;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -324,7 +324,7 @@
 
 #ehunter_popup .tooltip-inner {
   padding: 8px 12px;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 #ehunter_copy_email_button, #ehunter_save_email_button {
