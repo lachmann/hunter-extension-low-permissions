@@ -1,7 +1,7 @@
 {
   "name": "Hunter",
   "short_name": "Hunter",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "manifest_version": 2,
   "description": "Hunter is the easiest way to find email addresses from anywhere on the web, with just one click.",
   "homepage_url": "https://hunter.io",
@@ -77,6 +77,7 @@
         "shared/js/list-selection.js",
         "shared/js/lead-existence.js",
         "content_script/js/messaging.js",
+        "content_script/js/linkedin-company.js",
         "content_script/js/linkedin-debug.js",
         "content_script/js/linkedin-parse-profile.js",
         "content_script/js/linkedin-parse-company.js",
