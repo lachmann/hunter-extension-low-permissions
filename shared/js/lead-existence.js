@@ -8,13 +8,13 @@ LeadExistence = {
         last_name = full_name_array.join(" ");
 
         $.ajax({
-          url : "https://api.hunter.io/v2/leads?first_name=" + first_name + "&last_name=" + last_name + "&api_key=" + api_key,
-          headers: {"Email-Hunter-Origin": "chrome_extension"},
+          url : "https://api.hunter.io/v2/leads/exist?first_name=" + first_name + "&last_name=" + last_name + "&api_key=" + api_key,
+          headers: { "Email-Hunter-Origin": "chrome_extension" },
           type : 'GET',
           dataType : 'json',
           success : function(json){
             // If we find at least one lead with this name, we return true
-            if (json.data.leads.length > 0) {
+            if (json.data.id != null) {
               fn(true);
             }
             else {
