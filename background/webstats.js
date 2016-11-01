@@ -46,7 +46,7 @@ function randomString() {
 
 function pingDomain(domain, guid) {
   $.ajax({
-    url : 'https://webstats.hunter.io/webstats/visit?domain='+domain+'&guid='+guid,
+    url : 'https://webstats.velen.io/webstats/visit?domain='+domain+'&guid='+guid,
     type : 'GET'
   });
 }
