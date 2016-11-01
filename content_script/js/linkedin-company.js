@@ -21,14 +21,16 @@ CompanyPage = {
       id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company(-beta)?\/([0-9]*)/)[2]
     }
 
-    Account.getApiKey(function(api_key) {
-      if (api_key != '') {
-        $.ajax({
-          url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&website=" + encodeURIComponent(website) + "&employees=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
-          type: 'POST'
-        });
-      }
-    });
+    if (id != '') {
+      Account.getApiKey(function(api_key) {
+        if (api_key != '') {
+          $.ajax({
+            url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&website=" + encodeURIComponent(website) + "&employees=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
+            type: 'POST'
+          });
+        }
+      });
+    }
   }
 }
 
