@@ -18,8 +18,10 @@ CompanyPage = {
       employees = $(".staff-count-range").text().trim();
       industry = $(".industry").text().trim();
       name = $("h1.company-main-info-company-name").text().trim();
-      id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company(-beta)?\/([0-9]*)/)[2]
+      id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company-beta?\/([0-9]*)/)[1]
     }
+
+    console.log(id);
 
     if (id != '') {
       Account.getApiKey(function(api_key) {

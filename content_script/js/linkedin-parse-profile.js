@@ -87,6 +87,17 @@ var LinkedinProfile = {
     return last_company_path;
   },
 
+  getLastCompanyID: function(company_path) {
+    if (typeof company_path !== "undefined") {
+      id = company_path.match(/company(-beta)?\/([0-9]*)/)[2];
+    }
+    else {
+      id = undefined;
+    }
+
+    return id;
+  },
+
   // LAST POSITION
   getPosition: function(html) {
     var $html = $('<div />',{html:html});
@@ -195,6 +206,9 @@ var LinkedinProfile = {
 
     // Company path
     parsed_profile['last_company_path'] = this.getLastCompanyPath(html);
+
+    // Company ID
+    parsed_profile['last_company_id'] = this.getLastCompanyID(parsed_profile['last_company_path']);
 
     // Main content
     parsed_profile['profile_main_content'] = this.getMainProfileContent(html);

@@ -115,23 +115,28 @@ var LinkedinProfilePopup = {
       // Looking for domain name
       this_popup.mainMessage('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
 
-      LinkedinCompany.get(window.profile, function(company_data) {
+      $('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
 
-        if (company_data != "none") {
-          window.profile["domain"] = cleanDomain(company_data.website);
-          window.profile["company_size"] = company_data.company_size;
-          window.profile["company_industry"] = company_data.company_industry;
+      // Use or not API key
+      Account.getApiKey(function(api_key) {
 
-          $('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
+        if (typeof window.profile["domain"] !== "undefined") {
+          company_param = 'domain=' + encodeURIComponent(window.profile["domain"]);
+        }
+        else if (typeof window.profile["last_company_id"] !== "undefined") {
+          company_param = 'linkedin_id=' + encodeURIComponent(window.profile["last_company_id"]);
+        }
 
-          // Use or not API key
-          Account.getApiKey(function(api_key) {
+        if (typeof company_param !== "undefined") {
 
-            // Generate the email
-            generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(window.profile["domain"]) + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
-            apiCall(api_key, generate_email_endpoint, function(email_json) {
+          // Generate the email
+          email_finder_endpoint = 'https://api.hunter.io/v2/email-finder?' + company_param + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
+          apiCall(api_key, email_finder_endpoint, function(email_json) {
 
-              // We count call to measure use
+            if (email_json.data.domain != null) {
+              window.profile["domain"] = email_json.data.domain;
+
+              // We count the call to measure usage
               countCall();
 
               // Count how much email addresses there is on the domain
@@ -171,7 +176,10 @@ var LinkedinProfilePopup = {
 
               this_popup.askNewDomainListener();
               });
-            });
+            }
+            else {
+              this_popup.askDomainName();
+            }
           });
         }
         else {
