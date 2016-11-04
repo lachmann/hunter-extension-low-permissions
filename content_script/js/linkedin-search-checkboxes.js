@@ -17,12 +17,12 @@ LinkedinSearchCheckboxes = {
             if ($(".ehunter_checkbox_container").length) {
               setTimeout(function() {
                 Debug.handleDisappearedCheckboxes();
-              }, 500);
+              }, 1400);
             }
           }
         }
       });
-    }, 500);
+    }, 800);
   },
 
   inject: function() {
