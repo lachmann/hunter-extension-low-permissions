@@ -122,7 +122,7 @@ LinkedinSearch = {
     if (window.selected_profiles.length == 1) { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profile"); }
     else { $(".linkedin-profiles-selected strong").text(window.selected_profiles.length + " profiles"); }
 
-    if (window.selected_profiles.length > 0) { $("#linkedin-search-submit").prop("disabled", false); }
+    if (window.selected_profiles.length > 0 && typeof window.profile !== "undefined") { $("#linkedin-search-submit").prop("disabled", false); }
     else { $("#linkedin-search-submit").prop("disabled", true); }
   },
 
@@ -152,6 +152,7 @@ LinkedinSearch = {
         $("#linkedin-search-submit").text("Please sign in to save leads");
       }
       else {
+        window.profile = json.data;
         $(".linkedin-profiles-account-requests").html(numberWithCommas(json.data.calls.used)+" / "+numberWithCommas(json.data.calls.available)+" requests");
       }
     })
