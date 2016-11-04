@@ -28,8 +28,8 @@
     "storage",
     "clipboardWrite",
     "activeTab",
-    "http://*/*",
-    "https://*/*"
+    "*://*.hunter.io/*",
+    "*://*.linkedin.com/*"
   ],
   "background": {
     "scripts": [
