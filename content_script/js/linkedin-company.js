@@ -22,6 +22,13 @@ CompanyPage = {
       id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company(-beta)?\/([0-9a-z]*)/)[2]
     }
 
+    // We extract the domain name
+    //
+    domain = cleanDomain(website);
+    if (withoutSubDomain(domain)) {
+      domain = withoutSubDomain(domain);
+    }
+
     // We check if the ID is actually found and that it looks like an integer
     // In some cases, a handle is in the URL instead of an ID. We don't save it.
     // Example: https://www.linkedin.com/company/firmapi
@@ -30,7 +37,7 @@ CompanyPage = {
       Account.getApiKey(function(api_key) {
         if (api_key != '') {
           $.ajax({
-            url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&website=" + encodeURIComponent(website) + "&employees=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
+            url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&domain=" + encodeURIComponent(domain) + "&employees=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
             type: 'POST'
           });
         }
