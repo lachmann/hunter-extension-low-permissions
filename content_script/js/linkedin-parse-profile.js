@@ -89,7 +89,16 @@ var LinkedinProfile = {
 
   getLastCompanyID: function(company_path) {
     if (typeof company_path !== "undefined") {
-      id = company_path.match(/company(-beta)?\/([0-9]*)/)[2];
+      if (LinkedinVersion.isSalesNavigator()) {
+        id = company_path.match(/sales\/accounts\/insights\?companyId=([0-9]*)/)[2];
+      }
+      else if (LinkedinVersion.isRecruiter()) {
+        // TO DO
+        id = undefined;
+      }
+      else {
+        id = company_path.match(/company(-beta)?\/([0-9]*)/)[2];
+      }
     }
     else {
       id = undefined;
