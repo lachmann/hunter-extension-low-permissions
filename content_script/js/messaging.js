@@ -23,15 +23,6 @@ chrome.extension.onMessage.addListener(
       sendResponse(Object.assign({}, window.profile));
     }
 
-    // Return the parsed company of the last experience
-    if (request.subject == "get_company_page") {
-      LinkedinCompany.get(request.profile, function(company) {
-        sendResponse(company);
-      });
-
-      return true;
-    }
-
     // Return the profiles available in the search
     if (request.subject == "get_linkedin_search_results") {
       LinkedInSearchResults.parse($("html").html(), function(response){
