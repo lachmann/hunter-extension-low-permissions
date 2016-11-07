@@ -18,7 +18,9 @@ var LinkedinCompany = {
       else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
-        return JSON.parse(json)["website"];
+
+        try { return JSON.parse(json)["website"]; }
+        catch(e) { return ""; }
       }
       else {
         return "";
@@ -43,7 +45,9 @@ var LinkedinCompany = {
       else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
-        return JSON.parse(json)["size"];
+
+        try { return JSON.parse(json)["size"]; }
+        catch(e) { return ""; }
       }
       else {
         return "";
@@ -68,7 +72,9 @@ var LinkedinCompany = {
       else if (typeof $(html).find("code").last().html() != "undefined") {
         html = $(html).find("code").last().html()
         json = html.replace("<!--", "").replace("-->", "");
-        return JSON.parse(json)["industry"];
+
+        try { return JSON.parse(json)["industry"]; }
+        catch(e) { return ""; }
       }
       else {
         return "";
@@ -98,7 +104,7 @@ var LinkedinCompany = {
                 url : "https://autocomplete.clearbit.com/v1/companies/suggest?query="+profile.last_company,
                 type : 'GET',
                 success : function(response){
-                  if (typeof response[0].domain != "undefined") {
+                  if (typeof response[0] != "undefined" && typeof response[0].domain != "undefined") {
                     website = "http://" + response[0].domain;
                     callback({website: website, company_size: company_size, company_industry: company_industry});
                   }
