@@ -93,7 +93,6 @@ var LinkedinProfile = {
         id = company_path.match(/sales\/accounts\/insights\?companyId=([0-9]*)/)[1];
       }
       else if (LinkedinVersion.isRecruiter()) {
-        console.log(company_path);
         id = company_path.match(/recruiter\/company\/([0-9]*)/)[1];
       }
       else {
