@@ -93,8 +93,8 @@ var LinkedinProfile = {
         id = company_path.match(/sales\/accounts\/insights\?companyId=([0-9]*)/)[1];
       }
       else if (LinkedinVersion.isRecruiter()) {
-        // TO DO
-        id = undefined;
+        console.log(company_path);
+        id = company_path.match(/recruiter\/company\/([0-9]*)/)[1];
       }
       else {
         id = company_path.match(/company(-beta)?\/([0-9]*)/)[2];
@@ -152,7 +152,7 @@ var LinkedinProfile = {
       }
     }
     else if (LinkedinVersion.isRecruiter()) {
-      url = "https://www.linkedin.com" + $html.find(".public-profile a").attr("href");
+      url = $html.find(".public-profile a").attr("href");
     }
     else {
       url = $html.find(".public-profile a").text();

@@ -76,8 +76,6 @@ var LinkedinProfile = {
       // Use or not API key
       Account.getApiKey(function(api_key) {
 
-        console.log(window.profile);
-
         if (typeof window.profile["domain"] !== "undefined") {
           company_param = 'domain=' + encodeURIComponent(window.profile["domain"]);
         }
@@ -92,6 +90,8 @@ var LinkedinProfile = {
           // Generate the email
           email_finder_endpoint = 'https://api.hunter.io/v2/email-finder?' + company_param + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
           apiCall(api_key, email_finder_endpoint, function(email_json) {
+
+            console.log(email_json);
 
             if (email_json.data.domain != null) {
               window.profile["domain"] = email_json.data.domain;
@@ -136,6 +136,9 @@ var LinkedinProfile = {
 
               this_popup.askNewDomainListener();
               });
+            }
+            else {
+              this_popup.askDomainName();
             }
           });
         }
