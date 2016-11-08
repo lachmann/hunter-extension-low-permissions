@@ -141,7 +141,7 @@ var LinkedinProfilePopup = {
 
               // Count how much email addresses there is on the domain
               count_endpoint = 'https://api.hunter.io/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
-              apiCall(api_key, count_endpoint, function(count_json) {
+              apiCall("", count_endpoint, function(count_json) {
 
                 // If email addresses has NOT been found
                 if (email_json.data.email == null) {
