@@ -10,10 +10,10 @@
 
 LinkedinUsageWarning = {
 
-  // The daily limit of profiles viewed appears to be around 500-600 for free
+  // The daily limit of profiles viewed appears to be around 600 for free
   // accounts. We set the limit at a lower level to avoid any issue.
   //
-  dailyLimit: 400,
+  dailyLimit: 500,
 
   countOneProfileView: function() {
     this_usage = this
