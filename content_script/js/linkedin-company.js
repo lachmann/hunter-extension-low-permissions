@@ -37,7 +37,7 @@ CompanyPage = {
       Account.getApiKey(function(api_key) {
         if (api_key != '') {
           $.ajax({
-            url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&domain=" + encodeURIComponent(domain) + "&employees=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
+            url: 'https://api.hunter.io/v2/company-leads?linkedin_id=' + id + "&domain=" + encodeURIComponent(domain) + "&company_size=" + encodeURIComponent(employees) + "&industry=" + encodeURIComponent(industry) + "&name=" + encodeURIComponent(name) + "&api_key=" + api_key,
             type: 'POST'
           });
         }
