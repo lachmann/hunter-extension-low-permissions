@@ -111,6 +111,9 @@ var LinkedinSearchSave = {
 
 
   fetchProfile: function(profile_path, callback) {
+    // We force HTTPS (it can happen the links to profiles are in HTTP)
+    profile_path = profile_path.replace("http://", "https://");
+
     $.ajax({
       url: profile_path,
       type: 'GET',
