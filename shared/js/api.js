@@ -65,10 +65,23 @@ function saveLead(lead, fn) {
       else { leads_list_id = ""; }
 
       $.ajax({
-        url : "https://api.hunter.io/v2/leads?linkedin_id=" + encodeURIComponent(lead["last_company_id"]) + "&first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&leads_list_id=" + leads_list_id + "&api_key=" + api_key,
+        url : "https://api.hunter.io/v2/leads",
         headers: {"Email-Hunter-Origin": "chrome_extension"},
         type : 'POST',
-        dataType : 'json',
+        data : {
+          'linkedin_id': lead["last_company_id"],
+          'first_name': lead["first_name"],
+          'last_name': lead["last_name"],
+          'company': lead["last_company"],
+          'position': lead["position"],
+          'country_code': lead["country_code"],
+          'email': lead["email"],
+          'confidence_score': lead["confidence_score"],
+          'website': 'http://' + lead["domain"],
+          'source': 'Hunter (LinkedIn)',
+          'leads_list_id': leads_list_id,
+          'api_key': api_key;
+        },
         success : function(json){
           fn(json);
         },
