@@ -18,31 +18,18 @@ var LinkedinSearchSave = {
         parsed_profile["profile_id"] = search_profile["profile_id"];
 
         // If we don't have the last experience, we stop
-        if (typeof parsed_profile["last_company_path"] == "undefined") {
+        if (typeof parsed_profile["last_company_id"] == "undefined") {
           this_search.saveAndReturnStatus("no_company_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
         }
         else {
-          // 2. We fetch and parse the company page
+          // 2. We find the email address
           //
-          LinkedinCompany.get(parsed_profile, function(company_data) {
-            if (company_data == "none") {
-              this_search.saveAndReturnStatus("website_not_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
+          this_search.findEmailAddress(parsed_profile, function(parsed_profile) {
+            if (parsed_profile["email"] == null) {
+              this_search.saveAndReturnStatus("email_not_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
             }
             else {
-              parsed_profile["domain"] = cleanDomain(company_data.website);
-              parsed_profile["company_size"] = company_data.company_size;
-              parsed_profile["company_industry"] = company_data.company_industry;
-
-              // 3. We find the email address
-              //
-              this_search.findEmailAddress(parsed_profile, function(parsed_profile) {
-                if (parsed_profile["email"] == null) {
-                  this_search.saveAndReturnStatus("email_not_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
-                }
-                else {
-                  this_search.saveAndReturnStatus("email_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
-                }
-              });
+              this_search.saveAndReturnStatus("email_found", parsed_profile, function(is_saved, status, id) { fn(is_saved, status, id) });
             }
           });
         }
@@ -85,28 +72,48 @@ var LinkedinSearchSave = {
     // First we have to find email addresses
     Account.getApiKey(function(api_key) {
 
-      generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(parsed_profile["domain"]) + '&first_name=' + encodeURIComponent(parsed_profile["first_name"]) + '&last_name=' + encodeURIComponent(parsed_profile["last_name"]) + '&position=' + encodeURIComponent(parsed_profile["position"]) + '&company=' + encodeURIComponent(parsed_profile["last_company"]);
-      apiCall(api_key, generate_email_endpoint, function(email_json) {
+      if (typeof parsed_profile["domain"] !== "undefined") {
+        company_param = 'domain=' + encodeURIComponent(parsed_profile["domain"]);
+      }
+      else if (typeof parsed_profile["last_company_id"] !== "undefined") {
+        company_param = 'linkedin_id=' + encodeURIComponent(parsed_profile["last_company_id"]);
+      }
 
-        // If there is no result, we try to remove a subdomain
-        if (email_json.data.email == null && withoutSubDomain(parsed_profile["domain"])) {
-          parsed_profile["domain"] = withoutSubDomain(parsed_profile["domain"]);
-          this_search.findEmailAddress(parsed_profile, function(parsed_profile) {
+      if (typeof company_param !== "undefined") {
+
+        generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?linkedin_id=' + encodeURIComponent(parsed_profile["last_company_id"]) + '&first_name=' + encodeURIComponent(parsed_profile["first_name"]) + '&last_name=' + encodeURIComponent(parsed_profile["last_name"]) + '&position=' + encodeURIComponent(parsed_profile["position"]) + '&company=' + encodeURIComponent(parsed_profile["last_company"]);
+        apiCall(api_key, generate_email_endpoint, function(email_json) {
+
+          if (email_json.data.domain != null) {
+            parsed_profile["domain"] = email_json.data.domain;
+
+            // If there is no result, we try to remove a subdomain
+            if (email_json.data.email == null && withoutSubDomain(parsed_profile["domain"])) {
+              parsed_profile["domain"] = withoutSubDomain(parsed_profile["domain"]);
+              this_search.findEmailAddress(parsed_profile, function(parsed_profile) {
+                fn(parsed_profile);
+              });
+            }
+            else {
+              parsed_profile["email"] = email_json.data.email;
+              parsed_profile["confidence_score"] = email_json.data.score;
+
+              fn(parsed_profile);
+            }
+          }
+          else {
             fn(parsed_profile);
-          });
-        }
-        else {
-          parsed_profile["email"] = email_json.data.email;
-          parsed_profile["confidence_score"] = email_json.data.score;
-
-          fn(parsed_profile);
-        }
-      });
+          }
+        });
+      }
     });
   },
 
 
   fetchProfile: function(profile_path, callback) {
+    // We force HTTPS (it can happen the links to profiles are in HTTP)
+    profile_path = profile_path.replace("http://", "https://");
+
     $.ajax({
       url: profile_path,
       type: 'GET',

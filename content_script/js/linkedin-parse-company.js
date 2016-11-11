@@ -161,36 +161,3 @@ function extractCountryCodeFromSearchPath(path) {
 
   return country_code.toUpperCase();
 }
-
-
-//
-// Check if we are on a profile or the search
-// Check our own tags (popups) to avoid more dependences with LinkedIn
-//
-
-function linkedinPageType() {
-  if ($("#ehunter_popup").length) {
-    return "profile";
-  }
-  else if ($("#ehunter_search_selection_popup").length) {
-    return "search";
-  }
-  else {
-    return "other";
-  }
-}
-
-
-//
-// Throw an error
-//
-function showError(error) {
-  if (linkedinPageType() == "profile") {
-    $("#ehunter_popup_content_container").slideUp(300);
-    $("#ehunter_popup_error").html(error).slideDown(300);
-  }
-  else if (linkedinPageType() == "search") {
-    $("#ehunter_search_popup_content_container").slideUp(300);
-    $("#ehunter_search_popup_error").html(error).slideDown(300);
-  }
-}

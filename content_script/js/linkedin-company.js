@@ -11,7 +11,7 @@ CompanyPage = {
       employees = LinkedinCompany.getEmployees(html);
       industry = LinkedinCompany.getIndustry(html);
       name = $("h1.name").text();
-      id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company\/([0-9a-z]*)/)[1]
+      id = window.location.href.match(/https?\:\/\/www\.linkedin\.com\/company\/([0-9a-z]*)/)[1]
     }
     // New company pages
     else if ($(".about-us-organization-description").length) {
@@ -19,7 +19,7 @@ CompanyPage = {
       employees = $(".staff-count-range").text().trim();
       industry = $(".industry").text().trim();
       name = $("h1.company-main-info-company-name").text().trim();
-      id = window.location.href.match(/https\:\/\/www\.linkedin\.com\/company(-beta)?\/([0-9a-z]*)/)[2]
+      id = window.location.href.match(/https?\:\/\/www\.linkedin\.com\/company(-beta)?\/([0-9a-z]*)/)[2]
     }
 
     // We extract the domain name

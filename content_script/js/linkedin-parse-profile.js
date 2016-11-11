@@ -87,6 +87,25 @@ var LinkedinProfile = {
     return last_company_path;
   },
 
+  getLastCompanyID: function(company_path) {
+    if (typeof company_path !== "undefined") {
+      if (LinkedinVersion.isSalesNavigator()) {
+        id = company_path.match(/sales\/accounts\/insights\?companyId=([0-9]*)/)[1];
+      }
+      else if (LinkedinVersion.isRecruiter()) {
+        id = company_path.match(/recruiter\/company\/([0-9]*)/)[1];
+      }
+      else {
+        id = company_path.match(/company(-beta)?\/([0-9]*)/)[2];
+      }
+    }
+    else {
+      id = undefined;
+    }
+
+    return id;
+  },
+
   // LAST POSITION
   getPosition: function(html) {
     var $html = $('<div />',{html:html});
@@ -132,7 +151,7 @@ var LinkedinProfile = {
       }
     }
     else if (LinkedinVersion.isRecruiter()) {
-      url = "https://www.linkedin.com" + $html.find(".public-profile a").attr("href");
+      url = $html.find(".public-profile a").attr("href");
     }
     else {
       url = $html.find(".public-profile a").text();
@@ -147,11 +166,11 @@ var LinkedinProfile = {
 
     if (LinkedinVersion.isSalesNavigator()) {
       // TO DO
-      country_code = "";
+      country_code = undefined;
     }
     else if (LinkedinVersion.isRecruiter()) {
       // TO DO
-      country_code = "";
+      country_code = undefined;
     }
     else {
       path = $html.find(".locality a").attr("href");
@@ -195,6 +214,9 @@ var LinkedinProfile = {
 
     // Company path
     parsed_profile['last_company_path'] = this.getLastCompanyPath(html);
+
+    // Company ID
+    parsed_profile['last_company_id'] = this.getLastCompanyID(parsed_profile['last_company_path']);
 
     // Main content
     parsed_profile['profile_main_content'] = this.getMainProfileContent(html);

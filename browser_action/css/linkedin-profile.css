@@ -90,6 +90,7 @@
   padding: 12px 25px;
   color: #fff;
   background: #ff5722;
+  font-weight: bold;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
   -o-transition: background-color 200ms ease-in-out;

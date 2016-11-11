@@ -73,70 +73,76 @@ var LinkedinProfile = {
       // Looking for domain name
       this_popup.mainMessage('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
 
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        chrome.tabs.sendMessage(tabs[0].id, {subject: "get_company_page", profile: window.profile}, function(company_data) {
+      // Use or not API key
+      Account.getApiKey(function(api_key) {
 
-          if (company_data != "none") {
-            window.profile["domain"] = cleanDomain(company_data.website);
-            window.profile["company_size"] = company_data.company_size;
-            window.profile["company_industry"] = company_data.company_industry;
+        if (typeof window.profile["domain"] !== "undefined") {
+          company_param = 'domain=' + encodeURIComponent(window.profile["domain"]);
+        }
+        else if (typeof window.profile["last_company_id"] !== "undefined") {
+          company_param = 'linkedin_id=' + encodeURIComponent(window.profile["last_company_id"]);
+        }
 
-            $('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
+        if (typeof company_param !== "undefined") {
 
-            // Use or not API key
-            Account.getApiKey(function(api_key) {
+          //$('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
 
-              // Generate the email
-              generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(window.profile["domain"]) + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
-              apiCall(api_key, generate_email_endpoint, function(email_json) {
+          // Generate the email
+          email_finder_endpoint = 'https://api.hunter.io/v2/email-finder?' + company_param + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
+          apiCall(api_key, email_finder_endpoint, function(email_json) {
 
-                // We count call to measure use
-                countCall();
+            if (email_json.data.domain != null) {
+              window.profile["domain"] = email_json.data.domain;
 
-                // Count how much email addresses there is on the domain
-                count_endpoint = 'https://api.hunter.io/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
-                apiCall(api_key, count_endpoint, function(count_json) {
+              // We count call to measure use
+              countCall();
 
-                  // If email addresses has NOT been found
-                  if (email_json.data.email == null) {
+              // Count how much email addresses there is on the domain
+              count_endpoint = 'https://api.hunter.io/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
+              apiCall("", count_endpoint, function(count_json) {
 
-                    // Maybe try to remove a subdomain if there is one
-                    if (withoutSubDomain(window.profile["domain"])) {
-                      window.profile["domain"] = withoutSubDomain(window.profile["domain"]);
-                      this_popup.launchSearch();
-                    }
-                    else {
-                      this_popup.mainMessage("No result.");
-                      this_popup.showResultsCountMessage(count_json.data.total);
-                      $("#ehunter_popup_results_show").slideDown(300);
+                // If email addresses has NOT been found
+                if (email_json.data.email == null) {
 
-                      // If we have at least one email on the domain, we show it to help
-                      if (count_json.data.total > 0) {
-                        this_popup.showEmailList();
-                      }
-
-                      // Maybe there are email addresses directly on the profile! Let's show them :)
-                      this_popup.showParsedEmailAddresses();
-                    }
+                  // Maybe try to remove a subdomain if there is one
+                  if (withoutSubDomain(window.profile["domain"])) {
+                    window.profile["domain"] = withoutSubDomain(window.profile["domain"]);
+                    this_popup.launchSearch();
                   }
-
-                  // If email has been found
                   else {
-                    this_popup.showFoundEmailAddress(email_json, count_json);
-                    this_popup.showParsedEmailAddresses();
-                    this_popup.addAccountInformation();
+                    this_popup.mainMessage("No result.");
+                    this_popup.showResultsCountMessage(count_json.data.total);
                     $("#ehunter_popup_results_show").slideDown(300);
-                  }
 
-                this_popup.askNewDomainListener();
-                });
+                    // If we have at least one email on the domain, we show it to help
+                    if (count_json.data.total > 0) {
+                      this_popup.showEmailList();
+                    }
+
+                    // Maybe there are email addresses directly on the profile! Let's show them :)
+                    this_popup.showParsedEmailAddresses();
+                  }
+                }
+
+                // If email has been found
+                else {
+                  this_popup.showFoundEmailAddress(email_json, count_json);
+                  this_popup.showParsedEmailAddresses();
+                  this_popup.addAccountInformation();
+                  $("#ehunter_popup_results_show").slideDown(300);
+                }
+
+              this_popup.askNewDomainListener();
               });
-            });
-          }
-          else {
-            this_popup.askDomainName();
-          }
-        });
+            }
+            else {
+              this_popup.askDomainName();
+            }
+          });
+        }
+        else {
+          this_popup.askDomainName();
+        }
       });
     }
     else {
