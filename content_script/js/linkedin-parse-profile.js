@@ -166,11 +166,11 @@ var LinkedinProfile = {
 
     if (LinkedinVersion.isSalesNavigator()) {
       // TO DO
-      country_code = "";
+      country_code = undefined;
     }
     else if (LinkedinVersion.isRecruiter()) {
       // TO DO
-      country_code = "";
+      country_code = undefined;
     }
     else {
       path = $html.find(".locality a").attr("href");
