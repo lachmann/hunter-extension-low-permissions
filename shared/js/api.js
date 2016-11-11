@@ -64,6 +64,14 @@ function saveLead(lead, fn) {
       }
       else { leads_list_id = ""; }
 
+      // We remove the undefined params
+      var data = {}
+      for(var propertyName in lead) {
+        if (typeof propertyName !== "undefined") {
+          data[" + propertyName + "] = lead[" + propertyName + "];
+        }
+      }
+
       $.ajax({
         url : "https://api.hunter.io/v2/leads",
         headers: {"Email-Hunter-Origin": "chrome_extension"},

@@ -91,8 +91,6 @@ var LinkedinProfile = {
           email_finder_endpoint = 'https://api.hunter.io/v2/email-finder?' + company_param + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
           apiCall(api_key, email_finder_endpoint, function(email_json) {
 
-            console.log(email_json);
-
             if (email_json.data.domain != null) {
               window.profile["domain"] = email_json.data.domain;
 
