@@ -80,7 +80,7 @@ function saveLead(lead, fn) {
           'website': 'http://' + lead["domain"],
           'source': 'Hunter (LinkedIn)',
           'leads_list_id': leads_list_id,
-          'api_key': api_key;
+          'api_key': api_key.trim()
         },
         success : function(json){
           fn(json);
