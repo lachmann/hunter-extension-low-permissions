@@ -12,3 +12,13 @@ function(request, sender, sendResponse) {
   }
   return true;
 });
+
+
+// Open a tab when it's installed
+//
+
+chrome.runtime.onInstalled.addListener(function (object) {
+  if (object.reason == "install") {
+    chrome.tabs.create({ url: "https://hunter.io/users/sign_up?utm_source=chrome_extension&utm_medium=extension&utm_campaign=extension&utm_content=new_install" });
+  }
+});

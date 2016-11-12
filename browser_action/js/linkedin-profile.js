@@ -176,14 +176,16 @@ var LinkedinProfile = {
   addCopyButton: function(email) {
     this_popup = this;
 
-    $("<div id='ehunter_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy'></div>").insertBefore( "#ehunter_email_action_message" );
-    $('#ehunter_copy_email_button').tooltip();
+    if (!$("#ehunter_copy_email_button").length) {
+      $("<div id='ehunter_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy'></div>").insertBefore( "#ehunter_email_action_message" );
+      $('#ehunter_copy_email_button').tooltip();
 
-    $("#ehunter_copy_email_button").click(function() {
-      this_popup.executeCopy(email);
-      this_popup.displayActionMessage("Copied!");
-      console.log("\""+email+"\" copied in the clipboard!");
-    })
+      $("#ehunter_copy_email_button").click(function() {
+        this_popup.executeCopy(email);
+        this_popup.displayActionMessage("Copied!");
+        console.log("\""+email+"\" copied in the clipboard!");
+      })
+    }
   },
 
 
@@ -207,31 +209,34 @@ var LinkedinProfile = {
   // Add a copy button to copy the email address
   addSaveButton: function() {
     this_popup = this;
-    $("<div id='ehunter_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#ehunter_email_action_message" );
-    $('#ehunter_save_email_button').tooltip();
 
-    $("#ehunter_save_email_button").click(function() {
-      $('#ehunter_save_email_button').tooltip("hide");
-      $(this).remove();
-      $("<div class='fa fa-spinner fa-spin ehunter_save_lead_loader'></div>").insertBefore("#ehunter_email_action_message");
+    if (!$("#ehunter_save_email_button").length) {
+      $("<div id='ehunter_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#ehunter_email_action_message" );
+      $('#ehunter_save_email_button').tooltip();
 
-      saveLead(window.profile, function(response) {
-        if (response == "please_sign_in") {
-          this_popup.displayActionMessage("Please sign in!");
-        }
-        else if (response == "duplicated_entry") {
-          this_popup.displayActionMessage("Lead already saved!");
-        }
-        else if (response == "error") {
-          this_popup.displayActionMessage("Error. Please try again later.");
-        }
-        else {
-          this_popup.displayActionMessage("Saved!");
-          console.log("Saved in leads!");
-        }
-        $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
-      });
-    })
+      $("#ehunter_save_email_button").click(function() {
+        $('#ehunter_save_email_button').tooltip("hide");
+        $(this).remove();
+        $("<div class='fa fa-spinner fa-spin ehunter_save_lead_loader'></div>").insertBefore("#ehunter_email_action_message");
+
+        saveLead(window.profile, function(response) {
+          if (response == "please_sign_in") {
+            this_popup.displayActionMessage("Please sign in!");
+          }
+          else if (response == "duplicated_entry") {
+            this_popup.displayActionMessage("Lead already saved!");
+          }
+          else if (response == "error") {
+            this_popup.displayActionMessage("Error. Please try again later.");
+          }
+          else {
+            this_popup.displayActionMessage("Saved!");
+            console.log("Saved in leads!");
+          }
+          $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
+        });
+      })
+    }
   },
 
 
