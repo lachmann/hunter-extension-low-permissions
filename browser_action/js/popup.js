@@ -19,7 +19,6 @@ chrome.tabs.getSelected(null, function(tab) {
         }
         else {
           $("#domain-search").show();
-          DomainSearch.launch();
         }
       });
     });

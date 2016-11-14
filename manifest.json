@@ -24,19 +24,14 @@
     "default_popup": "browser_action/popup.html"
   },
   "permissions": [
-    "tabs",
     "storage",
     "clipboardWrite",
-    "activeTab",
     "*://*.hunter.io/*",
     "*://*.linkedin.com/*"
   ],
   "background": {
     "scripts": [
-      "shared/js/lib/jquery.min.js",
-      "background/install-check.js",
-      "background/icon-color.js",
-      "background/webstats.js"],
+      "background/install-check.js"],
     "persistent": false
   },
   "content_scripts": [
