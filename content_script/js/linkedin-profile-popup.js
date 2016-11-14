@@ -115,28 +115,33 @@ var LinkedinProfilePopup = {
       // Looking for domain name
       this_popup.mainMessage('Looking for ' + window.profile["first_name"] + '\'s email address...', true);
 
-      LinkedinCompany.get(window.profile, function(company_data) {
+      $('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
 
-        if (company_data != "none") {
-          window.profile["domain"] = cleanDomain(company_data.website);
-          window.profile["company_size"] = company_data.company_size;
-          window.profile["company_industry"] = company_data.company_industry;
+      // Use or not API key
+      Account.getApiKey(function(api_key) {
 
-          $('#ehunter_popup_results_link_container').html('<div class="ehunter_popup_results_message">Looking for ' + window.profile["domain"] + ' email addresses...</div>');
+        if (typeof window.profile["domain"] !== "undefined") {
+          company_param = 'domain=' + encodeURIComponent(window.profile["domain"]);
+        }
+        else if (typeof window.profile["last_company_id"] !== "undefined") {
+          company_param = 'linkedin_id=' + encodeURIComponent(window.profile["last_company_id"]);
+        }
 
-          // Use or not API key
-          Account.getApiKey(function(api_key) {
+        if (typeof company_param !== "undefined") {
 
-            // Generate the email
-            generate_email_endpoint = 'https://api.hunter.io/v2/email-finder?domain=' + encodeURIComponent(window.profile["domain"]) + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
-            apiCall(api_key, generate_email_endpoint, function(email_json) {
+          // Generate the email
+          email_finder_endpoint = 'https://api.hunter.io/v2/email-finder?' + company_param + '&first_name=' + encodeURIComponent(window.profile["first_name"]) + '&last_name=' + encodeURIComponent(window.profile["last_name"]) + '&position=' + encodeURIComponent(window.profile["position"]) + '&company=' + encodeURIComponent(window.profile["last_company"]);
+          apiCall(api_key, email_finder_endpoint, function(email_json) {
 
-              // We count call to measure use
+            if (email_json.data.domain != null) {
+              window.profile["domain"] = email_json.data.domain;
+
+              // We count the call to measure usage
               countCall();
 
               // Count how much email addresses there is on the domain
               count_endpoint = 'https://api.hunter.io/v2/email-count?domain=' + encodeURIComponent(window.profile["domain"]);
-              apiCall(api_key, count_endpoint, function(count_json) {
+              apiCall("", count_endpoint, function(count_json) {
 
                 // If email addresses has NOT been found
                 if (email_json.data.email == null) {
@@ -171,7 +176,10 @@ var LinkedinProfilePopup = {
 
               this_popup.askNewDomainListener();
               });
-            });
+            }
+            else {
+              this_popup.askDomainName();
+            }
           });
         }
         else {
@@ -210,14 +218,16 @@ var LinkedinProfilePopup = {
   addCopyButton: function(email) {
     this_popup = this;
 
-    $("<div id='ehunter_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy'></div>").insertBefore( "#ehunter_email_action_message" );
-    $('#ehunter_copy_email_button').tooltip();
+    if (!$("#ehunter_copy_email_button").length) {
+      $("<div id='ehunter_copy_email_button' class='fa fa-files-o' data-toggle='tooltip' data-placement='top' title='Copy'></div>").insertBefore( "#ehunter_email_action_message" );
+      $('#ehunter_copy_email_button').tooltip();
 
-    $("#ehunter_copy_email_button").click(function() {
-      this_popup.executeCopy(email);
-      this_popup.displayActionMessage("Copied!");
-      console.log("\""+email+"\" copied in the clipboard!");
-    })
+      $("#ehunter_copy_email_button").click(function() {
+        this_popup.executeCopy(email);
+        this_popup.displayActionMessage("Copied!");
+        console.log("\""+email+"\" copied in the clipboard!");
+      })
+    }
   },
 
 
@@ -241,33 +251,36 @@ var LinkedinProfilePopup = {
   // Add a copy button to copy the email address
   addSaveButton: function() {
     this_popup = this;
-    $("<div id='ehunter_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#ehunter_email_action_message" );
-    $('#ehunter_save_email_button').tooltip();
 
-    $("#ehunter_save_email_button").click(function() {
-      $('#ehunter_save_email_button').tooltip("hide");
-      $(this).remove();
-      $("<div class='fa fa-spinner fa-spin ehunter_save_lead_loader'></div>").insertBefore("#ehunter_email_action_message");
+    if (!$("#ehunter_save_email_button").length) {
+      $("<div id='ehunter_save_email_button' class='fa fa-floppy-o' data-toggle='tooltip' data-placement='top' title='Save the lead'></div>").insertBefore( "#ehunter_email_action_message" );
+      $('#ehunter_save_email_button').tooltip();
 
-      saveLead(window.profile, function(response) {
-        if (response == "please_sign_in") {
-          this_popup.displayActionMessage("Please sign in!");
-        }
-        else if (response == "duplicated_entry") {
-          this_popup.displayActionMessage("Lead already saved!");
-        }
-        else if (response == "error") {
-          this_popup.displayActionMessage("Error. Please try again later.");
-        }
-        else {
-          this_popup.displayActionMessage("Saved!");
-          console.log("Saved in leads!");
-        }
-        $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
-      });
-    })
+      $("#ehunter_save_email_button").click(function() {
+        $('#ehunter_save_email_button').tooltip("hide");
+        $(this).remove();
+        $("<div class='fa fa-spinner fa-spin ehunter_save_lead_loader'></div>").insertBefore("#ehunter_email_action_message");
 
-    this_popup.checkAlreadySaved();
+        saveLead(window.profile, function(response) {
+          if (response == "please_sign_in") {
+            this_popup.displayActionMessage("Please sign in!");
+          }
+          else if (response == "duplicated_entry") {
+            this_popup.displayActionMessage("Lead already saved!");
+          }
+          else if (response == "error") {
+            this_popup.displayActionMessage("Error. Please try again later.");
+          }
+          else {
+            this_popup.displayActionMessage("Saved!");
+            console.log("Saved in leads!");
+          }
+          $(".ehunter_save_lead_loader").removeClass("fa-spinner fa-spin").addClass("fa-floppy-o");
+        });
+      })
+
+      this_popup.checkAlreadySaved();
+    }
   },
 
   checkAlreadySaved: function() {

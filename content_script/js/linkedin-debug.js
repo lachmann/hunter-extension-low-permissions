@@ -2,7 +2,7 @@ Debug = {
 
   handleDisappearedButton: function() {
     if (this.isLinkedinButtonBlocked()) {
-      this.displayDebugMessage("It seems Hunter's button failed to appear on the profile. No worries! You still can find the email address by clicking on the icon in your browser.");
+      this.displayDebugMessage("It seems Hunter's button failed to appear on the profile. You still can find the email address if you click on the icon in your browser.");
       chrome.storage.sync.set({'linkedin_button_blocked_date': weekTodayString()});
     }
   },
@@ -16,7 +16,7 @@ Debug = {
 
   handleDisappearedCheckboxes: function() {
     if (this.isLinkedinSearchBlocked()) {
-      this.displayDebugMessage("It seems Hunter's checkboxes failed to appear on the search. No worries! You still can save the leads from this page by clicking on the icon in your browser.");
+      this.displayDebugMessage("It seems Hunter's checkboxes failed to appear on the search. You still can save the leads if you click on the icon in your browser.");
       chrome.storage.sync.set({'linkedin_checkboxes_blocked_date': weekTodayString()});
     }
   },

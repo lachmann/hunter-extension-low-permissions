@@ -64,11 +64,32 @@ function saveLead(lead, fn) {
       }
       else { leads_list_id = ""; }
 
+      // We remove the undefined params
+      var data = {}
+      for(var propertyName in lead) {
+        if (typeof propertyName !== "undefined") {
+          data[" + propertyName + "] = lead[" + propertyName + "];
+        }
+      }
+
       $.ajax({
-        url : "https://api.hunter.io/v2/leads?first_name="+ encodeURIComponent(lead["first_name"]) + "&last_name=" + encodeURIComponent(lead["last_name"]) + "&company=" + encodeURIComponent(lead["last_company"]) + "&company_industry=" + encodeURIComponent(lead["company_industry"]) + "&company_size=" + encodeURIComponent(lead["company_size"]) + "&position=" + encodeURIComponent(lead["position"]) + "&country_code=" + encodeURIComponent(lead["country_code"]) + "&email=" + encodeURIComponent(lead["email"]) + "&confidence_score=" + encodeURIComponent(lead["confidence_score"]) + "&website=http://" + encodeURIComponent(lead["domain"]) + "&source=Hunter (LinkedIn)&linkedin_url=" + encodeURIComponent(lead["linkedin_url"]) + "&leads_list_id=" + leads_list_id + "&api_key=" + api_key,
+        url : "https://api.hunter.io/v2/leads",
         headers: {"Email-Hunter-Origin": "chrome_extension"},
         type : 'POST',
-        dataType : 'json',
+        data : {
+          'linkedin_id': lead["last_company_id"],
+          'first_name': lead["first_name"],
+          'last_name': lead["last_name"],
+          'company': lead["last_company"],
+          'position': lead["position"],
+          'country_code': lead["country_code"],
+          'email': lead["email"],
+          'confidence_score': lead["confidence_score"],
+          'website': 'http://' + lead["domain"],
+          'source': 'Hunter (LinkedIn)',
+          'leads_list_id': leads_list_id,
+          'api_key': api_key.trim()
+        },
         success : function(json){
           fn(json);
         },
@@ -86,4 +107,37 @@ function saveLead(lead, fn) {
       });
     });
   });
+}
+
+
+//
+// Check if we are on a profile or the search
+// Check our own tags (popups) to avoid more dependences with LinkedIn
+//
+
+function linkedinPageType() {
+  if ($("#ehunter_popup").length) {
+    return "profile";
+  }
+  else if ($("#ehunter_search_selection_popup").length) {
+    return "search";
+  }
+  else {
+    return "other";
+  }
+}
+
+
+//
+// Throw an error
+//
+function showError(error) {
+  if (linkedinPageType() == "profile") {
+    $("#ehunter_popup_content_container").slideUp(300);
+    $("#ehunter_popup_error").html(error).slideDown(300);
+  }
+  else if (linkedinPageType() == "search") {
+    $("#ehunter_search_popup_content_container").slideUp(300);
+    $("#ehunter_search_popup_error").html(error).slideDown(300);
+  }
 }
