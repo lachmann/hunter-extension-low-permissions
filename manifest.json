@@ -1,7 +1,7 @@
 {
   "name": "Hunter",
   "short_name": "Hunter",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "manifest_version": 2,
   "description": "[Low permissions version - only LinkedIn] Hunter is the easiest to find email addresses.",
   "homepage_url": "https://hunter.io",
