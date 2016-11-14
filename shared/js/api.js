@@ -86,6 +86,7 @@ function saveLead(lead, fn) {
           'email': lead["email"],
           'confidence_score': lead["confidence_score"],
           'website': 'http://' + lead["domain"],
+          'linkedin_url': lead["linkedin_url"],
           'source': 'Hunter (LinkedIn)',
           'leads_list_id': leads_list_id,
           'api_key': api_key.trim()
