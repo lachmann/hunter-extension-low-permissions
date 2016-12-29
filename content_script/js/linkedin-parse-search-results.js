@@ -1,6 +1,10 @@
+
 LinkedInSearchResults = {
   parse: function(html, response) {
     var profiles = new Array;
+    var outOfNetProfiles = new Array;
+
+
 
     if (LinkedinVersion.isSalesNavigator()) {
       // Sales Navigator
@@ -36,10 +40,22 @@ LinkedInSearchResults = {
                           "profile_title": profile_title,
                           "profile_pic": profile_pic,
                           "profile_id": profile_id });
+        } else {
+            var profile_title = $(this).find(".description").text();
+            var profile_pic = $(this).find(".entity-img").attr("src");
+            var google_qurl = "https://www.google.fr/search?q=" + profile_title + " site:linkedin.com";
+
+            var profile = {
+                "profile_title": profile_title,
+                "google_qurl": google_qurl,
+                "profile_pic": profile_pic,
+            };
+            console.log("Yeah yeah");
+            outOfNetProfiles.push(profile);
         }
       });
     }
 
-    response(profiles);
+    response({'accessible': profiles, 'inaccessible': outOfNetProfiles});
   }
 }

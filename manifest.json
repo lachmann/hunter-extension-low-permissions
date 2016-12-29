@@ -1,10 +1,10 @@
 {
-  "name": "Hunter",
-  "short_name": "Hunter",
+  "name": "HunterPlus",
+  "short_name": "HunterPlus",
   "version": "1.9.4",
   "manifest_version": 2,
   "description": "[Low permissions version - only LinkedIn] Hunter is the easiest to find email addresses.",
-  "homepage_url": "https://hunter.io",
+  "homepage_url": "https://gethupp.com",
   "icons": {
     "16": "shared/img/icon16.png",
     "48": "shared/img/icon48.png",
@@ -13,7 +13,7 @@
   "default_locale": "en",
   "browser_action": {
     "default_icon": {
-      "19": "shared/img/icon19.png",
+      "19": "shared/img/icon.png",
       "38": "shared/img/icon38.png"
     },
     "default_title": "Find email addresses",
@@ -23,7 +23,8 @@
     "storage",
     "clipboardWrite",
     "*://*.hunter.io/*",
-    "*://*.linkedin.com/*"
+    "*://*.linkedin.com/*",
+    "*://www.google.fr/search?q=*"
   ],
   "background": {
     "scripts": [
@@ -63,6 +64,7 @@
         "shared/js/lib/bootstrap-tooltip.min.js",
         "shared/js/use-counter.js",
         "shared/js/utilities.js",
+        "shared/js/google.js",
         "shared/js/api.js",
         "shared/js/account.js",
         "shared/js/analytics.js",

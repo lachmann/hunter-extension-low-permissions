@@ -1,3 +1,28 @@
+function parseResultsPage(html) {
+
+    var search = $(html).find('#search');
+    var firstResult = $(search).find('.g')[0];  // '#search'));
+    var firstLink = $(firstResult).find('a')[0];  // , firstResult)
+    var profileUrl = firstLink.getAttribute('href');
+    var title = firstLink.text;
+    var splitTitle = title.split(' | ');
+    if ((splitTitle.length > 1) && (splitTitle[1] == "LinkedIn")) {
+        var profileName = splitTitle[0];
+    } else {
+        var profileName = "Not Found";
+    }
+
+    profileId = profileName.hashCode();
+    profile = {
+        "profile_path":  profileUrl,
+        "profile_name": profileName,
+        "profile_id": profileId 
+    };
+    return profile;
+
+}
+
+
 LinkedinSearch = {
   launch: function() {
     this_popup = this;
@@ -7,9 +32,8 @@ LinkedinSearch = {
     var readyStateCheckInterval = setInterval(function() {
       chrome.tabs.query({active:true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {subject: "get_linkedin_search_results"}, function(response) {
-          if (typeof response[0] != "undefined") {
+          if (typeof response.accessible[0] != "undefined") {
             clearInterval(readyStateCheckInterval);
-
             this_popup.open(response);
           }
           else {
@@ -22,8 +46,14 @@ LinkedinSearch = {
     }, 200);
   },
 
-  open: function(profiles) {
-    window.profiles = profiles;
+  // profiles is an object looking like {'accessible': [], 'inaccessible': []}
+  // inaccesible profiles are profiles out of network
+  open: function(allProfiles) {
+    var profiles = allProfiles.accessible;
+    var inaccessible = allProfiles.inaccessible;
+    window.profiles = profiles.concat(inaccessible);
+
+    window.allProfiles = allProfiles;
 
     var logo = chrome.extension.getURL('shared/img/orange_transparent_logo.png');
 
@@ -37,36 +67,72 @@ LinkedinSearch = {
         <i class='fa fa-square'></i>\n\
         Select all\n\
       </div>\n\
-    ")
+    ");
+
+    $("#linkedin-search").append("<div> There were " + inaccessible.length + " out of network profiles </div>");
+
+    $.each(inaccessible, function(index, profile) {
+      var url = profile.google_qurl;
+      if (profile.profile_name != "Not Found") {
+        this_popup.updateProfile(profile).done( function() {
+
+          LeadExistence.check(profile.profile_name, function(already_saved) {
+            if (already_saved) {
+              disabled = "disabled";
+              checkbox = "<i class='fa fa-check-square' disabled='disabled'></i>";
+              status = "Already saved";
+            }
+            else {
+              disabled = "";
+              checkbox = "<i class='fa fa-square'></i>";
+              status = "";
+            } 
+
+            $(".linkedin-search-profiles").append("\n\
+              <div class='linkedin-search-profile " + disabled + "' data-profile-id='" + profile.profile_id + "'>\n\
+                <span class='linkedin-profile-status'>" + status + "</span>\n\
+                " + checkbox + "\n\
+                <img src='" + profile.profile_pic + "'>\n\
+                <div class='linkedin-profile-description'>\n\
+                  <span class='linkedin-profile-name'><a href='" + profile.profile_path + "'>" + profile.profile_name + "</a></span>\n\
+                  <br/>\n\
+                  <span class='linkedin-profile-title'>" + limitLength(profile.profile_title, 40) + "</span>\n\
+                </div>\n\
+              </div>\n\
+            ");
+          })
+        });
+      }
+    });
 
     $.each(profiles, function(index, profile) {
 
-      // Check if the profiles have already been saved or not
-      LeadExistence.check(profile.profile_name, function(already_saved) {
-        if (already_saved) {
-          disabled = "disabled";
-          checkbox = "<i class='fa fa-check-square' disabled='disabled'></i>";
-          status = "Already saved";
-        }
-        else {
-          disabled = "";
-          checkbox = "<i class='fa fa-square'></i>";
-          status = "";
-        }
+        // Check if the profiles have already been saved or not
+        LeadExistence.check(profile.profile_name, function(already_saved) {
+          if (already_saved) {
+            disabled = "disabled";
+            checkbox = "<i class='fa fa-check-square' disabled='disabled'></i>";
+            status = "Already saved";
+          }
+          else {
+            disabled = "";
+            checkbox = "<i class='fa fa-square'></i>";
+            status = "";
+          }
 
-        $(".linkedin-search-profiles").append("\n\
-          <div class='linkedin-search-profile " + disabled + "' data-profile-id='" + profile.profile_id + "'>\n\
-            <span class='linkedin-profile-status'>" + status + "</span>\n\
-            " + checkbox + "\n\
-            <img src='" + profile.profile_pic + "'>\n\
-            <div class='linkedin-profile-description'>\n\
-              <span class='linkedin-profile-name'>" + limitLength(profile.profile_name, 30) + "</span>\n\
-              <br/>\n\
-              <span class='linkedin-profile-title'>" + limitLength(profile.profile_title, 40) + "</span>\n\
+          $(".linkedin-search-profiles").append("\n\
+            <div class='linkedin-search-profile " + disabled + "' data-profile-id='" + profile.profile_id + "'>\n\
+              <span class='linkedin-profile-status'>" + status + "</span>\n\
+              " + checkbox + "\n\
+              <img src='" + profile.profile_pic + "'>\n\
+              <div class='linkedin-profile-description'>\n\
+                <span class='linkedin-profile-name'>" + limitLength(profile.profile_name, 30) + "</span>\n\
+                <br/>\n\
+                <span class='linkedin-profile-title'>" + limitLength(profile.profile_title, 40) + "</span>\n\
+              </div>\n\
             </div>\n\
-          </div>\n\
-        ");
-      })
+          ");
+        })
     });
 
     this.selectProfiles();
@@ -74,6 +140,23 @@ LinkedinSearch = {
     this.saveWithoutEmailListener();
     ListSelection.appendSelector();
     this.launchParsing();
+  },
+
+  updateProfile: function (this_profile) {
+    return $.ajax({
+        url : this_profile.google_qurl,
+        context : this_profile,
+        method: 'GET',
+        success : function(response) {
+          var parsedProfile = parseResultsPage(response);
+          this_profile["profile_path"] = parsedProfile["profile_path"];
+          this_profile["profile_name"] = parsedProfile["profile_name"];
+          this_profile["profile_id"] = parsedProfile["profile_id"];
+        },
+        error : function() {
+          console.log("Error x-ray searching");
+        }
+    });
   },
 
   selectProfiles: function() {

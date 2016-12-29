@@ -1,7 +1,7 @@
 LeadExistence = {
   check: function(full_name, fn) {
     Account.getApiKey(function(api_key) {
-      if (api_key != '' && full_name != "LinkedIn Member") {
+      if (api_key != '' && full_name != "LinkedIn Member" && full_name != "Not Found") {
         full_name_array = cleanName(full_name).split(" ");
         first_name = full_name_array[0];
         full_name_array.shift();
